@@ -1,0 +1,23 @@
+[
+  {
+    "id": "character1",
+    "comicId": "comic1",
+    "name": "캐릭터1",
+    "imgUrl": "http://example.com/character1.jpg",
+    "hashtag": ["#해시태그1", "#해시태그2"]
+  },
+  {
+    "id": "character2",
+    "comicId": "comic2",
+    "name": "캐릭터2",
+    "imgUrl": "http://example.com/character2.jpg",
+    "hashtag": ["#해시태그3", "#해시태그4"]
+  },
+  {
+    "id": "character3",
+    "comicId": "comic3",
+    "name": "캐릭터3",
+    "imgUrl": "http://example.com/character3.jpg",
+    "hashtag": ["#해시태그5", "#해시태그6"]
+  }
+]

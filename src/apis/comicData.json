@@ -1,0 +1,17 @@
+[
+  {
+    "id": "comic1",
+    "title": "타이틀1",
+    "summary": "요약1"
+  },
+  {
+    "id": "comic2",
+    "title": "타이틀2",
+    "summary": "요약2"
+  },
+  {
+    "id": "comic3",
+    "title": "타이틀3",
+    "summary": "요약3"
+  }
+]
