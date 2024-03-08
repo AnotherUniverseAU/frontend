@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2021",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -18,5 +18,5 @@
     "baseUrl": "./",
     "allowImportingTsExtensions": true
   },
-  "include": ["src"]
+  "include": ["src", "typings.d.ts"]
 }

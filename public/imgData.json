@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "imgUrl": "src/assets/img/background.png",
+    "name": "Image1",
+    "title": "Title1",
+    "creatorNickname": "Creator1",
+    "genre": "ani"
+  },
+  {
+    "id": 2,
+    "imgUrl": "src/assets/img/background.png",
+    "name": "Image2",
+    "title": "Title2",
+    "creatorNickname": "Creator2",
+    "genre": "game"
+  },
+  {
+    "id": 3,
+    "imgUrl": "src/assets/img/background.png",
+    "name": "Image3",
+    "title": "Title3",
+    "creatorNickname": "Creator3",
+    "genre": "toon"
+  },
+  {
+    "id": 4,
+    "imgUrl": "src/assets/img/background.png",
+    "name": "Image4",
+    "title": "Title4",
+    "creatorNickname": "Creator4",
+    "genre": "toon"
+  },
+  {
+    "id": 5,
+    "imgUrl": "src/assets/img/background.png",
+    "name": "Image5",
+    "title": "Title5",
+    "creatorNickname": "Creator5",
+    "genre": "ani"
+  },
+  {
+    "id": 6,
+    "imgUrl": "src/assets/img/background.png",
+    "name": "Image6",
+    "title": "Title6",
+    "creatorNickname": "Creator6",
+    "genre": "toon"
+  }
+]

@@ -1,0 +1,104 @@
+import * as S from "src/styles/home/main.ts";
+
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { MainHeader } from "src/components/header/main/mainHeader.tsx";
+import { MainImage } from "src/components/mainImage/mainImage.tsx";
+import { StyledImage } from "src/components/styledImage/styledImage.tsx";
+import { IconFooter } from "src/components/footer//icon/iconFooter.tsx";
+
+import { apiRequestGet } from "src/apis/api.ts";
+
+export const Main = () => {
+  const location = useLocation();
+  const [selectedGenre, setSelectedGenre] = useState<string>("all");
+  const [isTutorial, setIsTutorial] = useState<boolean>(
+    location.state?.from === "/nickname"
+  );
+  const [characters, setCharacters] = useState<any[]>([]);
+  const [mainCharacter, setMainCharacter] = useState<any>({});
+
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      const result = await apiRequestGet("/character/list");
+      setCharacters(result.characters);
+    };
+
+    const fetchMainCharacter = async () => {
+      const result = await apiRequestGet("/character/main-character");
+      setMainCharacter(result.mainCharacter);
+    };
+
+    fetchCharacters();
+    fetchMainCharacter();
+  }, []);
+
+  const filteredCharacters =
+    selectedGenre === "all"
+      ? characters
+      : characters.filter(
+          (character: any) => character.genre === selectedGenre
+        );
+
+  return (
+    <S.Container style={{ overflow: isTutorial ? "hidden" : "scroll" }}>
+      {isTutorial && (
+        <S.TutorialContainer>
+          <S.TutorialTextContainer>
+            <S.TutorialText>원하는 AI 캐릭터를</S.TutorialText>
+            <S.TutorialText>직접 만들 수 있어요!</S.TutorialText>
+            <S.TutorialButton onClick={() => setIsTutorial(false)}>
+              OK
+            </S.TutorialButton>
+          </S.TutorialTextContainer>
+        </S.TutorialContainer>
+      )}
+      <MainHeader toCreate={true} isTutorial={isTutorial} />
+      <S.MainContainer>
+        <MainImage
+          route={`/detail/${mainCharacter?.id}`}
+          imgurl={mainCharacter?.coverImageUrl}
+          name={mainCharacter?.name}
+          title={mainCharacter?.title}
+          creatorNickname={mainCharacter?.creatorNickname}
+        />
+      </S.MainContainer>
+      <S.NavContainer>
+        <S.ButtonNav>
+          <S.StyledButton
+            active={selectedGenre === "all"}
+            onClick={() => setSelectedGenre("all")}
+          >
+            전체
+          </S.StyledButton>
+          <S.StyledButton
+            active={selectedGenre === "anime"}
+            onClick={() => setSelectedGenre("anime")}
+          >
+            애니
+          </S.StyledButton>
+          <S.StyledButton
+            active={selectedGenre === "game"}
+            onClick={() => setSelectedGenre("game")}
+          >
+            게임
+          </S.StyledButton>
+        </S.ButtonNav>
+        <S.ImageContainer>
+          {filteredCharacters.map((character: any) => (
+            <S.StyledImageMargin key={character.id}>
+              <StyledImage
+                route={`/detail/${character.id}`}
+                imgurl={character.coverImgUrl}
+                name={character.name}
+                title={character.title}
+                creatorNickname={character.creatorNickname}
+              />
+            </S.StyledImageMargin>
+          ))}
+        </S.ImageContainer>
+      </S.NavContainer>
+      <IconFooter activepage="/" />
+    </S.Container>
+  );
+};

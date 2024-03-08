@@ -1,0 +1,271 @@
+import { useState } from "react";
+
+import * as S from "src/styles/home/create.ts";
+import { BackHeader } from "src/components/header/back/backHeader.tsx";
+import { ListTitle } from "src/components/listTitle/listTitle.tsx";
+import { StyledInput } from "src/components/styledInput/styledInput.tsx";
+import { PolicyToggle } from "src/components/policyToggle/policyToggle.tsx";
+import { TextFooter } from "src/components/footer/text/textFooter.tsx";
+
+export const Create = () => {
+  const [name, setName] = useState("");
+  const [webtoon, setWebtoon] = useState("");
+  const [genre, setGenre] = useState("");
+  const [sex, setSex] = useState("");
+  const [appearance, setAppearance] = useState("");
+  const [personality, setPersonality] = useState("");
+  const [hobby, setHobby] = useState("");
+  const [tone, setTone] = useState("");
+  const [other, setOther] = useState("");
+
+  const [summary, setSummary] = useState("");
+  const [relationship, setRelationship] = useState("");
+
+  const [images, setImages] = useState<string[]>([]);
+
+  const [creatorNickname, setCreatorNickname] = useState("");
+  const [email, setEmail] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [totalSize, setTotalSize] = useState(0);
+  const [isPolicyOpen, setIsPolicyOpen] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      const newTotalSize =
+        totalSize + newFiles.reduce((sum, file) => sum + file.size, 0); // 바이트 계산
+
+      if (
+        images.length + newFiles.length <= 20 && //갯수가 20개 이하이도록
+        newTotalSize <= 5 * 1024 * 1024 // 용량이 5MB 이하이도록
+      ) {
+        setImages([
+          ...images,
+          ...newFiles.map((file) => URL.createObjectURL(file)),
+        ]);
+        setTotalSize(newTotalSize);
+      }
+    }
+  };
+
+  return (
+    <S.Container>
+      {isModalOpen && (
+        <S.StyledModal open={isModalOpen}>
+          <S.ModalContainer>
+            <S.ModalText>제출이 완료 되었습니다</S.ModalText>
+            <S.ModalButton onClick={() => setIsModalOpen(false)}>
+              확인
+            </S.ModalButton>
+          </S.ModalContainer>
+        </S.StyledModal>
+      )}
+      <BackHeader route="/contributeInfo" title="AI 캐릭터 만들기" />
+      <S.SubContainer>
+        <ListTitle listNumber={1} listText="캐릭터 정보" textColor="#6D2FEF" />
+        <S.InputTitle>
+          이름 <S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="캐릭터 이름을 입력해주세요"
+          content={name}
+          setContent={setName}
+          limit={20}
+          height="5.1rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          작품 <S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="작품의 제목을 입력해주세요"
+          content={webtoon}
+          setContent={setWebtoon}
+          limit={50}
+          height="5.1rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          작품 장르 <S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="애니/게임/웹툰 중 선택해주세요"
+          content={genre}
+          setContent={setGenre}
+          limit={2}
+          height="3.8rem"
+          marginTop="0.5rem"
+        />
+
+        <S.InputTitle>
+          성별<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="캐릭터의 성별을 입력해주세요"
+          content={sex}
+          setContent={setSex}
+          limit={10}
+          height="3.8rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          외모<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="캐릭터의 외모를 설명해주세요"
+          content={appearance}
+          setContent={setAppearance}
+          limit={500}
+          height="11.6rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          성격<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="캐릭터의 성격을 설명해주세요"
+          content={personality}
+          setContent={setPersonality}
+          limit={500}
+          height="11.6rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          취미<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="캐릭터의 취미를 설명해주세요"
+          content={hobby}
+          setContent={setHobby}
+          limit={500}
+          height="11.6rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          말투<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="캐릭터의 말투(대사) 예시를 입력해주세요"
+          content={tone}
+          setContent={setTone}
+          limit={700}
+          height="11.6rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          기타 정보<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="캐릭터의 기타 정보를 설명해주세요"
+          content={other}
+          setContent={setOther}
+          limit={900}
+          height="11.6rem"
+          marginTop="0.5rem"
+        />
+        <ListTitle listNumber={2} listText="작품 정보" textColor="#6D2FEF" />
+        <S.InputTitle>
+          줄거리<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="작품의 줄거리를 입력해주세요"
+          content={summary}
+          setContent={setSummary}
+          limit={900}
+          height="11.6rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          등장인물과의 관계<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="타 등장인물과의 관계를 설명해주세요"
+          content={relationship}
+          setContent={setRelationship}
+          limit={900}
+          height="11.6rem"
+          marginTop="0.5rem"
+        />
+        <ListTitle listNumber={3} listText="이미지" textColor="#6D2FEF" />
+        <S.ImageContainer>
+          <S.InputTitle>
+            캐릭터 이미지 (10개 이상)<S.RedText>*</S.RedText>
+          </S.InputTitle>
+          <S.FileSize>
+            <S.PurpleText>
+              {(totalSize / (1024 * 1024)).toFixed(2)}MB
+            </S.PurpleText>
+            /5MB
+          </S.FileSize>
+          <S.ImageLabel htmlFor="image-upload">+ 이미지 업로드</S.ImageLabel>
+          <S.ImageInput
+            id="image-upload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            multiple
+          />
+          <S.ImageInfo>5MB 이하까지 첨부 가능합니다.</S.ImageInfo>
+          <S.ImageInfo>
+            {" "}
+            이미지 파일 (GIF,PNG,JPG) 기준으로 최대 20개까지 등록 가능합니다.
+          </S.ImageInfo>
+          <S.ImageWrapper>
+            {images.map((image, index) => (
+              <S.StyledImage
+                key={index}
+                src={image}
+                alt={`uploaded ${index}`}
+              />
+            ))}
+          </S.ImageWrapper>
+        </S.ImageContainer>
+
+        <ListTitle listNumber={4} listText="제작자 정보" textColor="#6D2FEF" />
+        <S.InputTitle>
+          제작자 <S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="제작자의 닉네임을 알려주세요"
+          content={creatorNickname}
+          setContent={setCreatorNickname}
+          limit={20}
+          height="5.1rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          이메일<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="등록심사 결과를 안내 받은 이메일 주소를 입력해주세요"
+          content={email}
+          setContent={setEmail}
+          limit={50}
+          height="5.1rem"
+          marginTop="0.5rem"
+        />
+        <S.InputTitle>
+          제작자의 말<S.RedText>*</S.RedText>
+        </S.InputTitle>
+        <StyledInput
+          placeholder="제작 동기 등을 자유롭게 말해주세요"
+          content={description}
+          setContent={setDescription}
+          limit={100}
+          height="11.6rem"
+          marginTop="0.5rem"
+        />
+
+        <PolicyToggle policy={isPolicyOpen} setPolicy={setIsPolicyOpen} />
+      </S.SubContainer>
+      <TextFooter route="." text="제출할게요" onClick={openModal} />
+    </S.Container>
+  );
+};

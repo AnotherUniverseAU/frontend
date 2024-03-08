@@ -1,14 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Landing } from "src/pages/join/landing.tsx";
+import { BrowserRouter } from "react-router-dom";
+import MainRouter from "./mainRouter.tsx";
+import { GlobalStyle } from "src/styles/globalStyle.ts";
+import { useEffect } from "react";
 
 export const App = () => {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/landing" element={<Landing />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <GlobalStyle />
+      <MainRouter />
+    </BrowserRouter>
   );
 };
