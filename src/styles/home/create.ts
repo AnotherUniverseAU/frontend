@@ -131,6 +131,9 @@ export const ImageWrapper = styled.div`
   align-items: center;
   margin-top: 0.8rem;
   overflow-x: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const StyledImage = styled.img`

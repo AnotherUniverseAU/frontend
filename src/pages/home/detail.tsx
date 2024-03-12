@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { BackHeader } from "src/components/header/back/backHeader.tsx";
 import { TextFooter } from "src/components/footer/text/textFooter.tsx";
 
-import { apiRequestGet } from "src/apis/api.ts";
+import { apiRequestGet, apiRequestPost } from "src/apis/api.ts";
 
 import { Loading } from "src/pages/setting/loading.tsx";
 
@@ -12,6 +12,7 @@ import * as S from "src/styles/home/detail.ts";
 
 export const Detail = () => {
   const params = useParams();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState<any>(null);
@@ -25,6 +26,15 @@ export const Detail = () => {
     };
     fetchDetail();
   }, [params.id]);
+
+  const handleStartChat = async () => {
+    await apiRequestPost("/subscription/subscribe", {
+      characterId: params.id,
+    });
+
+    navigate("/chatlist");
+  };
+
   return (
     <>
       <BackHeader route="/" title="상세 보기" />
@@ -61,7 +71,7 @@ export const Detail = () => {
       ) : (
         <Loading />
       )}
-      <TextFooter route="/" text="채팅하기" />
+      <TextFooter route="." text="채팅 시작하기" onClick={handleStartChat} />
     </>
   );
 };

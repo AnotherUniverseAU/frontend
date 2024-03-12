@@ -56,11 +56,11 @@ export const Main = () => {
       <MainHeader toCreate={true} isTutorial={isTutorial} />
       <S.MainContainer>
         <MainImage
-          route={`/detail/${mainCharacter?.id}`}
-          imgurl={mainCharacter?.coverImageUrl}
-          name={mainCharacter?.name}
-          title={mainCharacter?.title}
-          creatorNickname={mainCharacter?.creatorNickname}
+          route={`/detail/${mainCharacter?.characterId}`}
+          imgurl={mainCharacter.mainImageUrl}
+          name={mainCharacter.name}
+          title={mainCharacter.title}
+          creatorNickname={mainCharacter.creatorNickname}
         />
       </S.MainContainer>
       <S.NavContainer>
@@ -86,10 +86,10 @@ export const Main = () => {
         </S.ButtonNav>
         <S.ImageContainer>
           {filteredCharacters.map((character: any) => (
-            <S.StyledImageMargin key={character.id}>
+            <S.StyledImageMargin key={character.characterId}>
               <StyledImage
-                route={`/detail/${character.id}`}
-                imgurl={character.coverImgUrl}
+                route={`/detail/${character.characterId}`}
+                imgurl={character.coverImageUrl}
                 name={character.name}
                 title={character.title}
                 creatorNickname={character.creatorNickname}

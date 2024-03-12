@@ -39,9 +39,10 @@ export const Text = styled.div`
 export const Policy = styled.div<ToggleProps>`
   font-size: 0.7rem;
   margin-top: 0.5rem;
-  max-height: ${(props) => (props.open ? "100px" : "0")};
+  max-height: ${(props) => (props.open ? "105rem" : "0")};
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
+  color: #a0a0a0;
 `;
 
 export const RedText = styled.span`

@@ -17,7 +17,9 @@ export const MainImage: React.FC<ImageProps> = ({
   creatorNickname,
 }) => {
   return (
-    <S.Container to={route} imgurl={imgurl}>
+    <S.Container to={route}>
+      <S.BackgroundImage src={imgurl} alt="mainImage" />
+      <S.ShadowImage />
       <S.Title>{title}</S.Title>
       <S.SubContainer>
         <S.Name>{name}</S.Name>

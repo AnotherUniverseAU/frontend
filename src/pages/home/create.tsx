@@ -1,22 +1,24 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 import * as S from "src/styles/home/create.ts";
 import { BackHeader } from "src/components/header/back/backHeader.tsx";
 import { ListTitle } from "src/components/listTitle/listTitle.tsx";
 import { StyledInput } from "src/components/styledInput/styledInput.tsx";
 import { PolicyToggle } from "src/components/policyToggle/policyToggle.tsx";
+import { apiRequestPost } from "src/apis/api.ts";
 import { TextFooter } from "src/components/footer/text/textFooter.tsx";
 
 export const Create = () => {
   const [name, setName] = useState("");
-  const [webtoon, setWebtoon] = useState("");
+  const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
-  const [sex, setSex] = useState("");
+  const [gender, setGender] = useState("");
   const [appearance, setAppearance] = useState("");
   const [personality, setPersonality] = useState("");
   const [hobby, setHobby] = useState("");
   const [tone, setTone] = useState("");
-  const [other, setOther] = useState("");
+  const [extraInfo, setExtraInfo] = useState("");
 
   const [summary, setSummary] = useState("");
   const [relationship, setRelationship] = useState("");
@@ -25,16 +27,14 @@ export const Create = () => {
 
   const [creatorNickname, setCreatorNickname] = useState("");
   const [email, setEmail] = useState("");
-  const [description, setDescription] = useState("");
+  const [creatorWords, setCreatorWords] = useState("");
 
   const [totalSize, setTotalSize] = useState(0);
   const [isPolicyOpen, setIsPolicyOpen] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  const navigate = useNavigate();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -55,15 +55,46 @@ export const Create = () => {
     }
   };
 
+  const handleSubmit = () => {
+    const formData = new FormData();
+
+    formData.append("image", new Blob(images));
+
+    formData.append("name", name);
+    formData.append("title", title);
+    formData.append("genre", genre);
+    formData.append("creatorWords", creatorWords);
+    formData.append("gender", gender);
+    formData.append("appearance", appearance);
+    formData.append("personality", personality);
+    formData.append("hobby", hobby);
+    formData.append("tone", tone);
+    formData.append("extraInfo", extraInfo);
+    formData.append("summary", summary);
+    formData.append("relationship", relationship);
+    formData.append("email", email);
+    // formData.append("creatorNickname", creatorNickname);
+
+    // apiRequestPost("/character/request-create", formData);
+
+    for (let key of formData.keys()) {
+      console.log(key, ":", formData.get(key));
+    }
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    navigate("/");
+  };
+
   return (
     <S.Container>
       {isModalOpen && (
         <S.StyledModal open={isModalOpen}>
           <S.ModalContainer>
             <S.ModalText>제출이 완료 되었습니다</S.ModalText>
-            <S.ModalButton onClick={() => setIsModalOpen(false)}>
-              확인
-            </S.ModalButton>
+            <S.ModalButton onClick={handleModalClose}>확인</S.ModalButton>
           </S.ModalContainer>
         </S.StyledModal>
       )}
@@ -86,8 +117,8 @@ export const Create = () => {
         </S.InputTitle>
         <StyledInput
           placeholder="작품의 제목을 입력해주세요"
-          content={webtoon}
-          setContent={setWebtoon}
+          content={title}
+          setContent={setTitle}
           limit={50}
           height="5.1rem"
           marginTop="0.5rem"
@@ -96,7 +127,7 @@ export const Create = () => {
           작품 장르 <S.RedText>*</S.RedText>
         </S.InputTitle>
         <StyledInput
-          placeholder="애니/게임/웹툰 중 선택해주세요"
+          placeholder="애니/게임 중 입력해주세요"
           content={genre}
           setContent={setGenre}
           limit={2}
@@ -109,8 +140,8 @@ export const Create = () => {
         </S.InputTitle>
         <StyledInput
           placeholder="캐릭터의 성별을 입력해주세요"
-          content={sex}
-          setContent={setSex}
+          content={gender}
+          setContent={setGender}
           limit={10}
           height="3.8rem"
           marginTop="0.5rem"
@@ -164,8 +195,8 @@ export const Create = () => {
         </S.InputTitle>
         <StyledInput
           placeholder="캐릭터의 기타 정보를 설명해주세요"
-          content={other}
-          setContent={setOther}
+          content={extraInfo}
+          setContent={setExtraInfo}
           limit={900}
           height="11.6rem"
           marginTop="0.5rem"
@@ -256,8 +287,8 @@ export const Create = () => {
         </S.InputTitle>
         <StyledInput
           placeholder="제작 동기 등을 자유롭게 말해주세요"
-          content={description}
-          setContent={setDescription}
+          content={creatorWords}
+          setContent={setCreatorWords}
           limit={100}
           height="11.6rem"
           marginTop="0.5rem"
@@ -265,7 +296,7 @@ export const Create = () => {
 
         <PolicyToggle policy={isPolicyOpen} setPolicy={setIsPolicyOpen} />
       </S.SubContainer>
-      <TextFooter route="." text="제출할게요" onClick={openModal} />
+      <TextFooter route="." text="제출할게요" onClick={handleSubmit} />
     </S.Container>
   );
 };

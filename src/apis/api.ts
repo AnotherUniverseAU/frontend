@@ -26,13 +26,14 @@ export const apiRequestGet = async (path: string) => {
 
 export const apiRequestPost = async (path: string, data: any) => {
   try {
+    console.log("Data to be posted: ", data);
     const response = await axios.post(`${BASE_URL}${path}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (response.status === 200) {
+    if (response.status >= 200 && response.status < 300) {
       console.log(`[POST] Data received from ${path}:`, response.data);
       return response.data;
     } else {

@@ -45,9 +45,9 @@ export const CreateInfo = () => {
             listText="등록 심사 결과"
             textColor="black"
           />
-          <S.ListContent>
+          {/* <S.ListContent>
             등록 심사 결과는 이메일을 통해 전달됩니다
-          </S.ListContent>
+          </S.ListContent> */}
           <S.ListContent>
             등록 승인 후 이메일을 통해 운영 방식을 안내
           </S.ListContent>

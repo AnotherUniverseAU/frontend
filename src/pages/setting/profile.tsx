@@ -41,6 +41,10 @@ export const Profile = () => {
     navigate(`${to}`, { state: { from: location.pathname, ...state } });
   };
 
+  const handleCSOpen = () => {
+    window.open("http://pf.kakao.com/_tmxfFG/chat");
+  };
+
   return (
     <S.Container>
       <MainHeader toCreate={false} isTutorial={false} />
@@ -69,7 +73,7 @@ export const Profile = () => {
           />
           <NavItem
             text={"문의하기"}
-            onClick={() => handleNavigate({ to: "/contact" })}
+            onClick={() => handleCSOpen()}
             style={{
               marginBottom: "1rem",
               borderRadius: "0 0 0.5rem 0.5rem",

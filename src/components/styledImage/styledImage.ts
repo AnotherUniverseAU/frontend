@@ -1,17 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-interface ImageProps {
-  imgurl: string;
-}
-
-export const Container = styled(Link)<ImageProps>`
+export const Container = styled(Link)`
   width: 22vw;
   height: 7.5rem;
   padding: 3vw 3vw;
-  background: url(${(props) => props.imgurl});
-  background-repeat: no-repeat;
-  background-size: cover;
+
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -20,6 +15,33 @@ export const Container = styled(Link)<ImageProps>`
   border-radius: 1rem;
 
   box-shadow: inset 0 -3rem 3rem rgba(0, 0, 0, 0.3);
+`;
+
+export const BackgroundImage = styled.img`
+  width: 28vw;
+  height: calc(7.5rem + 6vw);
+
+  object-fit: contain;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 1rem;
+
+  z-index: 1;
+`;
+
+export const ShadowImage = styled.div`
+  width: 28vw;
+  height: calc(7.5rem + 6vw);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 1rem;
+
+  box-shadow: inset 0 -3rem 3rem rgba(0, 0, 0, 0.5);
+  z-index: 2;
 `;
 
 export const Title = styled.div`
@@ -31,6 +53,8 @@ export const Title = styled.div`
   flex-direction: row;
   align-items: flex-end;
   justify-content: flex-start;
+
+  z-index: 3;
 `;
 
 export const SubContainer = styled.div`
@@ -40,16 +64,19 @@ export const SubContainer = styled.div`
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
+  z-index: 3;
 `;
 
 export const Name = styled.div`
   color: white;
   font-size: 0.6rem;
   font-weight: 700;
+  z-index: 3;
 `;
 
 export const CreatorNickname = styled.div`
   color: #a0a0a0;
   font-size: 0.4rem;
   font-weight: 500;
+  z-index: 3;
 `;
