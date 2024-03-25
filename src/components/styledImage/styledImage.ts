@@ -1,82 +1,80 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled(Link)`
-  width: 22vw;
-  height: 7.5rem;
-  padding: 3vw 3vw;
+    width: 22vw;
+    height: 7.5rem;
+    padding: 1.5vh 3vw;
 
-  position: relative;
+    position: relative;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 1rem;
 
-  box-shadow: inset 0 -3rem 3rem rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 -3rem 3rem rgba(0, 0, 0, 0.3);
 `;
 
 export const BackgroundImage = styled.img`
-  width: 28vw;
-  height: calc(7.5rem + 6vw);
+    width: 28vw;
+    height: calc(7.5rem + 3vh);
 
-  object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 1rem;
 
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 1rem;
-
-  z-index: 1;
+    z-index: 1;
 `;
 
 export const ShadowImage = styled.div`
-  width: 28vw;
-  height: calc(7.5rem + 6vw);
+    width: 28vw;
+    height: calc(7.5rem + 3vh);
 
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 1rem;
 
-  box-shadow: inset 0 -3rem 3rem rgba(0, 0, 0, 0.5);
-  z-index: 2;
+    box-shadow: inset 0 -3rem 3rem rgba(0, 0, 0, 0.5);
+    z-index: 2;
 `;
 
 export const Title = styled.div`
-  width: 100%;
-  color: white;
-  font-size: 0.4rem;
-  font-weight: 500;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: flex-start;
+    width: 100%;
+    color: white;
+    font-size: 0.4rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
 
-  z-index: 3;
+    z-index: 2;
 `;
 
 export const SubContainer = styled.div`
-  width: 100%;
-  margin-top: 0.2rem;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  z-index: 3;
+    width: 100%;
+    margin-top: 0.2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    z-index: 2;
 `;
 
 export const Name = styled.div`
-  color: white;
-  font-size: 0.6rem;
-  font-weight: 700;
-  z-index: 3;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    z-index: 2;
 `;
 
 export const CreatorNickname = styled.div`
-  color: #a0a0a0;
-  font-size: 0.4rem;
-  font-weight: 500;
-  z-index: 3;
+    color: #a0a0a0;
+    font-size: 0.4rem;
+    font-weight: 500;
+    z-index: 2;
 `;
