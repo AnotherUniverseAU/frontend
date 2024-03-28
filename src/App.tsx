@@ -1,9 +1,10 @@
 import MainRouter from "./mainRouter.tsx";
 import { GlobalStyle } from "src/styles/globalStyle.ts";
-import ReactGA from "react-ga4";
+// import ReactGA from "react-ga4";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import TagManager from "react-gtm-module";
 
 const BASE_URL =
   "https://anotheruniverse-backend.delightfuldune-c082bcd0.koreacentral.azurecontainerapps.io";
@@ -23,6 +24,7 @@ export const App = () => {
         const newAccessToken = response.data.access_token;
         console.log("New access token received:", newAccessToken);
         localStorage.setItem("accessToken", newAccessToken); // Save the new access token to local storage (optional
+        return newAccessToken;
       } else {
         console.error("Failed to get new access token:", response.data);
       }
@@ -30,22 +32,24 @@ export const App = () => {
       console.error("Error fetching new access token:", error);
     }
   }
-
-  const location = useLocation();
-  const [initialized, setInitialized] = useState(false);
+  // const location = useLocation();
+  // const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    ReactGA.initialize("G-RX2423BVPV");
-    setInitialized(true);
+    TagManager.initialize({
+      gtmId: `GTM-PKLD5HHC`,
+    });
     getToken(refreshToken);
+    // ReactGA.initialize("G-RX2423BVPV");
+    // setInitialized(true);
   }, []);
 
-  useEffect(() => {
-    if (initialized) {
-      ReactGA.set({ page: location.pathname });
-      ReactGA.send("pageview");
-    }
-  }, [initialized, location]);
+  // useEffect(() => {
+  //   if (initialized) {
+  //     ReactGA.set({ page: location.pathname });
+  //     ReactGA.send("pageview");
+  //   }
+  // }, [initialized, location]);
   return (
     <>
       <GlobalStyle />

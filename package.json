@@ -29,7 +29,7 @@
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-ga4": "^2.1.0",
+    "react-gtm-module": "^2.0.11",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.11",
@@ -63,6 +63,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.194",
+    "@types/react-gtm-module": "^2.0.3",
     "html-webpack-plugin": "^5.5.1",
     "workbox-webpack-plugin": "^6.5.4"
   },
@@ -70,5 +71,5 @@
   "main": "index.js",
   "author": "",
   "license": "ISC",
-  "homepage": "https://dhapdhap123.github.io"
+  "homepage": "https://dhapdhap123.github.io/"
 }
