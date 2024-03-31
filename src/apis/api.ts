@@ -1,9 +1,8 @@
 import axios from "axios";
 
-const BASE_URL =
-  "https://anotheruniverse-backend.delightfuldune-c082bcd0.koreacentral.azurecontainerapps.io";
-
 const token = localStorage.getItem("accessToken") as string;
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const apiRequestGet = async (path: string) => {
   try {

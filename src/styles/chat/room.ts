@@ -149,7 +149,7 @@ export const TutorialBox = styled.div<{
   $top?: number;
   $left?: number;
 }>`
-  min-width: 50%;
+  min-width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
