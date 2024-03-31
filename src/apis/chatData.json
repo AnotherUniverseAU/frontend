@@ -4,61 +4,71 @@
             "time": "2024-03-02 8:31",
             "content": "안녕하세요! 오늘 기분은 어떠세요?",
             "sentby": "character",
-            "type": "text"
+            "type": "text",
+            "isSent": true
         },
         {
             "time": "2024-03-02 8:32",
             "content": "기분이 좋아요. 날씨도 좋고요.",
             "sentby": "user",
-            "type": "text"
+            "type": "text",
+            "isSent": true
         },
         {
             "time": "2024-03-02 8:33",
             "content": "정말 좋은 소식이네요! 날씨가 좋으면 기분도 한층 더 좋아지는 것 같아요. 오늘 계획에 특별한 것이 있나요?",
             "sentby": "character",
-            "type": "text"
+            "type": "text",
+            "isSent": true
         },
         {
             "time": "2024-03-02 8:34",
             "content": "아무 계획 없이 휴식을 취할 생각이에요. 가끔은 아무 것도 안 하는 것도 필요하죠.",
             "sentby": "user",
-            "type": "text"
+            "type": "text",
+            "isSent": true
         },
         {
             "time": "2024-03-02 8:35",
             "content": "맞아요, 가끔은 스스로에게 휴식을 주는 것이 정말 중요하죠. 오늘 하루는 완전히 쉬면서 재충전하는 시간이 되길 바랍니다!",
             "sentby": "character",
-            "type": "text"
+            "type": "text",
+            "isSent": false
         },
         {
             "time": "2024-03-02 8:36",
             "content": "고마워요. 당신도 오늘 좋은 하루 보내세요!",
             "sentby": "user",
-            "type": "text"
+            "type": "text",
+            "isSent": false
         },
         {
             "time": "2024-03-02 8:37",
             "content": "감사합니다! 저도 오늘 하루 좋은 일만 가득하길 기대하고 있어요. 언제든지 대화하고 싶으시면 저는 여기 있으니 편하게 찾아주세요.",
             "sentby": "character",
-            "type": "text"
+            "type": "text",
+            "isSent": false
         },
         {
             "time": "2024-03-02 8:38",
             "content": "그럴게요. 나중에 또 대화하고 싶을 때 연락할게요.",
             "sentby": "character",
-            "type": "text"
+            "type": "text",
+            "isSent": false
         },
         {
             "time": "2024-03-02 8:39",
             "content": "언제든 환영입니다! 좋은 하루 보내시고, 기분 좋은 일만 가득하시길 바랍니다.",
             "sentby": "character",
-            "type": "text"
+            "type": "text",
+            "isSent": false
         },
         {
             "time": "2024-03-02 8:40",
             "content": "네, 감사합니다. 다음에 또 만나요!",
             "sentby": "user",
-            "type": "text"
+            "type": "text",
+            "isSent": false
         }
     ]
 }

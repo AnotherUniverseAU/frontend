@@ -3,6 +3,9 @@ import { IconFooter } from "src/components/footer/icon/iconFooter.tsx";
 import * as S from "src/styles/chat/list.ts";
 import { useState, useEffect } from "react";
 
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 const imgMockdata = [
   {
     id: 1,
@@ -54,23 +57,27 @@ const NoChatsComponent = () => {
   );
 };
 
+const StyledLink = styled(Link)``;
+
 const ChatListComponent = ({ chatList }: ChatListProps) => {
   return (
     <>
       {chatList.map((chat) => (
-        <S.ChatContainer key={chat.id}>
-          <S.ChatImgWrapper>
-            <S.ChatImg src={chat.imgUrl} alt="chatImg" />
-          </S.ChatImgWrapper>
-          <S.ChatContent>
-            <S.ChatName>{chat.name}</S.ChatName>
-            <S.ChatText>{chat.content}</S.ChatText>
-          </S.ChatContent>
-          <S.ChatSubContent>
-            <S.ChatTime>{chat.timeStamp}</S.ChatTime>
-            <S.ChatNum>{chat.chatNum}</S.ChatNum>
-          </S.ChatSubContent>
-        </S.ChatContainer>
+        <StyledLink to="/chatroom/1" key={chat.id}>
+          <S.ChatContainer>
+            <S.ChatImgWrapper>
+              <S.ChatImg src={chat.imgUrl} alt="chatImg" />
+            </S.ChatImgWrapper>
+            <S.ChatContent>
+              <S.ChatName>{chat.name}</S.ChatName>
+              <S.ChatText>{chat.content}</S.ChatText>
+            </S.ChatContent>
+            <S.ChatSubContent>
+              <S.ChatTime>{chat.timeStamp}</S.ChatTime>
+              <S.ChatNum>{chat.chatNum}</S.ChatNum>
+            </S.ChatSubContent>
+          </S.ChatContainer>
+        </StyledLink>
       ))}
     </>
   );
@@ -80,8 +87,8 @@ export const ChatList = () => {
   const [chatList, setChatList] = useState<Chat[]>([]);
 
   useEffect(() => {
-    // setChatList(imgMockdata);
-    setChatList([]);
+    setChatList(imgMockdata);
+    // setChatList([]);
   }, []);
 
   return (

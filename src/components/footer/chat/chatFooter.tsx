@@ -6,6 +6,7 @@ export const ChatFooter: React.FC<{
     type: "text" | "image";
     content: string;
     imageUrl?: string;
+    isSent: boolean;
   }) => void;
   isTuto: boolean;
 }> = ({ setChatMessage, isTuto }) => {
@@ -16,13 +17,18 @@ export const ChatFooter: React.FC<{
     const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setChatMessage({ type: "image", content: "", imageUrl });
+      setChatMessage({ type: "image", content: "", imageUrl, isSent: false });
     }
   };
 
   const sendChatMessage = () => {
-    setChatMessage({ type: "text", content: inputValue });
-    setInputValue("");
+    if (inputValue === "") {
+      // 아이콘 색깔도 바꾸기?
+      console.log("없지롱");
+    } else {
+      setChatMessage({ type: "text", content: inputValue, isSent: false });
+      setInputValue("");
+    }
   };
 
   const handleIconClick = () => {

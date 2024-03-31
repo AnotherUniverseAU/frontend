@@ -24,6 +24,7 @@
     "@types/styled-components": "^5.1.26",
     "axios": "^1.3.5",
     "dayjs": "^1.11.7",
+    "dotenv": "^16.4.5",
     "firebase": "^9.23.0",
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.0",
@@ -71,5 +72,5 @@
   "main": "index.js",
   "author": "",
   "license": "ISC",
-  "homepage": "https://dhapdhap123.github.io/"
+  "homepage": "https://dhapdhap123.github.io"
 }

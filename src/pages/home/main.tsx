@@ -18,6 +18,7 @@ export const Main = () => {
   const [characters, setCharacters] = useState<any[]>([]);
   const [mainCharacter, setMainCharacter] = useState<any>({});
 
+  const [loadingChat, setLoadingChat] = useState(true);
   useEffect(() => {
     const fetchCharacters = async () => {
       const result = await apiRequestGet("/character/list");
@@ -31,6 +32,8 @@ export const Main = () => {
 
     fetchCharacters();
     fetchMainCharacter();
+
+    window.addEventListener("scroll", checkOverScroll);
   }, []);
 
   const filteredCharacters =
@@ -39,7 +42,16 @@ export const Main = () => {
       : characters.filter(
           (character: any) => character.genre === selectedGenre
         );
-
+  const checkOverScroll = (e: any) => {
+    if (window.scrollY < 0) {
+      console.log("오버 스크롤링");
+      setLoadingChat(true);
+      // api 호출
+      setLoadingChat(false);
+    } else {
+      console.log(window.scrollY);
+    }
+  };
   return (
     <S.Container style={{ overflow: isTutorial ? "hidden" : "scroll" }}>
       {isTutorial && (
@@ -53,6 +65,7 @@ export const Main = () => {
           </S.TutorialTextContainer>
         </S.TutorialContainer>
       )}
+      {loadingChat && <div>로딩중~~</div>}
       <MainHeader toCreate={true} isTutorial={isTutorial} />
       <S.MainContainer>
         <MainImage
@@ -63,8 +76,6 @@ export const Main = () => {
           creatorNickname={mainCharacter.creatorNickname}
         />
       </S.MainContainer>
-      <a href="/login">로그인</a>
-      <a href="/tokentest">토큰</a>
       <S.NavContainer>
         <S.ButtonNav>
           <S.StyledButton
