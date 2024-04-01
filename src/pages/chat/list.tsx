@@ -62,6 +62,21 @@ const StyledLink = styled(Link)``;
 const ChatListComponent = ({ chatList }: ChatListProps) => {
   return (
     <>
+      <StyledLink to="/chatroom/1">
+        <S.ChatContainer>
+          <S.ChatImgWrapper>
+            <S.ChatImg src={""} alt="chatImg" />
+          </S.ChatImgWrapper>
+          <S.ChatContent>
+            <S.ChatName>{"아냐"}</S.ChatName>
+            <S.ChatText>{"아냐아냐"}</S.ChatText>
+          </S.ChatContent>
+          <S.ChatSubContent>
+            <S.ChatTime>{"18:24"}</S.ChatTime>
+            <S.ChatNum>{5}</S.ChatNum>
+          </S.ChatSubContent>
+        </S.ChatContainer>
+      </StyledLink>
       {chatList.map((chat) => (
         <StyledLink to="/chatroom/1" key={chat.id}>
           <S.ChatContainer>

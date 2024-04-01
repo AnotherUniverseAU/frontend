@@ -153,6 +153,7 @@ export const TutorialBox = styled.div<{
   display: flex;
   flex-direction: column;
   align-items: center;
+  visibility: hidden;
 
   position: absolute;
   top: ${(props) => (props.$top ? String(props.$top) + "px" : "0")};

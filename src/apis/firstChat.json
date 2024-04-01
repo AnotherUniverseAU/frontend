@@ -1,6 +1,7 @@
 {
     "sakuma_day": [
         {
+            "id": 1,
             "time": "",
             "content": "만나서 반갑군……. 앞으로 잘 부탁하네~.. 여유가 생기면 곧 다시 연락하도록 하지. 기다리게 해서 미안하구려……♪",
             "sentby": "character",
@@ -8,6 +9,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -18,6 +20,7 @@
     ],
     "sakuma_night": [
         {
+            "id": 1,
             "time": "",
             "content": "만나서 반갑군……. 잠시 눈을 붙이고 다가오는 새벽을 피하는 중이야…… 잠에서 깨면 {user name}의 이야기를 듣고 싶구나. 조금만 기다려주게나······♪",
             "sentby": "character",
@@ -25,6 +28,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -35,6 +39,7 @@
     ],
     "jungdaeman_day": [
         {
+            "id": 1,
             "time": "",
             "content": "야! 잠깐만. 금방 또 연락할게. 포기를 모르는 남자 정대만을 찾아 왔으니. 기다려!!",
             "sentby": "character",
@@ -42,6 +47,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -52,6 +58,7 @@
     ],
     "jungdaeman_night": [
         {
+            "id": 1,
             "time": "",
             "content": "야 이 몸은 자는 중이었어... 내일 연락하마. 이 불꽃 남자는 지금 좀 자야겠다...!",
             "sentby": "character",
@@ -59,6 +66,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -69,6 +77,7 @@
     ],
     "gojo_day": [
         {
+            "id": 1,
             "time": "",
             "content": "어이, 겁내 잘생긴 고죠 선생님이 일일이 문자를 보내주는 건데 감사하게 생각해~ 지금은 바쁘니까, 나중에 시간 나면 다시 올 테니 기다려 봐.",
             "sentby": "character",
@@ -76,6 +85,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -86,6 +96,7 @@
     ],
     "gojo_night": [
         {
+            "id": 1,
             "time": "",
             "content": "오, 고요한 어둠이 내 눈을 가려주는구나. 달빛 아래에서 조용히 눈 붙이려 하니까 너도 푹 자고 내일 깨어났을 때 연락하지.",
             "sentby": "character",
@@ -93,6 +104,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -103,6 +115,7 @@
     ],
     "levi_day": [
         {
+            "id": 1,
             "time": "",
             "content": "지금은 네 이야기 들어줄 여유 없으니까, 나중에 답장해줄게. 바빠 죽겠거든.",
             "sentby": "character",
@@ -110,6 +123,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -120,6 +134,7 @@
     ],
     "levi_night": [
         {
+            "id": 1,
             "time": "",
             "content": "이 시간에 네가 뭘 기대하는지 모르겠지만 난 잠들 준비 중이니까, 내일 답장 기다리던가 해.",
             "sentby": "character",
@@ -127,6 +142,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -137,6 +153,7 @@
     ],
     "kaito_day": [
         {
+            "id": 1,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -144,6 +161,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "이런 이런. 이 괴도키드 님의 정체를 알고 있다니.. 지금은 좀 바쁘니까 곧 다시 연락할게. 이 고희도님이 괴도키드라는 걸 절대로 말하지 말아다오",
             "sentby": "character",
@@ -154,6 +172,7 @@
     ],
     "kaito_night": [
         {
+            "id": 1,
             "time": "",
             "content": "이런 이런. 이 고희도님이 괴도키드라는걸 알고 있다니.. 환상적인 마술쇼를 위해 네 꿈나라로 들어가려던 참이었어. 내일 다시 연락하시죠.",
             "sentby": "character",
@@ -161,6 +180,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -171,6 +191,7 @@
     ],
     "anya_day": [
         {
+            "id": 1,
             "time": "",
             "content": "우와 반가워!! 근데 아냐 지금 바빠!! 좀이따 문자할게! 쫌 기다려야돼!!!",
             "sentby": "character",
@@ -178,6 +199,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
@@ -188,6 +210,7 @@
     ],
     "anya_night": [
         {
+            "id": 1,
             "time": "",
             "content": "아냐 지금 침대에서 자려고 누워있어! 아직 잠은 안 왔지만 곧 잠들 것 같아... 내일 문자할게에..",
             "sentby": "character",
@@ -195,6 +218,7 @@
             "isSent": false
         },
         {
+            "id": 2,
             "time": "",
             "content": "",
             "sentby": "character",
