@@ -6,39 +6,49 @@ import { MainHeader } from "src/components/header/main/mainHeader.tsx";
 import { MainImage } from "src/components/mainImage/mainImage.tsx";
 import { StyledImage } from "src/components/styledImage/styledImage.tsx";
 import { IconFooter } from "src/components/footer//icon/iconFooter.tsx";
+import { Loading } from "src/pages/setting/loading.tsx";
 
 import { apiRequestGet } from "src/apis/api.ts";
 
-export const Main = () => {
+export const Main: React.FC = () => {
   const location = useLocation();
-  const [selectedGenre, setSelectedGenre] = useState<string>("all");
+
   const [isTutorial, setIsTutorial] = useState<boolean>(
     location.state?.from === "/nickname"
   );
+
   const [characters, setCharacters] = useState<any[]>([]);
   const [mainCharacter, setMainCharacter] = useState<any>({});
 
+  const [filteredCharacters, setFilteredCharacters] = useState<any[]>([]);
+  const [selectedGenre, setSelectedGenre] = useState<string>("all");
+
   useEffect(() => {
-    const fetchCharacters = async () => {
-      const result = await apiRequestGet("/character/list");
-      setCharacters(result.characters);
-    };
+    const mainCharacterLocal = localStorage.getItem("mainCharacter");
+    const charactersLocal = localStorage.getItem("characters");
 
-    const fetchMainCharacter = async () => {
-      const result = await apiRequestGet("/character/main-character");
-      setMainCharacter(result.mainCharacter);
-    };
-
-    fetchCharacters();
-    fetchMainCharacter();
+    if (mainCharacterLocal) {
+      console.log(JSON.parse(mainCharacterLocal));
+      setMainCharacter(JSON.parse(mainCharacterLocal));
+    }
+    if (charactersLocal) {
+      console.log(JSON.parse(charactersLocal));
+      setCharacters(JSON.parse(charactersLocal));
+    }
   }, []);
 
-  const filteredCharacters =
-    selectedGenre === "all"
-      ? characters
-      : characters.filter(
-          (character: any) => character.genre === selectedGenre
-        );
+  useEffect(() => {
+    if (characters.length !== 0) {
+      const filteredCharacters =
+        selectedGenre === "all"
+          ? characters
+          : characters.filter(
+              (character: any) => character.genre === selectedGenre
+            );
+      setFilteredCharacters(filteredCharacters);
+    }
+  }, [characters, selectedGenre]);
+
   return (
     <S.Container style={{ overflow: isTutorial ? "hidden" : "scroll" }}>
       {isTutorial && (
