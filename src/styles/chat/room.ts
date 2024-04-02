@@ -1,14 +1,16 @@
 import styled, { css } from "styled-components";
 
-export const ChatContent = styled.div<{ showChatTutorial?: boolean }>`
+export const ChatContent = styled.div<{ isTuto: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow: scroll;
 
   ::-webkit-scrollbar {
     display: none;
   }
+
+  overflow: ${(props) => (props.isTuto ? "hidden" : "scroll")};
+  pointer-events: ${(props) => (props.isTuto ? "none" : "auto")};
 `;
 
 export const ProfileContainer = styled.div`
@@ -50,7 +52,7 @@ export const CharacterMessageWrapper = styled.div<{
   justify-content: ${(props) =>
     props.sentby === "user" ? "flex-end" : "flex-start"};
   width: 100%;
-  margin-left: ${(props) =>
+  padding-left: ${(props) =>
     props.sentby === "character" && !props.showProfile ? "3.2rem" : "0"};
   z-index: ${(props) => (props.showChatTutorial ? "60" : "0")};
 `;
@@ -75,6 +77,7 @@ export const CharacterName = styled.span`
   width: fit-content;
   font-size: 1rem;
   margin-left: 0.5rem;
+  margin-bottom: 0.3rem;
 `;
 
 export const MessageContent = styled.div`
@@ -82,20 +85,36 @@ export const MessageContent = styled.div`
   align-items: center;
 `;
 
-export const Message = styled.div<{ sentby: "user" | "character" }>`
+export const Message = styled.div<{
+  sentby: "user" | "character";
+  showProfile?: boolean;
+  showMessageTime: boolean;
+}>`
   padding: 1rem;
   border-radius: 10px;
   max-width: 70%;
-  margin: 0.5rem 0.3rem; // Ensure spacing around the message
+  overflow-wrap: break-word;
+  margin: ${(props) =>
+    props.showMessageTime === false
+      ? "0 0.3rem 0.4rem 0.3rem"
+      : "0 0.3rem 0.75rem 0.3rem"};
+  margin-top: ${(props) => (props.showProfile === true ? "0.5rem" : "0")};
   ${(props) =>
-    props.sentby === "user" ? userMessageStyles : characterMessageStyles}
+    props.sentby === "user" ? userMessageStyles : characterMessageStyles};
 `;
 
-export const MessageImage = styled.img`
+export const MessageImage = styled.img<{
+  showProfile?: boolean;
+  showMessageTime: boolean;
+}>`
   max-width: 70%;
   max-height: 20rem;
   border-radius: 10px;
-  margin: 0.5rem 0.3rem;
+  padding: ${(props) =>
+    props.showMessageTime === false
+      ? "0 0.3rem 0.4rem 0.3rem"
+      : "0 0.3rem 0.75rem 0.3rem"};
+  padding-top: ${(props) => (props.showProfile === false ? "0.5rem" : "0")};
   align-self: flex-end;
 `;
 
@@ -108,7 +127,7 @@ export const Time = styled.span`
 
 export const DateLabel = styled.div`
   text-align: center;
-  margin: 1rem 0 0;
+  margin: 1rem 0;
   color: #666;
   width: 100%;
   font-size: 0.85rem;
@@ -126,8 +145,8 @@ export const Container = styled.div`
 export const SubContainer = styled.div`
   margin: 5rem 0;
   display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex;
 
   height: calc(100vh - 10rem);
   padding: 0 1rem;
@@ -142,7 +161,7 @@ export const ChatTutorialContainer = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 50;
+  z-index: 60;
 `;
 
 export const TutorialBox = styled.div<{
@@ -153,6 +172,7 @@ export const TutorialBox = styled.div<{
   display: flex;
   flex-direction: column;
   align-items: center;
+  visibility: hidden;
 
   position: absolute;
   top: ${(props) => (props.$top ? String(props.$top) + "px" : "0")};
@@ -187,5 +207,5 @@ export const ChatTutorialButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
+  margin: 1rem 0;
 `;

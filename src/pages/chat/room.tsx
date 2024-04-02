@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import chatData from "src/apis/chatData2.json";
 import chatData2 from "src/apis/chatData.json";
+import anayChat from "src/apis/anayChat.json";
 import tutoChat from "src/apis/firstChat.json";
 
 import { ChatHeader } from "src/components/header/chat/chatHeader.tsx";
@@ -17,10 +18,8 @@ import { escapeHtml, decodeHtml } from "src/pages/chat/alterHtml";
 import { apiRequestPost } from "src/apis/api.ts";
 import profileImg from "src/assets/img/CreatorImg.svg"; /// 변경 예정
 
-const BASE_URL = process.env.BASE_URL;
-const token = localStorage.getItem("accessToken") as string;
-
 interface ChatMessage {
+  id: number;
   time: string;
   content: string;
   sentby: "user" | "character";
@@ -34,6 +33,7 @@ interface CharacterMessageProps {
   showProfile: boolean;
   characterName: string;
   showChatTutorial: boolean;
+  showMessageTime: boolean;
 }
 
 const CharacterMessage: React.FC<CharacterMessageProps> = ({
@@ -41,6 +41,7 @@ const CharacterMessage: React.FC<CharacterMessageProps> = ({
   showProfile,
   characterName,
   showChatTutorial,
+  showMessageTime,
 }) => {
   return (
     <S.CharacterMessageWrapper
@@ -57,11 +58,24 @@ const CharacterMessage: React.FC<CharacterMessageProps> = ({
         {showProfile && <S.CharacterName>{characterName}</S.CharacterName>}
         <S.MessageContent>
           {message.type === "text" ? (
-            <S.Message sentby="character">{message.content}</S.Message>
+            <S.Message
+              showProfile={showProfile}
+              showMessageTime={showMessageTime}
+              sentby="character"
+            >
+              {message.content}
+            </S.Message>
           ) : (
-            <S.MessageImage src={message.imageUrl} alt="Sent image" /> // 이미지 타입 메시지를 위한 JSX
+            <S.MessageImage
+              showProfile
+              showMessageTime
+              src={message.imageUrl}
+              alt="Sent image"
+            /> // 이미지 타입 메시지를 위한 JSX
           )}
-          <S.Time>{message.time.split(" ")[1]}</S.Time>
+          {showMessageTime ? (
+            <S.Time>{message.time.split(" ")[1]}</S.Time>
+          ) : null}
         </S.MessageContent>
       </div>
     </S.CharacterMessageWrapper>
@@ -70,24 +84,44 @@ const CharacterMessage: React.FC<CharacterMessageProps> = ({
 
 interface UserMessageProps {
   message: ChatMessage;
+  showMessageTime: boolean;
   showReplyTutorial: boolean;
 }
 
 const UserMessage: React.FC<UserMessageProps> = ({
   message,
   showReplyTutorial,
+  showMessageTime,
 }) => {
+  // if (showMessageTime) {
+  //   let time = message.time.split(" ")[1];
+  //   if (time.substring(0, 1) === "0") {
+  //     time = time.substring(1);
+  //     const timeMA = "오전 " + time;
+  //     console.log(timeMA);
+  //   } else {
+  //     const timeMA =
+  //       Number(time.substring(0, 2)) < 12 ? "오전 " + time : "오후 " + time;
+  //     console.log(timeMA);
+  //   }
+  // }
   return (
     <S.UserMessageWrapper
       sentby="user"
       showProfile={false}
       showReplyTutorial={showReplyTutorial}
     >
-      <S.Time>{message.time.split(" ")[1]}</S.Time>
+      {showMessageTime ? <S.Time>{message.time.split(" ")[1]}</S.Time> : null}
       {message.type === "text" ? (
-        <S.Message sentby="user">{message.content}</S.Message>
+        <S.Message showMessageTime={showMessageTime} sentby="user">
+          {message.content}
+        </S.Message>
       ) : (
-        <S.MessageImage src={message.imageUrl} alt="Sent image" /> // 이미지 타입 메시지를 위한 JSX
+        <S.MessageImage
+          showMessageTime={showMessageTime}
+          src={message.imageUrl}
+          alt="Sent image"
+        /> // 이미지 타입 메시지를 위한 JSX
       )}
     </S.UserMessageWrapper>
   );
@@ -95,11 +129,12 @@ const UserMessage: React.FC<UserMessageProps> = ({
 
 export const ChatRoom = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
+  const [characterName, setCharacterName] = useState<string>("청명");
+
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const subContainerRef = useRef<HTMLDivElement>(null); // SubContainer에 대한 ref 추가
   const sizeRef = useRef<HTMLDivElement>(null);
   const middleRef = useRef<HTMLDivElement>(null);
-  const [characterName, setCharacterName] = useState<string>("청명");
 
   const [showChatTutorial, setShowChatTutorial] = useState<boolean>(false);
   const [showReplyTutorial, setShowReplyTutorial] = useState<boolean>(false);
@@ -112,44 +147,37 @@ export const ChatRoom = (): JSX.Element => {
   //처음 마운팅될 때 chatTutorial이 보여진 적 없으면 보여줌
   useEffect(() => {
     const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
-    const ReplyTutorialShown = localStorage.getItem(`ReplyTutorialShown`);
+    const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
 
-    if (chatTutorialShown === null) {
-      setShowChatTutorial(true);
-      // url로 캐릭터 id 가져와 해당 캐릭터 text 가져오기
-      setChatMessages(tutoChat.anya_day as ChatMessage[]);
-      setIsTuto(true);
-      setChatMessages(tutoChat.anya_day as ChatMessage[]);
-      // const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+9
-      // const timeInKorea = new Date(new Date().getTime() + koreaTimeOffset)
-      const timeInKorea = new Date(new Date().getTime())
+    if (chatTutorialShown !== "true" || replyTutorialShown !== "true") {
+      const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+9
+      const timeInKorea = new Date(new Date().getTime() + koreaTimeOffset)
         .toISOString()
         .replace("T", " ")
-        .substr(0, 16);
-      // 튜토리얼 내용 가져오기 :
+        .substring(0, 16);
+
       const firstChat = tutoChat.anya_day;
       for (let message of firstChat) {
         message.time = timeInKorea;
       }
       setChatMessages(firstChat as ChatMessage[]);
-    } else if (ReplyTutorialShown === null) {
-      setIsTuto(true);
-      setChatMessages(tutoChat.anya_day as ChatMessage[]);
-      // const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+9
-      // const timeInKorea = new Date(new Date().getTime() + koreaTimeOffset)
-      const timeInKorea = new Date(new Date().getTime())
-        .toISOString()
-        .replace("T", " ")
-        .substr(0, 16);
-      // 튜토리얼 내용 가져오기 :
-      const firstChat = tutoChat.anya_day;
-      for (let message of firstChat) {
-        message.time = timeInKorea;
+      if (chatTutorialShown === null) {
+        setShowChatTutorial(true);
+        // url로 캐릭터 id 가져와 해당 캐릭터 text 가져오기
+        setIsTuto(true);
+      } else if (replyTutorialShown === null) {
+        setIsTuto(true);
       }
-      setChatMessages(firstChat as ChatMessage[]);
     } else {
-      if (isTuto !== false) {
-        setIsTuto(false);
+      setIsTuto(false);
+      // api로부터 user, character id에 맞는 채팅 내역 가져오기
+      // 아래는 목데이터 테스트
+      setChatMessages(anayChat.chat as ChatMessage[]);
+      const current = subContainerRef.current;
+      if (current) {
+        setTimeout(() => {
+          current.scrollTop = current.scrollHeight;
+        }, 10);
       }
     }
   }, []);
@@ -177,6 +205,7 @@ export const ChatRoom = (): JSX.Element => {
               newDiv.style.minHeight = info.height + "px";
               current.appendChild(newDiv);
               setTimeout(() => {
+                console.log(current.children[current.children.length - 1]);
                 const element = document.querySelector(".empty-div");
                 current.scrollTop = current.scrollHeight;
                 if (element) {
@@ -185,9 +214,14 @@ export const ChatRoom = (): JSX.Element => {
                     left + 10,
                   ]);
                 }
-              }, 0);
+                box.style.visibility = "visible";
+              }, 100);
+            } else {
+              setTimeout(() => {
+                setTutorialPosition([top + lastChild.clientHeight, left + 10]);
+                box.style.visibility = "visible";
+              }, 100);
             }
-            setTutorialPosition([top + lastChild.clientHeight, left + 10]);
           }
         } else {
           const element = document.querySelector(".empty-div");
@@ -199,7 +233,8 @@ export const ChatRoom = (): JSX.Element => {
           const box = sizeRef.current;
           const middleBody = middleRef.current;
           if (lastChild && box && middleBody) {
-            const { top, left, height } = lastChild.getBoundingClientRect();
+            const { top, left, height, width } =
+              lastChild.getBoundingClientRect();
             const info = box.getBoundingClientRect();
             if (
               top + height + info.height >
@@ -215,12 +250,19 @@ export const ChatRoom = (): JSX.Element => {
                 if (element) {
                   setTutorialPosition([
                     element.getBoundingClientRect().top,
-                    left + 10,
+                    left + width - info.width,
                   ]);
+                  box.style.visibility = "visible";
                 }
-              }, 0);
+              }, 100);
             } else {
-              setTutorialPosition([top + lastChild.clientHeight, left + 10]);
+              setTimeout(() => {
+                setTutorialPosition([
+                  top + lastChild.clientHeight,
+                  left + width - info.width,
+                ]);
+                box.style.visibility = "visible";
+              }, 100);
             }
           }
         }
@@ -229,26 +271,32 @@ export const ChatRoom = (): JSX.Element => {
   }, [isTuto, chatMessages]);
 
   const checkOverScroll = (e: any) => {
-    if (isTuto !== true) {
+    if (isTuto !== true && chatMessages[0].id !== 1) {
       if (e.target.scrollTop === 0) {
+        console.log(chatMessages[0]);
         setLoadingChat(true);
         // 목 데이터 테스트
         setTimeout(() => {
-          const newMessages = chatData.chat;
-          console.log(newMessages);
-          newMessages.map((message) => {
-            // 백에서 안 줄 때
-            message.isSent = true;
-          });
-          setLoadingChat(false);
-          const newAddedMessages = newMessages.concat(chatMessages);
-          console.log(newMessages);
-          setChatMessages(newAddedMessages as ChatMessage[]);
-
           const current = subContainerRef.current;
           if (current) {
+            const beforeScrollH = current?.scrollHeight;
+            const newMessages = chatData2.chat;
+            console.log(newMessages);
+            newMessages.map((message) => {
+              // 백에서 안 줄 때
+              message.isSent = true;
+            });
+            setLoadingChat(false);
+            const newAddedMessages = newMessages.concat(chatMessages);
+            console.log(newMessages);
+            setChatMessages(newAddedMessages as ChatMessage[]);
+
             setTimeout(() => {
-              current.scrollTop = 110;
+              const current = subContainerRef.current;
+              if (current) {
+                const afterScrollH = current.scrollHeight;
+                current.scrollTop = afterScrollH - beforeScrollH;
+              }
             }, 10);
           }
         }, 1000);
@@ -266,6 +314,7 @@ export const ChatRoom = (): JSX.Element => {
     for (let i in chatMessages) {
       // console.log(i);
       // console.log("before", chatMessages[i].content);
+      // 고쳐야 함. 그 전 항목들밖에 안됨
       chatMessages[i].content = decodeHtml(chatMessages[i].content);
       // console.log("after", chatMessages[i].content);
     }
@@ -314,6 +363,16 @@ export const ChatRoom = (): JSX.Element => {
       current.removeChild(element);
     }
     setIsTuto(false);
+    // api 콜 현재 메시지 전송
+    // apiRequestPost
+    for (let message of chatMessages) {
+      message.isSent = true;
+      console.log(message);
+      // apiRequestPost()
+    }
+    console.log(
+      "api로 현재까지 튜토리얼 내용을 DB에 저장하는 코드를 구현하시오."
+    );
   };
 
   const addChatMessage = (message: {
@@ -326,8 +385,9 @@ export const ChatRoom = (): JSX.Element => {
     const timeInKorea = new Date(new Date().getTime() + koreaTimeOffset)
       .toISOString()
       .replace("T", " ")
-      .substr(0, 16);
+      .substring(0, 16);
     const newMessage: ChatMessage = {
+      id: chatMessages[chatMessages.length - 1].id + 1,
       time: timeInKorea,
       content: message.content,
       sentby: "user",
@@ -368,12 +428,31 @@ export const ChatRoom = (): JSX.Element => {
     let lastSender = "";
 
     return (
-      <S.ChatContent ref={subContainerRef} onScroll={checkOverScroll}>
-        {loadingChat && <div>로딩중~~</div>}
-
+      <S.ChatContent
+        isTuto={isTuto}
+        ref={subContainerRef}
+        onScroll={checkOverScroll}
+      >
         {chatMessages.map((message, index) => {
           const [date, time] = message.time.split(" ");
           const showMessageDate = date !== lastDate;
+          let showMessageTime = true;
+
+          if (index < chatMessages.length - 1) {
+            const nextSentby = chatMessages[index + 1].sentby;
+            const [nextDate, nextTime] =
+              chatMessages[index + 1].time.split(" ");
+            if (message.sentby !== nextSentby) {
+              showMessageTime = true;
+            } else {
+              if (date === nextDate && time === nextTime) {
+                showMessageTime = false;
+              } else {
+                showMessageTime = true;
+              }
+            }
+          }
+
           if (showMessageDate) lastDate = date;
 
           const formattedDate = new Date(date).toLocaleDateString("ko-KR", {
@@ -395,10 +474,12 @@ export const ChatRoom = (): JSX.Element => {
                   showProfile={showProfile}
                   characterName={characterName}
                   showChatTutorial={showChatTutorial}
+                  showMessageTime={showMessageTime}
                 />
               ) : (
                 <UserMessage
                   message={message}
+                  showMessageTime={showMessageTime}
                   showReplyTutorial={showReplyTutorial}
                 />
               )}
@@ -413,29 +494,27 @@ export const ChatRoom = (): JSX.Element => {
     <S.Container>
       <ChatHeader route="/chatlist" title={characterName} />
       <S.SubContainer ref={middleRef}>
-        {showChatTutorial && (
+        {(showChatTutorial || showReplyTutorial) && (
           <S.ChatTutorialContainer>
             <S.TutorialBox
               ref={sizeRef}
               $top={tutorialPosition[0]}
               $left={tutorialPosition[1]}
             >
-              <TutorialContainer text="캐릭터는 일과 중 짬날 때,\n하루 약 7번 찾아와요"></TutorialContainer>
-              <S.ChatTutorialButton onClick={handleChatTutorialClose}>
-                OK
-              </S.ChatTutorialButton>
-            </S.TutorialBox>
-          </S.ChatTutorialContainer>
-        )}
-        {showReplyTutorial && (
-          <S.ChatTutorialContainer>
-            <S.TutorialBox
-              ref={sizeRef}
-              $top={tutorialPosition[0]}
-              $left={tutorialPosition[1]}
-            >
-              <TutorialContainer text="이용자 분들의 답변 중,\n캐릭터가 선택한 답변에\n답장을 보내줘요"></TutorialContainer>
-              <S.ChatTutorialButton onClick={handleReplyTutorialClose}>
+              <TutorialContainer
+                text={
+                  showChatTutorial
+                    ? "캐릭터는 일과 중 짬날 때,\n하루 약 7번 찾아와요"
+                    : "이용자 분들의 답변 중,\n캐릭터가 선택한 답변에\n답장을 보내줘요"
+                }
+              ></TutorialContainer>
+              <S.ChatTutorialButton
+                onClick={
+                  showChatTutorial
+                    ? handleChatTutorialClose
+                    : handleReplyTutorialClose
+                }
+              >
                 OK
               </S.ChatTutorialButton>
             </S.TutorialBox>

@@ -1,14 +1,14 @@
 {
     "chat": [
         {
-            "time": "2024-03-02 8:31",
+            "time": "2024-03-02 08:31",
             "content": "안녕하세요! 오늘 기분은 어떠세요?",
             "sentby": "character",
             "type": "text",
             "isSent": true
         },
         {
-            "time": "2024-03-02 8:32",
+            "time": "2024-03-02 08:32",
             "content": "기분이 좋아요. 날씨도 좋고요.",
             "sentby": "user",
             "type": "text",

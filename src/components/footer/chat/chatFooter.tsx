@@ -12,6 +12,7 @@ export const ChatFooter: React.FC<{
 }> = ({ setChatMessage, isTuto }) => {
   const [inputValue, setInputValue] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const chatInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -24,10 +25,13 @@ export const ChatFooter: React.FC<{
   const sendChatMessage = () => {
     if (inputValue === "") {
       // 아이콘 색깔도 바꾸기?
-      console.log("없지롱");
+      return;
     } else {
       setChatMessage({ type: "text", content: inputValue, isSent: false });
       setInputValue("");
+      if (!isTuto) {
+        chatInputRef.current?.focus();
+      }
     }
   };
 
@@ -47,6 +51,7 @@ export const ChatFooter: React.FC<{
         disabled={isTuto}
       />
       <S.ChatInput
+        ref={chatInputRef}
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}

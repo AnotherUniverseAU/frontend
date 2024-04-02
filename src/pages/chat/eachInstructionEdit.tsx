@@ -6,8 +6,8 @@ interface TutorialContainerProps {
 
 const TutorialContainer: React.FC<TutorialContainerProps> = ({ text }) => {
   const text_list = [];
-  for (let i in text.split("\\n")) {
-    text_list.push({ text: text.split("\\n")[i], id: i });
+  for (let i in text.split("\n")) {
+    text_list.push({ text: text.split("\n")[i], id: i });
   }
 
   return (
