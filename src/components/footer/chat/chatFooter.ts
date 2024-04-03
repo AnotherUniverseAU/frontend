@@ -1,44 +1,71 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { ReactComponent as AttachIconSvg } from 'src/assets/img/attachIcon.svg';
-import { ReactComponent as SendIconSvg } from 'src/assets/img/sendIcon.svg';
+import { ReactComponent as AttachIconSvg } from "src/assets/img/attachIcon.svg";
+import { ReactComponent as SendIconSvg } from "src/assets/img/sendIcon.svg";
 
-export const Container = styled.div`
-    width: 100vw;
-    height: 5rem;
-    padding: 0 2vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    background: white;
-    position: fixed;
-    bottom: 0;
-    z-index: 5;
+export const Container = styled.div<{
+  currentRow: number;
+}>`
+  width: 100vw;
+  height: ${(props) =>
+    props.currentRow < 3 ? "5rem" : props.currentRow + 2 + "rem"};
+  padding: 0 2vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  background: white;
+  position: fixed;
+  bottom: 0;
+  z-index: 5;
 `;
 
 export const AttachIcon = styled(AttachIconSvg)`
-    width: 10vw;
-    display: flex;
-    align-items: center;
+  width: 10vw;
+  display: flex;
+  align-items: center;
 `;
-
-export const ChatInput = styled.input`
-    width: 78vw;
-    height: 2.5rem;
-    font-size: 1rem;
-    border: 0.1rem solid #dfdfdf;
-    border-radius: 0.5rem;
-    padding: 0 0.5rem;
-    margin: 0 1vw;
-    &:focus {
-        outline: none;
-        border: 0.1rem solid #dfdfdf; // 입력 시 색상 변경되지 않도록
-    }
+export const TextAreaDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+export const ChatCalcTextArea = styled.textarea`
+  width: 78vw;
+  font-size: 1rem;
+  line-height: 1rem;
+  height: 1rem;
+  border: 0.1rem solid #dfdfdf;
+  border-radius: 0.5rem;
+  margin: 0;
+  padding: 0.3rem 0.5rem;
+  &:focus {
+    outline: none;
+    border: 0.1rem solid #dfdfdf; // 입력 시 색상 변경되지 않도록
+  }
+  visibility: hidden;
+  position: absolute;
+`;
+export const ChatTextArea = styled.textarea<{
+  currentRow: number;
+}>`
+  width: 78vw;
+  font-size: 1rem;
+  line-height: 1rem;
+  height: ${(props) => props.currentRow + "rem"};
+  max-height: 4rem;
+  border: 0.1rem solid #dfdfdf;
+  border-radius: 0.5rem;
+  margin: 0;
+  padding: 0.3rem 0.5rem;
+  overflow: hidden;
+  &:focus {
+    outline: none;
+    border: 0.1rem solid #dfdfdf; // 입력 시 색상 변경되지 않도록
+  }
 `;
 
 export const SendIcon = styled(SendIconSvg)`
-    width: 10vw;
-    display: flex;
-    align-items: center;
+  width: 10vw;
+  display: flex;
+  align-items: center;
 `;
