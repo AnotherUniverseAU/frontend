@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 
 import * as S from "./chatFooter.ts";
 export const ChatFooter: React.FC<{
@@ -11,8 +11,26 @@ export const ChatFooter: React.FC<{
   isTuto: boolean;
 }> = ({ setChatMessage, isTuto }) => {
   const [inputValue, setInputValue] = useState("");
+
+  const [currentRow, setCurrentRow] = useState(1);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const chatInputRef = useRef<HTMLInputElement>(null);
+  const chatInputRef = useRef<HTMLTextAreaElement>(null);
+  const chatValidRef = useRef<HTMLTextAreaElement>(null);
+
+  const [initialRem, setInitialRem] = useState(Number);
+  const [initialScrollH, setInitialScrollH] = useState(Number);
+
+  useEffect(() => {
+    const remSize = parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
+    setInitialRem(remSize);
+
+    if (chatInputRef.current) {
+      // setInitialClientH(chatInputRef.current.ClientHeight);
+      setInitialScrollH(chatInputRef.current.scrollHeight);
+    }
+  }, []);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -32,15 +50,51 @@ export const ChatFooter: React.FC<{
       if (!isTuto) {
         chatInputRef.current?.focus();
       }
+      setCurrentRow(1);
     }
   };
 
   const handleIconClick = () => {
-    fileInputRef.current?.click();
+    requestPermissions().then(() => {
+      fileInputRef.current?.click();
+    });
   };
 
+  async function requestPermissions() {
+    // React Native의 WebView로 권한 요청 메시지 전송
+    if ((window as any).ReactNativeWebView) {
+      console.log("권한 요청 시도");
+      (window as any).ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: "REQUEST_PERMISSIONS", // 요청 유형을 변경
+        })
+      );
+      console.log("권한 요청 완료");
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    console.log("왜 안돼");
+    setInputValue(e.target.value);
+
+    const checkRow = chatValidRef.current;
+    if (checkRow) {
+      checkRow.value = e.target.value;
+      if (checkRow.scrollHeight === initialScrollH) {
+        setCurrentRow(1);
+      } else if (checkRow.scrollHeight === initialScrollH + initialRem) {
+        setCurrentRow(2);
+      } else if (checkRow.scrollHeight === initialScrollH + initialRem * 2) {
+        setCurrentRow(3);
+      } else if (checkRow.scrollHeight === initialScrollH + initialRem * 3) {
+        setCurrentRow(4);
+      } else {
+        setCurrentRow(4);
+      }
+    }
+  };
   return (
-    <S.Container>
+    <S.Container currentRow={currentRow}>
       <S.AttachIcon onClick={handleIconClick} />
       <input
         type="file"
@@ -50,13 +104,21 @@ export const ChatFooter: React.FC<{
         style={{ display: "none" }}
         disabled={isTuto}
       />
-      <S.ChatInput
-        ref={chatInputRef}
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        maxLength={isTuto ? 50 : 1000}
-      />
+
+      <S.TextAreaDiv>
+        <S.ChatCalcTextArea
+          ref={chatValidRef}
+          readOnly
+          // style={{ display: "none" }}
+        ></S.ChatCalcTextArea>
+        <S.ChatTextArea
+          currentRow={currentRow}
+          ref={chatInputRef}
+          value={inputValue}
+          onChange={handleChange}
+          maxLength={isTuto ? 50 : 2000}
+        />
+      </S.TextAreaDiv>
       <S.SendIcon onClick={sendChatMessage} />
     </S.Container>
   );
