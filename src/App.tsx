@@ -4,6 +4,7 @@ import { GlobalStyle } from "src/styles/globalStyle.ts";
 import TagManager from "react-gtm-module";
 import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
+import { getNewToken } from "./pages/home/getNewToken.tsx";
 
 const REACT_APP_GTM_ID = process.env.REACT_APP_GTM_ID;
 export const App = () => {
@@ -13,6 +14,7 @@ export const App = () => {
         gtmId: REACT_APP_GTM_ID,
       });
     }
+    getNewToken();
   }, []);
   return (
     <>
