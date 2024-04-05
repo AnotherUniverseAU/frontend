@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { apiRequestGet } from "src/apis/api";
+import { apiRequestGet } from "src/apis/apiRequestGet";
 import { Loading } from "src/pages/setting/loading.tsx";
 
 const picNameMockData = {

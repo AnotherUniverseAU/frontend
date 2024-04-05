@@ -8,6 +8,7 @@ interface InputComponentProps {
   limit: number;
   height: string;
   marginTop: string;
+  required?: boolean;
 }
 
 export const StyledInput: React.FC<InputComponentProps> = ({
@@ -17,6 +18,7 @@ export const StyledInput: React.FC<InputComponentProps> = ({
   limit,
   height,
   marginTop,
+  required,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -48,6 +50,7 @@ export const StyledInput: React.FC<InputComponentProps> = ({
         height={height}
         marginTop={marginTop}
         spellCheck="false"
+        required
       />
       <S.CharacterCounter
         isFocused={isFocused}

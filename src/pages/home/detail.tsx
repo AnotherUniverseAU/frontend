@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BackHeader } from "src/components/header/back/backHeader.tsx";
 import { TextFooter } from "src/components/footer/text/textFooter.tsx";
 
-import { apiRequestGet, apiRequestPost } from "src/apis/api.ts";
+import { apiRequestGet } from "src/apis/apiRequestGet";
+import { apiRequestPost } from "src/apis/apiRequestPost";
 
 import { Loading } from "src/pages/setting/loading.tsx";
 
