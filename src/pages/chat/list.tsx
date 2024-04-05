@@ -6,45 +6,63 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { apiRequestGet } from "src/apis/api";
+import { Loading } from "src/pages/setting/loading.tsx";
 
-const imgMockdata = [
-  {
-    id: 1,
-    imgUrl: require("src/assets/img/background.png") as string,
-    name: "병찬햄",
-    content: "학교에서 훈련하다가 오른쪽 무릎이 아파서 힘들었어",
-    timeStamp: "18:24",
-    chatNum: 3,
-  },
-  {
-    id: 2,
-    imgUrl: require("src/assets/img/background.png") as string,
-    name: "문대",
-    content: "온르은 유진이와 같이 새로운 뮤직비디오 시청을 했어어",
-    timeStamp: "18:24",
-    chatNum: 1,
-  },
-  {
-    id: 3,
-    imgUrl: require("src/assets/img/background.png") as string,
-    name: "병찬햄",
-    content:
-      "사시쯤이었나? 윤종 사형이랑 백천 사형이 같이 막걸이 마시자고 해서 한탕 땡기고 옴ㅋㅋㅋㅋㄹㅇ",
-    timeStamp: "18:24",
-    chatNum: 1,
-  },
-];
+const picNameMockData = {
+  nameAndPics: [
+    {
+      characterId: "65c0b542c9a646697bb644aa",
+      name: "이영찬",
+      profilePicUrl:
+        "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec (1).jpg",
+    },
+  ],
+};
+const picNameMockData1 = {
+  nameAndPics: [
+    {
+      characterId: "65c0b542c9a646697bb644ab",
+      name: "강동혁",
+      profilePicUrl:
+        "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec (1).jpg",
+    },
+  ],
+};
+
+const chatRoomMockData = {
+  chatRoomDatas: [
+    {
+      characterId: "65c0b542c9a646697bb644aa",
+      lastAccess: "2024-04-03T13:14:15Z",
+      lastChat: "하하하하하하하",
+      unreadCount: 4,
+    },
+    {
+      characterId: "65c0b542c9a646697bb644ab",
+      lastAccess: "2024-04-03T13:28:15Z",
+      lastChat: "음허허허허허허",
+      unreadCount: 1,
+    },
+    {
+      characterId: "65c0b542c9a646697bb644ac",
+      lastAccess: "2024-04-08T13:50:10Z",
+      lastChat: ";;;;;",
+      unreadCount: 110,
+    },
+  ],
+};
 
 interface Chat {
-  id: number;
-  imgUrl: string;
   name: string;
-  content: string;
-  timeStamp: string;
-  chatNum: number;
+  profilePicUrl: string;
+  characterId: string;
+  lastChat: string;
+  lastAccess: string;
+  unreadCount: number;
+  exceedCount?: "string";
 }
 interface ChatListProps {
-  chatList: Chat[];
+  chatRoomDatas: Array<Chat>;
 }
 
 const NoChatsComponent = () => {
@@ -60,37 +78,26 @@ const NoChatsComponent = () => {
 
 const StyledLink = styled(Link)``;
 
-const ChatListComponent = ({ chatList }: ChatListProps) => {
+const ChatListComponent = ({ chatRoomDatas }: ChatListProps) => {
   return (
     <>
-      <StyledLink to="/chatroom/1">
-        <S.ChatContainer>
-          <S.ChatImgWrapper>
-            <S.ChatImg src={""} alt="chatImg" />
-          </S.ChatImgWrapper>
-          <S.ChatContent>
-            <S.ChatName>{"아냐"}</S.ChatName>
-            <S.ChatText>{"아냐아냐"}</S.ChatText>
-          </S.ChatContent>
-          <S.ChatSubContent>
-            <S.ChatTime>{"18:24"}</S.ChatTime>
-            <S.ChatNum>{5}</S.ChatNum>
-          </S.ChatSubContent>
-        </S.ChatContainer>
-      </StyledLink>
-      {chatList.map((chat) => (
-        <StyledLink to="/chatroom/1" key={chat.id}>
+      {chatRoomDatas.map((chat) => (
+        <StyledLink to={`/chatroom/${chat.characterId}`} key={chat.characterId}>
           <S.ChatContainer>
             <S.ChatImgWrapper>
-              <S.ChatImg src={chat.imgUrl} alt="chatImg" />
+              <S.ChatImg src={chat.profilePicUrl} alt="chatImg" />
             </S.ChatImgWrapper>
             <S.ChatContent>
               <S.ChatName>{chat.name}</S.ChatName>
-              <S.ChatText>{chat.content}</S.ChatText>
+              <S.ChatText>{chat.lastChat}</S.ChatText>
             </S.ChatContent>
             <S.ChatSubContent>
-              <S.ChatTime>{chat.timeStamp}</S.ChatTime>
-              <S.ChatNum>{chat.chatNum}</S.ChatNum>
+              <S.ChatTime>
+                {chat.lastAccess.replace("T", " ").substring(11, 16)}
+              </S.ChatTime>
+              <S.ChatNum>
+                {chat.exceedCount ? chat.exceedCount : chat.unreadCount}
+              </S.ChatNum>
             </S.ChatSubContent>
           </S.ChatContainer>
         </StyledLink>
@@ -103,8 +110,35 @@ export const ChatList = () => {
   const [chatList, setChatList] = useState<Chat[]>([]);
 
   useEffect(() => {
-    setChatList(imgMockdata);
-    // setChatList([]);
+    // const apiData = apiRequestGet("/chatroom");
+    // 에서 가져왔다 치고~
+    const apiData = chatRoomMockData;
+    const newData = [];
+    for (let i in apiData.chatRoomDatas) {
+      const characterId = apiData.chatRoomDatas[i].characterId;
+      // api에 characterid 필요하다고 가정
+      // const { name, profilePicUrl } = apiRequestGet('/character/pic-name').nameAndPics[0];
+      // 이 부분을 api에서 가져오는 걸로 교체할 것.
+      const { name, profilePicUrl } = picNameMockData.nameAndPics[0];
+      //
+      if (apiData.chatRoomDatas[i].unreadCount > 99) {
+        const littleNewData = {
+          ...apiData.chatRoomDatas[i],
+          exceedCount: `+99`,
+          name: name,
+          profilePicUrl: profilePicUrl,
+        };
+        newData.push(littleNewData);
+      } else {
+        const littleNewData = {
+          ...apiData.chatRoomDatas[i],
+          name: name,
+          profilePicUrl: profilePicUrl,
+        };
+        newData.push(littleNewData);
+      }
+    }
+    setChatList(newData);
   }, []);
 
   return (
@@ -116,7 +150,7 @@ export const ChatList = () => {
       {chatList.length === 0 ? (
         <NoChatsComponent />
       ) : (
-        <ChatListComponent chatList={chatList} />
+        <ChatListComponent chatRoomDatas={chatList} />
       )}
 
       <IconFooter activepage="/chatlist" />

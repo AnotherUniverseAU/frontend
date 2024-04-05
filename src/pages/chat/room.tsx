@@ -15,17 +15,117 @@ import axios from "axios";
 
 import { escapeHtml, decodeHtml } from "src/pages/chat/alterHtml";
 
-import { apiRequestPost } from "src/apis/api.ts";
+import { apiRequestGet, apiRequestPost } from "src/apis/api.ts";
 import profileImg from "src/assets/img/CreatorImg.svg"; /// 변경 예정
 
+interface CharacterChat {
+  _id: string;
+  characterId: string;
+  characterName: string;
+  content: string[];
+  reply?: string[];
+  timeToSend: string;
+}
+const nonResponse = { characterChats: [], userReplies: [] };
+const response = {
+  characterChats: [
+    {
+      _id: "65e1c90bc66b2b0ef618daa9",
+      characterId: "65c0b542c9a646697bb644aa",
+      characterName: "아냐 포저",
+      content: [
+        "우와 {user name}이다!!",
+        "12312413413",
+        "alsdkfjas;ldkfja;lsdkjf",
+        "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec%20(1).jpg",
+      ],
+      reply: ["허허허허허허", "반가워~"],
+      timeToSend: "2024-04-01T07:14:15Z",
+    },
+    {
+      _id: "65e1c90bc66b2b0ef618daa9",
+      characterId: "65c0b542c9a646697bb644aa",
+      characterName: "아냐 포저",
+      content: ["근데 아냐 지금 바빠!!", "아으~~~~~", "국밥을 쩝쩝"],
+      timeToSend: "2024-04-01T23:14:15Z",
+    },
+    {
+      _id: "65e1c90bc66b2b0ef618daa9",
+      characterId: "65c0b542c9a646697bb644aa",
+      characterName: "아냐 포저",
+      content: ["좀이따 문자할게!"],
+      timeToSend: "2024-04-01T03:14:15Z",
+    },
+    {
+      _id: "65e1c90bc66b2b0ef618daa9",
+      characterId: "65c0b542c9a646697bb644aa",
+      characterName: "아냐 포저",
+      content: ["쫌 기다려야돼!!!", "가만히 잘 있으라구~~"],
+      timeToSend: "2024-04-03T13:14:15Z",
+    },
+  ],
+  userReplies: [
+    {
+      userId: "11111111",
+      characterId: "65c0b542c9a646697bb644aa",
+      userReply: "안녕?",
+      replyTime: "2024-04-01T07:14:15Z",
+    },
+    {
+      userId: "11111111",
+      characterId: "65c0b542c9a646697bb644aa",
+      userReply: "지금 뭐해?",
+      replyTime: "2024-04-01T07:14:18Z",
+    },
+    {
+      userId: "11111111",
+      characterId: "65c0b542c9a646697bb644aa",
+      userReply: "오케이~~!",
+      replyTime: "2024-04-01T23:14:16Z",
+    },
+    {
+      userId: "11111111",
+      characterId: "65c0b542c9a646697bb644aa",
+      userReply: "난 이제 출근한다~~ 아냐는 뭐해??",
+      replyTime: "2024-04-02T19:13:11Z",
+    },
+    {
+      userId: "11111111",
+      characterId: "65c0b542c9a646697bb644aa",
+      userReply: "바이바이~",
+      replyTime: "2024-04-03T13:14:15Z",
+    },
+  ],
+};
+const firstMessage = {
+  characterId: "65c0b542c9a646697bb644aa",
+  helloMessage: [
+    "우와 이영찬이다!!",
+    "근데 아냐 지금 바빠!!",
+    "좀이따 문자할게!",
+    "쫌 기다려야돼!!!",
+  ],
+  helloPicture:
+    "https://i.namu.wiki/i/aoz8aZCJb_iT23eRsiEP7L6niPF6kI_AUyciLm1N74w7V_SiBVbDtK1gi7NxzVf6QjTDtzEv629IDxNTGrNJoVhD7iNyb0PfPVpwj4IbSXAT_CohU-k4jl0aaEPHDRQtjTM8Aq_oONGzxXE_kN6u6w.webp",
+};
+interface Response {
+  characterChats: CharacterChat[];
+  userReplies: UserReply[];
+}
+
+interface UserReply {
+  userId: string;
+  characterId: string;
+  userReply: string;
+  replyTime: string;
+}
+
 interface ChatMessage {
-  id: number;
   time: string;
   content: string;
   sentby: "user" | "character";
   type: "text" | "image"; // 메시지 타입을 나타내는 필드 추가
   imageUrl?: string; // 이미지 URL을 위한 선택적 필드 추가
-  isSent: boolean; // api 요청이 보내진 메시지인지 확인
 }
 
 interface CharacterMessageProps {
@@ -149,38 +249,105 @@ export const ChatRoom = (): JSX.Element => {
     const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
     const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
 
-    if (chatTutorialShown !== "true" || replyTutorialShown !== "true") {
-      const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+9
-      const timeInKorea = new Date(new Date().getTime() + koreaTimeOffset)
-        .toISOString()
-        .replace("T", " ")
-        .substring(0, 16);
+    // api콜 보내서 가져오기
 
-      const firstChat = tutoChat.anya_day;
-      for (let message of firstChat) {
-        message.time = timeInKorea;
-      }
-      setChatMessages(firstChat as ChatMessage[]);
-      if (chatTutorialShown === null) {
-        setShowChatTutorial(true);
-        // url로 캐릭터 id 가져와 해당 캐릭터 text 가져오기
-        setIsTuto(true);
-      } else if (replyTutorialShown === null) {
-        setIsTuto(true);
-      }
+    const timeStamp = new Date(new Date().getTime()).toISOString();
+    // api로 가져온다. 가져왔다 친다
+    // const chatHistory = apiRequestGet(`/chatroom/chat-history/${id}/${timeStamp}?offset=0`);
+    const chatHistory = response;
+
+    // 어떻게 처음인지 알 수 있을까? => 튜토리얼에서 무조건 하나 이상 입력하게 하기 때문에 있/없으로 판단?
+    // 튜토리얼 끝냈지만 처음인 채팅방이라면?
+    if (chatHistory.userReplies.length === 0) {
+      // 튜토리얼
+      // hello api로 가져와 주기
+      // const greetMessage = apiRequestGet(`/character/hello/${id}`)
+      const greetMessage = firstMessage;
     } else {
-      setIsTuto(false);
-      // api로부터 user, character id에 맞는 채팅 내역 가져오기
-      // 아래는 목데이터 테스트
-      setChatMessages(anayChat.chat as ChatMessage[]);
-      const current = subContainerRef.current;
-      if (current) {
-        setTimeout(() => {
-          current.scrollTop = current.scrollHeight;
-        }, 10);
+      // 일반적인 상태
+      const changedChats = changeDataForm(chatHistory);
+      setChatMessages(changedChats);
+    }
+
+    // apiRequestGet(`hello/${id}`)
+  }, []);
+
+  const changeDataForm = (chatHistory: Response) => {
+    const chatList: ChatMessage[] = [];
+    // 형식 변환해 chatList에 모두 넣기
+    // 각 캐릭터 메시지 뭉텅이 마다
+    for (let i of chatHistory.characterChats) {
+      // 각 내용마다
+      for (let j of i.content) {
+        if (j.startsWith("https:") && j.endsWith(".jpg")) {
+          // 이미지일 때
+          const newMessage: ChatMessage = {
+            time: i.timeToSend,
+            content: "",
+            sentby: "character",
+            type: "image",
+            imageUrl: j,
+          };
+          chatList.push(newMessage);
+        } else {
+          // text일 때
+          const newMessage: ChatMessage = {
+            time: i.timeToSend,
+            content: j,
+            sentby: "character",
+            type: "text",
+          };
+          chatList.push(newMessage);
+        }
+      }
+      // 답장이 있다면
+      if ("reply" in i && i.reply) {
+        i.reply.forEach((text) => {
+          const afterFiveM = new Date(
+            Date.parse(i.timeToSend) + 5 * 60 * 1000
+          ).toISOString();
+
+          const newMessage: ChatMessage = {
+            time: afterFiveM,
+            content: text,
+            sentby: "character",
+            type: "text",
+          };
+          chatList.push(newMessage);
+        });
       }
     }
-  }, []);
+
+    chatHistory.userReplies.forEach((chat) => {
+      if (
+        chat.userReply.startsWith("https:") &&
+        chat.userReply.endsWith(".jpg")
+      ) {
+        const newMessage: ChatMessage = {
+          time: chat.replyTime,
+          content: "",
+          sentby: "user",
+          type: "image",
+          imageUrl: chat.userReply,
+        };
+        chatList.push(newMessage);
+      } else {
+        const newMessage: ChatMessage = {
+          time: chat.replyTime,
+          content: chat.userReply,
+          sentby: "user",
+          type: "text",
+        };
+        chatList.push(newMessage);
+      }
+    });
+
+    chatList.sort(
+      (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+    );
+
+    return chatList;
+  };
 
   useEffect(() => {
     const current = subContainerRef.current;
@@ -271,35 +438,40 @@ export const ChatRoom = (): JSX.Element => {
   }, [isTuto, chatMessages]);
 
   const checkOverScroll = (e: any) => {
-    if (isTuto !== true && chatMessages[0].id !== 1) {
+    // 로직 고쳐야 함. 처음인지 어떻게 알 수 있을까
+    if (isTuto !== true) {
       if (e.target.scrollTop === 0) {
         console.log(chatMessages[0]);
+
         setLoadingChat(true);
         // 목 데이터 테스트
-        setTimeout(() => {
-          const current = subContainerRef.current;
-          if (current) {
-            const beforeScrollH = current?.scrollHeight;
-            const newMessages = chatData2.chat;
-            console.log(newMessages);
-            newMessages.map((message) => {
-              // 백에서 안 줄 때
-              message.isSent = true;
-            });
-            setLoadingChat(false);
-            const newAddedMessages = newMessages.concat(chatMessages);
-            console.log(newMessages);
-            setChatMessages(newAddedMessages as ChatMessage[]);
+        // 현재 최상위 offset 기반으로 가져오기
+        // offset
 
-            setTimeout(() => {
-              const current = subContainerRef.current;
-              if (current) {
-                const afterScrollH = current.scrollHeight;
-                current.scrollTop = afterScrollH - beforeScrollH;
-              }
-            }, 10);
-          }
-        }, 1000);
+        // setTimeout(() => {
+        //   const current = subContainerRef.current;
+        //   if (current) {
+        //     const beforeScrollH = current?.scrollHeight;
+        //     const newMessages = chatData2.chat;
+        //     console.log(newMessages);
+        //     newMessages.map((message) => {
+        //       // 백에서 안 줄 때
+        //       message.isSent = true;
+        //     });
+        //     setLoadingChat(false);
+        //     const newAddedMessages = newMessages.concat(chatMessages);
+        //     console.log(newMessages);
+        //     setChatMessages(newAddedMessages as ChatMessage[]);
+
+        //     setTimeout(() => {
+        //       const current = subContainerRef.current;
+        //       if (current) {
+        //         const afterScrollH = current.scrollHeight;
+        //         current.scrollTop = afterScrollH - beforeScrollH;
+        //       }
+        //     }, 10);
+        //   }
+        // }, 1000);
         // api 호출
       } else {
         return;
@@ -319,30 +491,6 @@ export const ChatRoom = (): JSX.Element => {
       // console.log("after", chatMessages[i].content);
     }
   }, [loadingChat]);
-
-  // const apiNewChattingPost = async (path: string, data: any) => {
-  //   setLoadingChat(true);
-  //   try {
-  //     console.log("Data to be posted: ", data);
-  //     const response = await axios.post(`${BASE_URL}${path}`, data, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     if (response.status >= 200 && response.status < 300) {
-  //       console.log(`[POST] Data received from ${path}:`, response.data);
-  //       setLoadingChat(false);
-  //       return response.data;
-  //     } else {
-  //       console.error(`[POST] Failed to get data from ${path}:`, response.data);
-  //       setLoadingChat(false);
-  //     }
-  //   } catch (error) {
-  //     console.error(`[POST] rror fetching data from ${path}:`, error);
-  //     setLoadingChat(false);
-  //   }
-  // };
 
   const handleChatTutorialClose = () => {
     setShowChatTutorial(false);
@@ -366,7 +514,6 @@ export const ChatRoom = (): JSX.Element => {
     // api 콜 현재 메시지 전송
     // apiRequestPost
     for (let message of chatMessages) {
-      message.isSent = true;
       console.log(message);
       // apiRequestPost()
     }
@@ -387,13 +534,11 @@ export const ChatRoom = (): JSX.Element => {
       .replace("T", " ")
       .substring(0, 16);
     const newMessage: ChatMessage = {
-      id: chatMessages[chatMessages.length - 1].id + 1,
       time: timeInKorea,
       content: message.content,
       sentby: "user",
       type: message.type,
       imageUrl: message.imageUrl,
-      isSent: false,
     };
     setChatMessages((prevMessages) => [...prevMessages, newMessage]);
 
@@ -407,7 +552,6 @@ export const ChatRoom = (): JSX.Element => {
 
     // api로 새 메시지 전송
     newMessage.content = escapeHtml(newMessage.content);
-    newMessage.isSent = true;
     // const data = apiRequestPost("/zzz", newMessage);
 
     //replyTutorial가 보여진 적 없으면 답장 튜토리얼 보여줌
