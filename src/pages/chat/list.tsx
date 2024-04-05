@@ -105,15 +105,7 @@ const ChatListComponent = ({ chatRoomDatas }: ChatListProps) => {
     </>
   );
 };
-useEffect(() => {
-  if (REACT_APP_GTM_ID) {
-    TagManager.initialize({
-      gtmId: REACT_APP_GTM_ID,
-    });
-  } else {
-    console.error("아오");
-  }
-}, []);
+
 export const ChatList = () => {
   const [chatList, setChatList] = useState<Chat[]>([]);
 

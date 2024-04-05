@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export const getNewToken = async (refreshToken: string) => {
+export const getNewToken = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
+
   console.log("새 토큰을 가져옵니다");
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   try {
