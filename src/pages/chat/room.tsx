@@ -1,22 +1,18 @@
 import React, { ReactEventHandler } from "react";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import chatData from "src/apis/chatData2.json";
-import chatData2 from "src/apis/chatData.json";
-import anayChat from "src/apis/anayChat.json";
-import tutoChat from "src/apis/firstChat.json";
 
 import { ChatHeader } from "src/components/header/chat/chatHeader.tsx";
 import { ChatFooter } from "src/components/footer/chat/chatFooter.tsx";
 import * as S from "src/styles/chat/room.ts";
 import TutorialContainer from "src/pages/chat/eachInstructionEdit";
 
-import axios from "axios";
-
 import { escapeHtml, decodeHtml } from "src/pages/chat/alterHtml";
 
-import { apiRequestGet, apiRequestPost } from "src/apis/api.ts";
-import profileImg from "src/assets/img/CreatorImg.svg"; /// 변경 예정
+import { apiRequestGet } from "src/apis/apiRequestGet";
+import { apiRequestPost } from "src/apis/apiRequestPost";
+
+import { getNewToken } from "../../apis/getNewToken";
 
 interface CharacterChat {
   _id: string;
@@ -134,6 +130,7 @@ interface CharacterMessageProps {
   characterName: string;
   showChatTutorial: boolean;
   showMessageTime: boolean;
+  profileImageUrl: string;
 }
 
 const CharacterMessage: React.FC<CharacterMessageProps> = ({
@@ -142,6 +139,7 @@ const CharacterMessage: React.FC<CharacterMessageProps> = ({
   characterName,
   showChatTutorial,
   showMessageTime,
+  profileImageUrl,
 }) => {
   return (
     <S.CharacterMessageWrapper
@@ -151,7 +149,7 @@ const CharacterMessage: React.FC<CharacterMessageProps> = ({
     >
       {showProfile && (
         <div>
-          <S.ProfileImage src={profileImg} alt="Character profile" />
+          <S.ProfileImage src={profileImageUrl} alt="Character profile" />
         </div>
       )}
       <div>
@@ -229,7 +227,8 @@ const UserMessage: React.FC<UserMessageProps> = ({
 
 export const ChatRoom = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
-  const [characterName, setCharacterName] = useState<string>("청명");
+  const [characterName, setCharacterName] = useState<string>("");
+  const [profileImageUrl, setProfileImageUrl] = useState<string>("");
 
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const subContainerRef = useRef<HTMLDivElement>(null); // SubContainer에 대한 ref 추가
@@ -250,6 +249,19 @@ export const ChatRoom = (): JSX.Element => {
     const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
 
     // api콜 보내서 가져오기
+    console.log(id);
+    const getCharInfo = async function () {
+      const res = await apiRequestGet(`/character/${id}`);
+      console.log(res);
+      // if (res.statusCode === 200) {
+      //   setCharacterName(res.character.name);
+      //   setProfileImageUrl(res.character.profilePicUrl);
+      // } else {
+      //   getNewToken();
+      // }
+      console.log("함수 실행");
+    };
+    getCharInfo();
 
     const timeStamp = new Date(new Date().getTime()).toISOString();
     // api로 가져온다. 가져왔다 친다
@@ -619,6 +631,7 @@ export const ChatRoom = (): JSX.Element => {
                   characterName={characterName}
                   showChatTutorial={showChatTutorial}
                   showMessageTime={showMessageTime}
+                  profileImageUrl={profileImageUrl}
                 />
               ) : (
                 <UserMessage
@@ -636,7 +649,7 @@ export const ChatRoom = (): JSX.Element => {
 
   return (
     <S.Container>
-      <ChatHeader route="/chatlist" title={characterName} />
+      <ChatHeader route="/chatlist" title={characterName} characterId={id} />
       <S.SubContainer ref={middleRef}>
         {(showChatTutorial || showReplyTutorial) && (
           <S.ChatTutorialContainer>

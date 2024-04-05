@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 
 import * as S from "src/styles/setting/notice";
 import { useEffect, useState } from "react";
-import { apiRequestGet } from "src/apis/api";
+import { apiRequestGet } from "src/apis/apiRequestGet";
 
 const noticeMockdata = {
   notificiations: [

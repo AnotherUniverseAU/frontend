@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { MainHeader } from "src/components/header/main/mainHeader.tsx";
 import { IconFooter } from "src/components/footer/icon/iconFooter.tsx";
 
-import { apiRequestGet } from "src/apis/api.ts";
+import { apiRequestGet } from "src/apis/apiRequestGet";
 
 interface NavItemProps {
   text: string;

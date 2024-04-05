@@ -6,7 +6,8 @@ import { TextFooter } from "src/components/footer/text/textFooter.tsx";
 
 import { StyledInput } from "src/components/styledInput/styledInput.tsx";
 
-import { apiRequestPost } from "src/apis/api.ts";
+import { apiRequestGet } from "src/apis/apiRequestGet";
+import { apiRequestPost } from "src/apis/apiRequestPost";
 
 export const NicknameEdit = () => {
   const location = useLocation();
