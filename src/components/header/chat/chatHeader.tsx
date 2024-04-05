@@ -11,13 +11,13 @@ interface FooterProps {
 
 export const ChatHeader: FC<FooterProps> = ({ route, title }) => {
     const [showSetting, setShowSetting] = useState(false);
+    const [isAlarm, setIsAlarm] = useState<boolean>(true);
+
     const navigate = useNavigate();
 
     const handleShowSetting = () => {
         setShowSetting(!showSetting);
     };
-
-    const [isAlarm, setIsAlarm] = useState<boolean>(true);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsAlarm(!isAlarm);
