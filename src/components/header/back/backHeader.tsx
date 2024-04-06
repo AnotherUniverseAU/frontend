@@ -7,7 +7,7 @@ const backArrow = require("src/components/header/back/backArrow.png") as string;
 interface FooterProps {
   route?: string;
   title: string;
-  type: string;
+  type?: string;
 }
 
 export const BackHeader: FC<FooterProps> = ({ title, type }) => {
