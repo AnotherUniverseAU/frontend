@@ -1,20 +1,31 @@
+import { useNavigate } from "react-router-dom";
 import * as S from "./backHeader.ts";
 import React, { FC } from "react";
 
 const backArrow = require("src/components/header/back/backArrow.png") as string;
 
 interface FooterProps {
-  route: string;
+  route?: string;
   title: string;
+  type: string;
 }
 
-export const BackHeader: FC<FooterProps> = ({ route, title }) => {
+export const BackHeader: FC<FooterProps> = ({ title, type }) => {
+  const navigate = useNavigate();
   return (
     <S.HeaderContainer>
-      <S.StyledLink to={route}>
-        <S.StyledLinkArrow src={backArrow} alt="back arrow" />
-      </S.StyledLink>
-      <S.TitleContainer>{title}</S.TitleContainer>
+      {type === "first" ? (
+        <>
+          <S.TitleContainer>{title}</S.TitleContainer>
+        </>
+      ) : (
+        <>
+          <S.StyledBackDiv onClick={() => navigate(-1)}>
+            <S.StyledLinkArrow src={backArrow} alt="back arrow" />
+          </S.StyledBackDiv>
+          <S.TitleContainer>{title}</S.TitleContainer>
+        </>
+      )}
     </S.HeaderContainer>
   );
 };

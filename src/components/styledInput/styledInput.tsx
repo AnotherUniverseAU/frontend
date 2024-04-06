@@ -8,7 +8,7 @@ interface InputComponentProps {
   limit: number;
   height: string;
   marginTop: string;
-  required?: boolean;
+  isEmpty?: boolean;
 }
 
 export const StyledInput: React.FC<InputComponentProps> = ({
@@ -18,7 +18,7 @@ export const StyledInput: React.FC<InputComponentProps> = ({
   limit,
   height,
   marginTop,
-  required,
+  isEmpty,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -39,7 +39,12 @@ export const StyledInput: React.FC<InputComponentProps> = ({
   };
 
   return (
-    <S.InputWrapper isFocused={isFocused} height={height} marginTop={marginTop}>
+    <S.InputWrapper
+      isFocused={isFocused}
+      isEmpty={isEmpty}
+      height={height}
+      marginTop={marginTop}
+    >
       <S.CustomTextarea
         value={content}
         onChange={handleTextareaChange}
@@ -50,10 +55,11 @@ export const StyledInput: React.FC<InputComponentProps> = ({
         height={height}
         marginTop={marginTop}
         spellCheck="false"
-        required
+        isEmpty={isEmpty}
       />
       <S.CharacterCounter
         isFocused={isFocused}
+        isEmpty={isEmpty}
         height={height}
         marginTop={marginTop}
       >{`${content.length.toLocaleString()}/${limit.toLocaleString()}`}</S.CharacterCounter>

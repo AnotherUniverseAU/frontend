@@ -23,7 +23,7 @@ export const NicknameEdit = () => {
 
   return (
     <S.Container>
-      <BackHeader route="/profile" title="기본 호칭" />
+      <BackHeader route="/profile" type="each" title="기본 호칭" />
       <S.InfoContainer>
         <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
         <S.Info>기본 호칭을 설정해주세요</S.Info>

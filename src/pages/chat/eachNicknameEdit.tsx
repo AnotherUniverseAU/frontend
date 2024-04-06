@@ -13,40 +13,65 @@ export const EachNicknameEdit = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { characterName } = location.state;
+  const { characterName, characterId } = location.state;
 
   const [nicknameEdit, setNicknameEdit] = useState("");
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     const getNickname = async function () {
+      // api는 각 채팅방 닉네임 가져오는 걸로 변경하기
       const res = await apiRequestGet("/user/nickname");
       console.log(res);
-      //   console.log(res.nickname);
-      //   setNicknameEdit(res.nickname);
+      setNicknameEdit(res.nickname);
     };
     getNickname();
   }, []);
 
+  useEffect(() => {
+    if (load === true) {
+      if (nicknameEdit === "") {
+        setIsEmpty(true);
+        console.log("true");
+      } else {
+        setIsEmpty(false);
+        console.log("false");
+      }
+    } else {
+      if (nicknameEdit !== "") {
+        setLoad(true);
+      }
+    }
+  }, [nicknameEdit]);
+
   const nicknameEditRequest = async () => {
     if (nicknameEdit !== "") {
-      await apiRequestPost("/user/nickname", { nickname: nicknameEdit });
+      await apiRequestPost(`/chatroom/set-nickname/${characterId}`, {
+        nickname: nicknameEdit,
+      });
       navigate(-1);
     }
   };
 
   return (
     <S.Container>
-      <BackHeader route="/profile" title="기본 호칭" />
+      <BackHeader route="/profile" type="each" title="기본 호칭" />
       <S.InfoContainer>
         <S.Info>{characterName}이/가 나를 부를 때 사용할</S.Info>
         <S.Info>호칭을 설정해주세요</S.Info>
         <StyledInput
-          placeholder="호칭을 입력해주세요"
+          placeholder={
+            isEmpty
+              ? "호칭은 한 글자 이상이어야 합니다."
+              : "호칭을 입력해주세요"
+          }
           content={nicknameEdit}
           setContent={setNicknameEdit}
           limit={20}
           height="3.8rem"
           marginTop="2rem"
+          isEmpty={isEmpty}
         />
       </S.InfoContainer>
       <TextFooter

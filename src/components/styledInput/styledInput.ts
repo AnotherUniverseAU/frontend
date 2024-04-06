@@ -4,13 +4,16 @@ interface InputProps {
   isFocused: boolean;
   height: string;
   marginTop: string;
+  isEmpty?: boolean;
 }
 
 export const InputWrapper = styled.div<InputProps>`
   position: relative;
   width: 90vw;
   height: ${(props) => props.height};
-  border: 0.1rem solid ${(props) => (props.isFocused ? "#6D2FEF" : "#a0a0a0")};
+  border: 0.1rem solid
+    ${(props) =>
+      props.isEmpty ? "#FF0000" : props.isFocused ? "#6D2FEF" : "#a0a0a0"};
   border-radius: 1rem;
   padding: 1rem 4vw;
   display: flex;
@@ -31,12 +34,14 @@ export const CustomTextarea = styled.textarea<InputProps>`
   background: none;
   caret-color: transparent; // 커서를 숨김
   &::placeholder {
-    color: ${(props) => (props.isFocused ? "#6D2FEF" : "a0a0a0")};
+    color: ${(props) =>
+      props.isEmpty ? "#FF0000" : props.isFocused ? "#6D2FEF" : "#a0a0a0"};
   }
 `;
 
 export const CharacterCounter = styled.div<InputProps>`
-  color: ${(props) => (props.isFocused ? "#6D2FEF" : "a0a0a0")};
+  color: ${(props) =>
+    props.isEmpty ? "#FF0000" : props.isFocused ? "#6D2FEF" : "#a0a0a0"};
   width: 15vw;
   text-align: center;
   font-size: 0.8rem;

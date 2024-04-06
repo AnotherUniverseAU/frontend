@@ -26,6 +26,17 @@ export const StyledLink = styled(Link)`
   align-items: center;
   justify-content: center;
 `;
+export const StyledBackDiv = styled.div`
+  width: 15vw;
+  height: 5rem;
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
 
 export const StyledLinkArrow = styled.img`
   width: 1rem;
