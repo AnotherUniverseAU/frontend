@@ -64,7 +64,17 @@ export const Profile = () => {
         <S.NavWrapper>
           <NavItem
             text={"알림설정"}
-            onClick={() => handleNavigate({ to: "/notification" })}
+            onClick={function openAppSettings() {
+              if ((window as any).ReactNativeWebView) {
+                console.log("설정 이동 요청");
+                (window as any).ReactNativeWebView.postMessage(
+                  JSON.stringify({
+                    type: "OPEN_APP_SETTINGS",
+                  })
+                );
+                console.log("설정 이동 완료");
+              }
+            }}
             style={{ marginBottom: "1rem" }}
           />
           <NavItem

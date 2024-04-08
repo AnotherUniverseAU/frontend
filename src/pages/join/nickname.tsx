@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -12,61 +12,69 @@ import { apiRequestPost } from "src/apis/apiRequestPost";
 
 export const Nickname = () => {
   const [nickname, setNickname] = useState("");
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getNickname = async () => {
+      const res = await apiRequestGet("user/nickname");
+      if (res.nickname !== "") {
+        setNickname(res.nickname);
+      }
+    };
+    getNickname();
+  }, []);
 
   const updateNickname = async (nickname: string) => {
     if (nickname !== "") {
       const res = await apiRequestPost("/user/nickname", {
         nickname: nickname,
       });
-      console.log(res);
-      //   if (res.nickname) {
-      //     console.log(res.nickname);
-      //     navigate("/", { state: { from: "/nickname" } });
-      //   }
+      if (res.nickname) {
+        navigate("/", { state: { from: "/nickname" } });
+      }
+    } else {
+      if (load === false) {
+        setLoad(true);
+      }
     }
-
-    // const token = localStorage.getItem('accessToken'); // replace with your Bearer token
-
-    // const BASE_URL = 'https://anotheruniverse-backend.delightfuldune-c082bcd0.koreacentral.azurecontainerapps.io';
-
-    // try {
-    //     const response = await axios.post(
-    //         `${BASE_URL}/user/nickname`,
-    //         { nickname },
-    //         {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         }
-    //     );
-
-    //     if (response.status === 200) {
-    //         console.log('Nickname updated successfully:', response.data);
-    //     } else {
-    //         console.log('Failed to update nickname:', response.data);
-    //     }
-    // } catch (error) {
-    //     console.error('Error updating nickname:', error);
-    // }
-    // ;
   };
 
+  useEffect(() => {
+    if (load === true) {
+      if (nickname === "") {
+        setIsEmpty(true);
+        console.log("true");
+      } else {
+        setIsEmpty(false);
+        console.log("false");
+      }
+    } else {
+      if (nickname !== "") {
+        setLoad(true);
+      }
+    }
+  }, [nickname, load]);
   return (
     <S.Container>
-      <BackHeader route="/permission" title="프로필 설정" />
+      <BackHeader type="first" title="프로필 설정" />
       <S.InfoContainer>
         <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
         <S.Info>기본 호칭을 입력해주세요</S.Info>
         <StyledInput
-          placeholder="호칭을 입력해주세요"
+          placeholder={
+            isEmpty
+              ? "호칭은 한 글자 이상이어야 합니다."
+              : "호칭을 입력해주세요"
+          }
           content={nickname}
           setContent={setNickname}
           limit={20}
           height="3.8rem"
           marginTop="2rem"
-          required={true}
+          isEmpty={isEmpty}
         />
       </S.InfoContainer>
       <TextFooter

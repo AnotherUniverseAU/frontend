@@ -16,10 +16,6 @@ const picNameMockData = {
       profilePicUrl:
         "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec (1).jpg",
     },
-  ],
-};
-const picNameMockData1 = {
-  nameAndPics: [
     {
       characterId: "65c0b542c9a646697bb644ab",
       name: "강동혁",
@@ -114,28 +110,34 @@ export const ChatList = () => {
     // 에서 가져왔다 치고~
     const apiData = chatRoomMockData;
     const newData = [];
+
+    const namePicData = picNameMockData;
+    // const namePicData = apiRequestGet('/character/pic-name').nameAndPics;
     for (let i in apiData.chatRoomDatas) {
-      const characterId = apiData.chatRoomDatas[i].characterId;
-      // api에 characterid 필요하다고 가정
-      // const { name, profilePicUrl } = apiRequestGet('/character/pic-name').nameAndPics[0];
-      // 이 부분을 api에서 가져오는 걸로 교체할 것.
-      const { name, profilePicUrl } = picNameMockData.nameAndPics[0];
-      //
-      if (apiData.chatRoomDatas[i].unreadCount > 99) {
-        const littleNewData = {
-          ...apiData.chatRoomDatas[i],
-          exceedCount: `+99`,
-          name: name,
-          profilePicUrl: profilePicUrl,
-        };
-        newData.push(littleNewData);
-      } else {
-        const littleNewData = {
-          ...apiData.chatRoomDatas[i],
-          name: name,
-          profilePicUrl: profilePicUrl,
-        };
-        newData.push(littleNewData);
+      for (let j in namePicData.nameAndPics) {
+        if (
+          apiData.chatRoomDatas[i].characterId ===
+          namePicData.nameAndPics[j].characterId
+        ) {
+          const { name, profilePicUrl } = picNameMockData.nameAndPics[j];
+          //
+          if (apiData.chatRoomDatas[i].unreadCount > 99) {
+            const littleNewData = {
+              ...apiData.chatRoomDatas[i],
+              exceedCount: `+99`,
+              name: name,
+              profilePicUrl: profilePicUrl,
+            };
+            newData.push(littleNewData);
+          } else {
+            const littleNewData = {
+              ...apiData.chatRoomDatas[i],
+              name: name,
+              profilePicUrl: profilePicUrl,
+            };
+            newData.push(littleNewData);
+          }
+        }
       }
     }
     setChatList(newData);

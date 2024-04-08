@@ -8,6 +8,7 @@ import { StyledInput } from "src/components/styledInput/styledInput.tsx";
 import { PolicyToggle } from "src/components/policyToggle/policyToggle.tsx";
 import { TextFooter } from "src/components/footer/text/textFooter.tsx";
 import { apiRequestPost } from "src/apis/apiRequestPost";
+import permissionCheck from "src/assets/img/permissionCheck.png";
 
 export const Create = () => {
   const [name, setName] = useState("");
@@ -32,7 +33,9 @@ export const Create = () => {
   const [totalSize, setTotalSize] = useState(0);
   const [isPolicyOpen, setIsPolicyOpen] = useState(false);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [isAgreeModalOpen, setIsAgreeModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,49 +58,116 @@ export const Create = () => {
     }
   };
 
+  const [isChecked, setIsChecked] = useState(false);
+
   const handleSubmit = () => {
-    const formData = new FormData();
+    if (
+      images.length !== 0 &&
+      name &&
+      title &&
+      genre &&
+      creatorWords &&
+      gender &&
+      appearance &&
+      personality &&
+      hobby &&
+      tone &&
+      extraInfo &&
+      summary &&
+      relationship &&
+      email
+    ) {
+      console.log(isPolicyOpen);
+      if (isPolicyOpen === false) {
+        console.log("맞잖아");
+        setIsAgreeModalOpen(true);
+      } else {
+        setIsTextModalOpen(false);
+        const formData = new FormData();
 
-    formData.append("image", new Blob(images));
+        formData.append("image", new Blob(images));
+        formData.append("name", name);
+        formData.append("title", title);
+        formData.append("genre", genre);
+        formData.append("creatorWords", creatorWords);
+        formData.append("gender", gender);
+        formData.append("appearance", appearance);
+        formData.append("personality", personality);
+        formData.append("hobby", hobby);
+        formData.append("tone", tone);
+        formData.append("extraInfo", extraInfo);
+        formData.append("summary", summary);
+        formData.append("relationship", relationship);
+        formData.append("email", email);
+        // formData.append("creatorNickname", creatorNickname);
 
-    formData.append("name", name);
-    formData.append("title", title);
-    formData.append("genre", genre);
-    formData.append("creatorWords", creatorWords);
-    formData.append("gender", gender);
-    formData.append("appearance", appearance);
-    formData.append("personality", personality);
-    formData.append("hobby", hobby);
-    formData.append("tone", tone);
-    formData.append("extraInfo", extraInfo);
-    formData.append("summary", summary);
-    formData.append("relationship", relationship);
-    formData.append("email", email);
-    // formData.append("creatorNickname", creatorNickname);
+        // apiRequestPost("/character/request-create", formData);
 
-    // apiRequestPost("/character/request-create", formData);
-
-    for (let key of formData.keys()) {
-      console.log(key, ":", formData.get(key));
+        for (let key of formData.keys()) {
+          console.log(key, ":", formData.get(key));
+        }
+        setIsSubmit(true);
+      }
+    } else {
+      setIsTextModalOpen(true);
     }
-    setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
+    setIsSubmit(false);
     navigate("/");
+  };
+
+  const handleTextModalClose = () => {
+    setIsTextModalOpen(false);
+  };
+  const handleAgreeModalClose = () => {
+    setIsAgreeModalOpen(false);
   };
 
   return (
     <S.Container>
-      {isModalOpen && (
-        <S.StyledModal open={isModalOpen}>
+      {isSubmit && (
+        <S.StyledModal open={isSubmit}>
           <S.ModalContainer>
             <S.ModalText>제출이 완료 되었습니다</S.ModalText>
             <S.ModalButton onClick={handleModalClose}>확인</S.ModalButton>
           </S.ModalContainer>
         </S.StyledModal>
       )}
+      {isTextModalOpen && (
+        <S.StyledModal open={isTextModalOpen}>
+          <S.ModalContainer>
+            <S.PermissionCheck src={permissionCheck} alt="permissionCheck" />
+            <S.ModalText type="unfulfilled">
+              전체 내용을 입력해 주세요.
+            </S.ModalText>
+            <S.ModalSubTextContainer>
+              <S.ModalSubText>누락된 정보가 있어 제출이</S.ModalSubText>
+              <S.ModalSubText>불가합니다.</S.ModalSubText>
+            </S.ModalSubTextContainer>
+            <S.ModalButton onClick={handleTextModalClose}>확인</S.ModalButton>
+          </S.ModalContainer>
+        </S.StyledModal>
+      )}
+      {isAgreeModalOpen && (
+        <S.StyledModal open={isAgreeModalOpen}>
+          <S.ModalContainer>
+            <S.PermissionCheck src={permissionCheck} alt="permissionCheck" />
+            <S.ModalText type="unfulfilled">
+              개인정보 수집/이용 동의
+            </S.ModalText>
+            <S.ModalSubTextContainer>
+              <S.ModalSubText>
+                하단의 개인정보 수집/이용 동의란에
+              </S.ModalSubText>
+              <S.ModalSubText>체크하셔야 제출이 가능합니다.</S.ModalSubText>
+            </S.ModalSubTextContainer>
+            <S.ModalButton onClick={handleAgreeModalClose}>확인</S.ModalButton>
+          </S.ModalContainer>
+        </S.StyledModal>
+      )}
+
       <BackHeader route="/contributeInfo" title="AI 캐릭터 만들기" />
       <S.SubContainer>
         <ListTitle listNumber={1} listText="캐릭터 정보" textColor="#6D2FEF" />
@@ -294,7 +364,12 @@ export const Create = () => {
           marginTop="0.5rem"
         />
 
-        <PolicyToggle policy={isPolicyOpen} setPolicy={setIsPolicyOpen} />
+        <PolicyToggle
+          policy={isPolicyOpen}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+          setPolicy={setIsPolicyOpen}
+        />
       </S.SubContainer>
       <TextFooter route="." text="제출할게요" onClick={handleSubmit} />
     </S.Container>

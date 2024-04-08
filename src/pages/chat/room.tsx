@@ -252,13 +252,10 @@ export const ChatRoom = (): JSX.Element => {
     console.log(id);
     const getCharInfo = async function () {
       const res = await apiRequestGet(`/character/${id}`);
-      console.log(res);
-      // if (res.statusCode === 200) {
-      //   setCharacterName(res.character.name);
-      //   setProfileImageUrl(res.character.profilePicUrl);
-      // } else {
-      //   getNewToken();
-      // }
+
+      setCharacterName(res.character.name);
+      setProfileImageUrl(res.character.profilePicUrl);
+
       console.log("함수 실행");
     };
     getCharInfo();

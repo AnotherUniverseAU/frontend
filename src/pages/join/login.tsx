@@ -1,12 +1,28 @@
 import * as S from "src/styles/join/login.ts";
 import purpleLogo from "src/assets/img/purpleLogo.png";
 import kakaoIcon from "src/assets/img/kakaoIcon.png";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export const Login = () => {
   const handleLogin = () => {
     const kakaoOauthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
-    console.log(kakaoOauthUrl);
     window.location.href = kakaoOauthUrl;
+    // const getCode = async () => {
+    //   const res = axios.get(kakaoOauthUrl);
+    //   console.log(res);
+    // };
+    // getCode();
+
+    // setTimeout(() => {
+
+    //   console.log(urlParameter);
+    //   const a = async () => {
+    //     const res = await axios.post(`${process.env.REACT_APP_BASE_URL}`, data);
+    //     return res;
+    //   }
+
+    // }, 3000);
   };
 
   return (

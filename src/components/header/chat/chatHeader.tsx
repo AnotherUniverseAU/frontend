@@ -38,6 +38,7 @@ export const ChatHeader: FC<FooterProps> = ({ route, title, characterId }) => {
 
   useEffect(() => {
     // const nicknameRes = apiRequestGet('/user/nickname').nickname;
+    // 해당 채팅방 nickname 가져오는 api
     const nicknameRes = "베이지색바다표범";
     setNickname(nicknameRes);
   }, []);

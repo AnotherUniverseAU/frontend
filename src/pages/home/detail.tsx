@@ -22,6 +22,7 @@ export const Detail = () => {
     const fetchDetail = async () => {
       setLoading(true); // 데이터를 가져오기 전에 로딩 상태를 true로 설정
       const result = await apiRequestGet(`/character/${params.id}`);
+
       setDetail(result.character);
       setLoading(false); // 데이터를 가져온 후에 로딩 상태를 false로 설정
     };
@@ -29,11 +30,14 @@ export const Detail = () => {
   }, [params.id]);
 
   const handleStartChat = async () => {
-    await apiRequestPost("/subscription/subscribe", {
+    setLoading(true);
+    const res = await apiRequestPost("/subscription/subscribe", {
       characterId: params.id,
     });
-
-    navigate("/chatlist");
+    setTimeout(() => {
+      setLoading(false);
+      navigate(`/chatroom/${params.id}`);
+    }, 500);
   };
 
   return (
