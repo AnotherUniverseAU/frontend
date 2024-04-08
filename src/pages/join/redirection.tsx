@@ -8,14 +8,23 @@ export const Redirection = () => {
 
   useEffect(() => {
     console.log(process.env.REACT_APP_URL);
-    axios.post(`${process.env.REACT_APP_URL}kakaoLogin${code}`).then((r) => {
-      console.log(r.data);
+    const getToken = async () => {
+      const data = { code: code };
+      const res = await axios.post(
+        `${process.env.REACT_APP_URL}/oauth/kakao`,
+        data
+      );
+      const accessToken = res.data.accessToken;
+      const refreshToken = res.data.refreshToken;
 
-      // 토큰을 받아서 localStorage같은 곳에 저장하는 코드를 여기에 쓴다.
-      localStorage.setItem("name", r.data.user_name); // 일단 이름만 저장했다.
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
 
-      navigate("/");
-    });
+      return true;
+    };
+
+    getToken();
+    navigate("/");
   }, []);
 
   return <div>로그인 중입니다.</div>;
