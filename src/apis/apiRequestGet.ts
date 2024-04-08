@@ -1,6 +1,11 @@
 import { getNewToken } from "src/apis/getNewToken";
 import { AuthVerify } from "./authVerify";
-import type { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
+import type {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import axios from "axios";
 
 const accessToken = localStorage.getItem("accessToken") as string;
@@ -16,7 +21,8 @@ export const apiRequestGet = async (path: string) => {
   });
 
   const onFulfilled = async (config: InternalAxiosRequestConfig) => {
-    if (AuthVerify() === "Access Token Expired") {
+    const token_validate = AuthVerify();
+    if (token_validate === "Access Token Expired" || "None Access Token") {
       const newAccessToken = await getNewToken();
       if (config.headers) {
         config.headers.Authorization = `Bearer ${newAccessToken}`;

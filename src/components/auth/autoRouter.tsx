@@ -48,8 +48,8 @@ const RouterInfo: RouterItem[] = [
   { path: "/landing", element: <Landing />, withAuthorization: true },
   { path: "/login", element: <Login />, withAuthorization: false },
   { path: "/redirection", element: <Redirection />, withAuthorization: false },
-  { path: "/permission", element: <Permission />, withAuthorization: true },
-  // { path: "/nickname", element: <Nickname />, withAuthorization: true },
+  // { path: "/permission", element: <Permission />, withAuthorization: true },
+  { path: "/nickname", element: <Nickname />, withAuthorization: true },
   { path: "/createInfo", element: <CreateInfo />, withAuthorization: true },
   {
     path: "/contributeInfo",
