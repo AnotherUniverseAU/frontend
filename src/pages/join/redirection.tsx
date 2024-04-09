@@ -1,45 +1,42 @@
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { Loading } from "../setting/loading";
 
 export const Redirection = () => {
   const params = new URLSearchParams(window.location.search);
+  const [isLogin, setIsLogin] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const getToken = async () => {
       const code = params.get("code");
 
-      console.log(code);
-      const param = {
-        code,
-      };
-      await fetch(`${process.env.REACT_APP_BASE_URL}/oauth/kakao`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(param), // string으로 전달해야함
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/oauth/kakao`,
+        {
+          code: code,
+        }
+      );
+      const { access_token, refresh_token } = res.data;
 
-      // axios.post(`${process.env.REACT_APP_BASE_URL}/oauth/kakao`, {
-      //   code: code,
-      // });
-      // console.log(res);
-      // const accessToken = res.data.accessToken;
-      // const refreshToken = res.data.refreshToken;
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
 
-      // localStorage.setItem("accessToken", accessToken);
-      // localStorage.setItem("refreshToken", refreshToken);
-
-      // return true;
+      setIsLogin(true);
     };
 
     getToken();
-    // navigate("/");
   }, []);
 
-  return <div>로그인 중입니다.</div>;
+  useEffect(() => {
+    if (isLogin === true) {
+      navigate("/");
+    }
+  }, [isLogin]);
+
+  return <Loading></Loading>;
 };
 
 // import { useEffect } from "react";

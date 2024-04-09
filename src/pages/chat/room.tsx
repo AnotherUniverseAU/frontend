@@ -251,7 +251,7 @@ export const ChatRoom = (): JSX.Element => {
     // api콜 보내서 가져오기
     console.log(id);
     const getCharInfo = async function () {
-      const res = await apiRequestGet(`/character/${id}`);
+      const res = await apiRequestGet(`/info/${id}`);
 
       setCharacterName(res.character.name);
       setProfileImageUrl(res.character.profilePicUrl);
