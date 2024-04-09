@@ -1,33 +1,42 @@
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { Loading } from "../setting/loading";
 
 export const Redirection = () => {
-  const code = window.location.search;
+  const params = new URLSearchParams(window.location.search);
+  const [isLogin, setIsLogin] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_URL);
     const getToken = async () => {
-      const data = { code: code };
+      const code = params.get("code");
+
       const res = await axios.post(
-        `${process.env.REACT_APP_URL}/oauth/kakao`,
-        data
+        `${process.env.REACT_APP_BASE_URL}/oauth/kakao`,
+        {
+          code: code,
+        }
       );
-      const accessToken = res.data.accessToken;
-      const refreshToken = res.data.refreshToken;
+      const { access_token, refresh_token } = res.data;
 
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
 
-      return true;
+      setIsLogin(true);
     };
 
     getToken();
-    navigate("/");
   }, []);
 
-  return <div>로그인 중입니다.</div>;
+  useEffect(() => {
+    if (isLogin === true) {
+      navigate("/");
+    }
+  }, [isLogin]);
+
+  return <Loading></Loading>;
 };
 
 // import { useEffect } from "react";

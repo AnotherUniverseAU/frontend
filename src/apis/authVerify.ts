@@ -5,10 +5,10 @@ const parseJwt = (token: string | null) => {
 export const AuthVerify = () => {
   const accessToken = localStorage.getItem("accessToken");
   const decodedAccess = parseJwt(accessToken);
-
-  if (decodedAccess.exp * 1000 < Date.now()) {
+  if (accessToken === null || undefined) {
+    return "None Access Token";
+  } else if (decodedAccess.exp * 1000 < Date.now()) {
     return "Access Token Expired";
   }
-
   return true;
 };

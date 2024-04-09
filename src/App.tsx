@@ -1,10 +1,11 @@
-import MainRouter from "./mainRouter.tsx";
+import MainRouter from "src/mainRouter.tsx";
 import { GlobalStyle } from "src/styles/globalStyle.ts";
 // import ReactGA from "react-ga4";
 import TagManager from "react-gtm-module";
 import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
-import { getNewToken } from "./apis/getNewToken.tsx";
+import { getNewToken } from "src/apis/getNewToken.tsx";
+import AutoRouter from "src/components/auth/autoRouter.tsx";
 
 const REACT_APP_GTM_ID = process.env.REACT_APP_GTM_ID;
 export const App = () => {
@@ -26,7 +27,7 @@ export const App = () => {
         ></meta>
       </Helmet>
       <GlobalStyle />
-      <MainRouter />
+      <AutoRouter />
     </>
   );
 };

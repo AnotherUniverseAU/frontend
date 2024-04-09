@@ -101,11 +101,10 @@ export const Create = () => {
         formData.append("email", email);
         // formData.append("creatorNickname", creatorNickname);
 
-        // apiRequestPost("/character/request-create", formData);
-
         for (let key of formData.keys()) {
           console.log(key, ":", formData.get(key));
         }
+        apiRequestPost("/character/request-create", formData);
         setIsSubmit(true);
       }
     } else {

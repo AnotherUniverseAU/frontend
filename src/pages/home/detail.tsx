@@ -21,7 +21,7 @@ export const Detail = () => {
   useEffect(() => {
     const fetchDetail = async () => {
       setLoading(true); // 데이터를 가져오기 전에 로딩 상태를 true로 설정
-      const result = await apiRequestGet(`/character/${params.id}`);
+      const result = await apiRequestGet(`/info/${params.id}`);
 
       setDetail(result.character);
       setLoading(false); // 데이터를 가져온 후에 로딩 상태를 false로 설정
