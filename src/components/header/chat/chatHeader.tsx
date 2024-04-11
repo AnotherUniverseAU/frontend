@@ -4,16 +4,25 @@ import backArrow from "src/components/header/back/backArrow.png";
 import chatSetting from "src/components/header/chat/chatSettingImg.svg";
 import { useNavigate } from "react-router-dom";
 import { apiRequestGet } from "src/apis/apiRequestGet.ts";
+import { apiRequestPost } from "src/apis/apiRequestPost.ts";
 
 interface FooterProps {
   route: string;
   title: string;
   characterId?: string;
+  isModalOpen: boolean;
+  setIsModalOpen: (isModalOpen: boolean) => void;
 }
 
-export const ChatHeader: FC<FooterProps> = ({ route, title, characterId }) => {
+export const ChatHeader: FC<FooterProps> = ({
+  setIsModalOpen,
+  isModalOpen,
+  route,
+  title,
+  characterId,
+}) => {
   const [showSetting, setShowSetting] = useState(false);
-  const [isAlarm, setIsAlarm] = useState<boolean>(true);
+  // const [isAlarm, setIsAlarm] = useState<boolean>(true);
   const [nickname, setNickname] = useState(String);
 
   const navigate = useNavigate();
@@ -22,9 +31,9 @@ export const ChatHeader: FC<FooterProps> = ({ route, title, characterId }) => {
     setShowSetting(!showSetting);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsAlarm(!isAlarm);
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setIsAlarm(!isAlarm);
+  // };
 
   const handleEachNicknameEdit = () => {
     navigate("/eachNicknameEdit", {
@@ -35,12 +44,17 @@ export const ChatHeader: FC<FooterProps> = ({ route, title, characterId }) => {
       },
     });
   };
-
-  useEffect(() => {
-    document.addEventListener("click", (e) => {
-      console.log(e);
-      console.log("touch");
+  const handleRoomOut = () => {
+    setIsModalOpen(!isModalOpen);
+    const res: any = apiRequestPost("/subscription/unsubscribe", {
+      characterId: characterId,
+    }).then((response) => {
+      if (response) {
+        navigate("/chatlist");
+      }
     });
+  };
+  useEffect(() => {
     // const nicknameRes = apiRequestGet('/user/nickname').nickname;
     // 해당 채팅방 nickname 가져오는 api
     const nicknameRes = "베이지색바다표범";
@@ -48,8 +62,30 @@ export const ChatHeader: FC<FooterProps> = ({ route, title, characterId }) => {
   }, []);
 
   useEffect(() => {
-    console.log(isAlarm);
-  }, [isAlarm]);
+    if (showSetting === true) {
+      const handleClick = (evt: Event) => {
+        // if (showSetting === true) {
+        const { target } = evt;
+        if (target instanceof HTMLElement) {
+          const classList = target.classList; // DOMTokenList
+          if (classList.contains("setting-modal")) {
+          } else {
+            setShowSetting(false);
+          }
+        }
+      };
+      setTimeout(() => {
+        document.addEventListener("click", handleClick);
+      }, 0);
+
+      return () => {
+        document.removeEventListener("click", handleClick);
+      };
+    }
+  }, [showSetting]);
+  // useEffect(() => {
+  //   console.log(isAlarm);
+  // }, [isAlarm]);
 
   return (
     <S.HeaderContainer>
@@ -65,15 +101,28 @@ export const ChatHeader: FC<FooterProps> = ({ route, title, characterId }) => {
         />
         <S.ChatSettingWrapper>
           {showSetting && (
-            <S.ChatSettingBox>
-              <S.AlarmSettingWrapper>
+            <S.ChatSettingBox className="setting-modal">
+              {/* <S.AlarmSettingWrapper>
                 <S.AlarmSettingText>알람설정</S.AlarmSettingText>
                 <S.SwitchWrapper>
                   <S.CustomSwitch checked={isAlarm} onChange={handleChange} />
                 </S.SwitchWrapper>
-              </S.AlarmSettingWrapper>
-              <S.NicknameEditWrapper onClick={handleEachNicknameEdit}>
-                <S.NicknameEditText>닉네임 변경</S.NicknameEditText>
+              </S.AlarmSettingWrapper> */}
+              <S.NicknameEditWrapper
+                className="setting-modal"
+                onClick={handleEachNicknameEdit}
+              >
+                <S.NicknameEditText className="setting-modal">
+                  닉네임 변경
+                </S.NicknameEditText>
+              </S.NicknameEditWrapper>
+              <S.NicknameEditWrapper
+                className="setting-modal"
+                onClick={handleRoomOut}
+              >
+                <S.NicknameEditText className="setting-modal">
+                  채팅방 나가기
+                </S.NicknameEditText>
               </S.NicknameEditWrapper>
             </S.ChatSettingBox>
           )}

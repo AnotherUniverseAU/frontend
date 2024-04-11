@@ -11,7 +11,7 @@ import { Loading } from "src/pages/setting/loading.tsx";
 const picNameMockData = {
   nameAndPics: [
     {
-      characterId: "65c0b542c9a646697bb644aa",
+      characterId: "6617e54d2957fc21b66eaf2f",
       name: "이영찬",
       profilePicUrl:
         "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec (1).jpg",
@@ -106,9 +106,9 @@ export const ChatList = () => {
   const [chatList, setChatList] = useState<Chat[]>([]);
 
   useEffect(() => {
-    // const apiData = apiRequestGet("/chatroom");
+    const apiData: any = apiRequestGet("/chatroom");
     // 에서 가져왔다 치고~
-    const apiData = chatRoomMockData;
+    // const apiData = chatRoomMockData;
     const newData = [];
 
     const namePicData = picNameMockData;

@@ -6,8 +6,6 @@ import NotChecked from "./NotChecked.png";
 interface PolicyToggleProps {
   policy: boolean;
   setPolicy: (policy: boolean) => void;
-  setIsChecked: (isChecked: boolean) => void;
-  isChecked: boolean;
 }
 
 export const PolicyToggle: React.FC<PolicyToggleProps> = ({

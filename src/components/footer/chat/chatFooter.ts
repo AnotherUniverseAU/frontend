@@ -30,7 +30,7 @@ export const TextAreaDiv = styled.div`
   flex-direction: column;
 `;
 export const ChatCalcTextArea = styled.textarea`
-  width: 78vw;
+  width: 65vw;
   font-size: 1rem;
   line-height: 1rem;
   height: 1rem;
@@ -48,7 +48,7 @@ export const ChatCalcTextArea = styled.textarea`
 export const ChatTextArea = styled.textarea<{
   currentRow: number;
 }>`
-  width: 78vw;
+  width: 65vw;
   font-size: 1rem;
   line-height: 1rem;
   height: ${(props) => props.currentRow + "rem"};
