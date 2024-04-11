@@ -58,8 +58,6 @@ export const Create = () => {
     }
   };
 
-  const [isChecked, setIsChecked] = useState(false);
-
   const handleSubmit = () => {
     if (
       images.length !== 0 &&
@@ -79,7 +77,6 @@ export const Create = () => {
     ) {
       console.log(isPolicyOpen);
       if (isPolicyOpen === false) {
-        console.log("맞잖아");
         setIsAgreeModalOpen(true);
       } else {
         setIsTextModalOpen(false);
@@ -363,12 +360,7 @@ export const Create = () => {
           marginTop="0.5rem"
         />
 
-        <PolicyToggle
-          policy={isPolicyOpen}
-          isChecked={isChecked}
-          setIsChecked={setIsChecked}
-          setPolicy={setIsPolicyOpen}
-        />
+        <PolicyToggle policy={isPolicyOpen} setPolicy={setIsPolicyOpen} />
       </S.SubContainer>
       <TextFooter route="." text="제출할게요" onClick={handleSubmit} />
     </S.Container>

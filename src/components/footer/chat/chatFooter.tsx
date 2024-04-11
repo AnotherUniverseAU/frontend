@@ -106,16 +106,13 @@ export const ChatFooter: React.FC<{
       />
 
       <S.TextAreaDiv>
-        <S.ChatCalcTextArea
-          ref={chatValidRef}
-          readOnly
-          // style={{ display: "none" }}
-        ></S.ChatCalcTextArea>
+        <S.ChatCalcTextArea ref={chatValidRef} readOnly></S.ChatCalcTextArea>
         <S.ChatTextArea
           currentRow={currentRow}
           ref={chatInputRef}
           value={inputValue}
           onChange={handleChange}
+          spellCheck="false"
           maxLength={isTuto ? 50 : 2000}
         />
       </S.TextAreaDiv>

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+import Modal from "@mui/material/Modal";
 
-export const ChatContent = styled.div<{ isTuto: boolean }>`
+export const ChatContent = styled.div<{ showTutorial: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -9,8 +10,8 @@ export const ChatContent = styled.div<{ isTuto: boolean }>`
     display: none;
   }
 
-  overflow: ${(props) => (props.isTuto ? "hidden" : "scroll")};
-  pointer-events: ${(props) => (props.isTuto ? "none" : "auto")};
+  overflow: scroll;
+  pointer-events: ${(props) => (props.showTutorial ? "none" : "auto")};
 `;
 
 export const ProfileContainer = styled.div`
@@ -208,4 +209,81 @@ export const ChatTutorialButton = styled.div`
   align-items: center;
   justify-content: center;
   margin: 1rem 0;
+`;
+
+////////Modal/////////
+export const StyledModal = styled(Modal)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 80vw;
+  border-radius: 1rem;
+`;
+
+export const ModalText = styled.div`
+  width: 80vw;
+  height: 7rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalButtonContainer = styled.div`
+  width: 80vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const ModalLeftButton = styled.div`
+  width: 40vw;
+  height: 3rem;
+  background-color: #a0a0a0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  border-radius: 0 0 0 1rem;
+`;
+
+export const ModalRightButton = styled.div`
+  width: 40vw;
+  height: 3rem;
+  background-color: #6d2fef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  border-radius: 0 0 1rem 0;
+`;
+
+export const ModalFullButton = styled.div`
+  width: 80vw;
+  height: 3rem;
+  background-color: #6d2fef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  border-radius: 0 0 1rem 1rem;
 `;
