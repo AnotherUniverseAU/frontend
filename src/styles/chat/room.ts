@@ -49,10 +49,10 @@ export const CharacterMessageWrapper = styled.div<{
   showChatTutorial?: boolean;
 }>`
   display: flex;
+  max-width: 100%;
   align-items: flex-start;
   justify-content: ${(props) =>
     props.sentby === "user" ? "flex-end" : "flex-start"};
-  width: 100%;
   padding-left: ${(props) =>
     props.sentby === "character" && !props.showProfile ? "3.2rem" : "0"};
   z-index: ${(props) => (props.showChatTutorial ? "60" : "0")};
@@ -64,9 +64,9 @@ export const UserMessageWrapper = styled.div<{
   showReplyTutorial?: boolean;
 }>`
   display: flex;
-  align-items: flex-start;
-  justify-content: ${(props) =>
-    props.sentby === "user" ? "flex-end" : "flex-start"};
+  overflow-wrap: break-word;
+  align-items: flex-end;
+  justify-content: flex-end;
   width: 100%;
   margin-left: ${(props) =>
     props.sentby === "character" && !props.showProfile ? "3.2rem" : "0"};
@@ -84,6 +84,17 @@ export const CharacterName = styled.span`
 export const MessageContent = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
+  overflow-wrap: break-word;
+`;
+
+export const MessageDiv = styled.div<{
+  showProfile?: boolean;
+}>`
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 3rem);
+  flex-grow: 1;
 `;
 
 export const Message = styled.div<{
@@ -93,7 +104,8 @@ export const Message = styled.div<{
 }>`
   padding: 1rem;
   border-radius: 10px;
-  max-width: 70%;
+  max-width: ${(props) =>
+    props.sentby === "user" ? "70%" : "calc(100% - 3rem)"};
   overflow-wrap: break-word;
   margin: ${(props) =>
     props.showMessageTime === false

@@ -46,13 +46,6 @@ export const ChatHeader: FC<FooterProps> = ({
   };
   const handleRoomOut = () => {
     setIsModalOpen(!isModalOpen);
-    const res: any = apiRequestPost("/subscription/unsubscribe", {
-      characterId: characterId,
-    }).then((response) => {
-      if (response) {
-        navigate("/chatlist");
-      }
-    });
   };
   useEffect(() => {
     // const nicknameRes = apiRequestGet('/user/nickname').nickname;

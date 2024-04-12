@@ -58,19 +58,18 @@ const NoticeItem = ({ id, title, content, date }: NoticeProps) => {
 };
 
 export const Notice = () => {
-  const [notificiations, setNotificiations] = useState({});
+  const [notificiations, setNotificiations] = useState([]);
 
   useEffect(() => {
-    // const noticeData = apiRequestGet("/notificaition").notifications;
-    const noticeData = noticeMockdata;
-    setNotificiations(noticeData);
+    const noticeData: any = apiRequestGet("/notificaition");
+    setNotificiations(noticeData.notifications);
   }, []);
 
   return (
     <S.Container>
       <BackHeader route="/profile" title={"공지사항"} />
       <S.SubContainer>
-        {noticeMockdata.notificiations.map((notice, idx) => (
+        {notificiations.map((notice: any, idx) => (
           <NoticeItem
             key={idx}
             id={idx + 1}
