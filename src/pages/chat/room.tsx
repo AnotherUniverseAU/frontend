@@ -40,8 +40,8 @@ const response1 = {
       characterId: "65c0b542c9a646697bb644aa",
       characterName: "아냐 포저",
       content: [
-        "우와 {user name}이다!!",
-        "12312413413",
+        "우와 {user name}이다!!zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "12312413413ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
         "alsdkfjas;ldkfja;lsdkjf",
         "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec%20(1).jpg",
       ],
@@ -67,6 +67,7 @@ const response1 = {
       characterId: "65c0b542c9a646697bb644aa",
       characterName: "아냐 포저",
       content: ["쫌 기다려야돼!!!", "가만히 잘 있으라구~~"],
+      reply: ["뭐해??", "진짜 갔어??"],
       timeToSend: "2024-04-03T13:14:15Z",
     },
   ],
@@ -234,7 +235,7 @@ const CharacterMessage: React.FC<CharacterMessageProps> = ({
           <S.ProfileImage src={profileImageUrl} alt="Character profile" />
         </div>
       )}
-      <div>
+      <S.MessageDiv showProfile={showProfile}>
         {showProfile && <S.CharacterName>{characterName}</S.CharacterName>}
         <S.MessageContent>
           {message.type === "text" ? (
@@ -257,7 +258,7 @@ const CharacterMessage: React.FC<CharacterMessageProps> = ({
             <S.Time>{message.time.split(" ")[1]}</S.Time>
           ) : null}
         </S.MessageContent>
-      </div>
+      </S.MessageDiv>
     </S.CharacterMessageWrapper>
   );
 };
@@ -331,6 +332,7 @@ export const ChatRoom = (): JSX.Element => {
   const [isScrollTrigger, setIsScrollTrigger] = useState(true);
 
   const [helloMessages, setHelloMessages] = useState<ChatMessage[]>([]);
+  const [isHelloShown, setIsHelloShown] = useState<boolean>(false);
   const [isFirst, setIsFirst] = useState<boolean>(true);
   const [firstChat, setFirstChat] = useState<ChatMessage[]>([]);
 
@@ -357,14 +359,14 @@ export const ChatRoom = (): JSX.Element => {
     } else {
       setIsTuto(true);
     }
-
+    getHello();
     const timeStamp = new Date(new Date().getTime()).toISOString();
     setFirstTime(timeStamp);
     // api로 가져온다. 가져왔다 친다
     // const chatHistory = apiRequestGet(`/chatroom/chat-history/${id}/${timeStamp}?offset=0`);
-    const chatHistory = response1;
-    // const chatHistory = nonResponse;
-    getHello();
+    // const chatHistory = response1;
+    const chatHistory = nonResponse;
+
     const firstChats = changeDataForm(chatHistory);
     setFirstChat(firstChats);
 
@@ -385,11 +387,15 @@ export const ChatRoom = (): JSX.Element => {
     const helloRes = firstMessage;
     const contentList = [...helloRes.helloMessage, helloRes.helloPicture];
     const helloList: React.SetStateAction<ChatMessage[]> = [];
+    const koreaTimeOffset = 9 * 60 * 60 * 1000;
     contentList.forEach((message) => {
       if (message.startsWith("https:")) {
         helloList.push({
           // 시간은 챗룸 생성 시간
-          time: "2024-04-01T07:14:15Z",
+          time: new Date(Date.parse("2024-03-27T07:14:15Z") + koreaTimeOffset)
+            .toISOString()
+            .replace("T", " ")
+            .substring(0, 16),
           content: "",
           sentby: "character",
           type: "image",
@@ -398,7 +404,10 @@ export const ChatRoom = (): JSX.Element => {
       } else {
         helloList.push({
           // 시간은 챗룸 생성 시간
-          time: "2024-04-01T07:14:15Z",
+          time: new Date(Date.parse("2024-03-27T07:14:15Z") + koreaTimeOffset)
+            .toISOString()
+            .replace("T", " ")
+            .substring(0, 16),
           content: message,
           sentby: "character",
           type: "text",
@@ -417,14 +426,22 @@ export const ChatRoom = (): JSX.Element => {
         setChatMessages([helloMessages[0]]);
       } else if (!replyTutorialShown) {
         setChatMessages([...helloMessages, ...firstChat]);
+        setIsHelloShown(true);
       }
     } else {
-      // 튜토리얼이 아니라면
-      setChatMessages([...firstChat]);
+      // 튜토리얼이 아니라면 처음 가져온 메시지 보여주기
+      // 챗 히스토리가 있으면
+      if (firstChat.length > 0) {
+        setChatMessages([...firstChat]);
+        // 챗 히스토리가 비어있으면 hello 보여주기
+      } else {
+        setChatMessages([...helloMessages]);
+        setIsHelloShown(true);
+      }
     }
   }, [helloMessages]);
 
-  // dataform 바꿔주기
+  // DB -> front형식으로 dataform 바꿔주기
   const changeDataForm = (chatHistory: Response) => {
     const chatList: ChatMessage[] = [];
     const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+
@@ -461,13 +478,15 @@ export const ChatRoom = (): JSX.Element => {
           chatList.push(newMessage);
         }
       }
-      // 답장이 있다면
+      // 답장이 있다면 : 5분 추가해 다 넣어주자
       if ("reply" in i && i.reply) {
         i.reply.forEach((text) => {
-          const afterFiveM = new Date(Date.parse(i.timeToSend) + 5 * 60 * 1000)
+          const afterFiveM = new Date(
+            Date.parse(i.timeToSend) + 5 * 60 * 1000 + koreaTimeOffset
+          )
             .toISOString()
+            .replace("T", " ")
             .substring(0, 16);
-
           const newMessage: ChatMessage = {
             time: afterFiveM,
             content: text,
@@ -478,7 +497,7 @@ export const ChatRoom = (): JSX.Element => {
         });
       }
     }
-
+    // 유저 답장마다 형식 바꿔서 넣어주기
     chatHistory.userReplies.forEach((chat) => {
       if (chat.userReply.startsWith("https:")) {
         const newMessage: ChatMessage = {
@@ -506,6 +525,7 @@ export const ChatRoom = (): JSX.Element => {
       }
     });
 
+    // 캐릭터 대사, 답장, 유저 답장 순으로 만들어진 리스트 시간순 정렬
     chatList.sort(
       (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
     );
@@ -516,10 +536,12 @@ export const ChatRoom = (): JSX.Element => {
   useEffect(() => {
     const current = subContainerRef.current;
     // 채팅 유형에 따른 튜토리얼 div position 계산 및 이동
+    // 현재 채팅이 하나라도 있고, 튜토리얼이라면
     if (chatMessages.length > 0) {
       if (isTuto) {
         if (current) {
           const lastChat = chatMessages[chatMessages.length - 1];
+          // 마지막 채팅이 캐릭터일 때
           if (lastChat.sentby === "character") {
             const lastChild = current.lastElementChild;
             const box = sizeRef.current;
@@ -557,6 +579,7 @@ export const ChatRoom = (): JSX.Element => {
                 }, 100);
               }
             }
+            // 마지막 채팅이 유저일 때
           } else {
             const element = document.querySelector(".empty-div");
             if (element) {
@@ -601,14 +624,16 @@ export const ChatRoom = (): JSX.Element => {
             }
           }
         }
+        // 튜토리얼 아닌데 chatMessages 변경될 때 : 최초 챗룸 들어왔을 때 한 번만 맨 아래 보여주는 로직
       } else {
         if (isFirst) {
-          const current = subContainerRef.current;
-          if (current) {
-            setTimeout(() => {
+          setTimeout(() => {
+            const current = subContainerRef.current;
+            if (current) {
               current.scrollTop = current.scrollHeight;
-            }, 0);
-          }
+            }
+          }, 100);
+
           setIsFirst(false);
         }
       }
@@ -616,28 +641,21 @@ export const ChatRoom = (): JSX.Element => {
   }, [chatMessages]);
 
   const checkOverScroll = (e: any) => {
+    // 스크롤인데
+    // 튜토리얼이 아니고
     if (isTuto !== true) {
       const current = subContainerRef.current;
       if (current) {
+        // 제일 상단이 아니고, 스크롤 트리거가 켜져있고, 마지막 채팅이 아니라면 api로 다음 데이터를 가져옴
         if (
           e.target.scrollTop > 0 &&
           isScrollTrigger === true &&
           isLastChat === false
         ) {
           // 아래 주석으로 교체할 것.
-          console.log("데이터를 가져옵니다.");
-          const nextChat = response;
+          const nextChat = nonResponse;
           setIsScrollTrigger(false);
           setApiOffset((offSet) => offSet + 1);
-          if (
-            nextChat.characterChats.length === 0 &&
-            nextChat.userReplies.length === 0
-          ) {
-            setIsLastChat(true);
-            setIsScrollTrigger(false);
-          } else {
-            setNextHistory(changeDataForm(nextChat));
-          }
           // apiRequestGet(
           //   `/chatroom/chat-history/${id}/${firstTime}?offset=${apiOffeset + 1}`
           // ).then((response) => {
@@ -645,37 +663,69 @@ export const ChatRoom = (): JSX.Element => {
           //   setApiOffset((current) => current + 1);
           //   setNextHistory(changeDataForm(response));
           // });
-        } else if (
-          e.target.scrollTop === 0 &&
-          isScrollTrigger === false &&
-          isLastChat === false
-        ) {
-          const beforeScrollH = current?.scrollHeight;
-          setChatMessages([...nextHistory, ...chatMessages]);
-          setIsScrollTrigger(true);
-          setTimeout(() => {
-            const current = subContainerRef.current;
-            if (current) {
-              const afterScrollH = current.scrollHeight;
-              current.scrollTop = afterScrollH - beforeScrollH;
+
+          // 다음 데이터가 비어있을 시(현재까지가 마지막 채팅)
+          if (
+            nextChat.characterChats.length === 0 &&
+            nextChat.userReplies.length === 0
+          ) {
+            // 마지막채팅state -> true, 스크롤 트리거 막음, 다음 채팅 -> hello
+            setIsLastChat(true);
+            setIsScrollTrigger(false);
+
+            setNextHistory(helloMessages);
+          } else {
+            // 다음 데이터가 안 비어있다면 그대로 다음 채팅 state에 넣어줌
+            setNextHistory(changeDataForm(nextChat));
+          }
+          // 만약 스크롤이 맨 위고 스크롤 트리거가 막혀있고
+        } else if (e.target.scrollTop === 0 && isScrollTrigger === false) {
+          // 마지막 채팅일 경우
+          if (isLastChat) {
+            // 헬로우 메시지가 보여진 적 없다면 : 챗메시지앞에 다음 채팅 넣어주고 스크롤 현재로 유지, 트리거 끈 상태로 유지
+            if (!isHelloShown) {
+              const beforeScrollH = current?.scrollHeight;
+
+              setChatMessages([...helloMessages, ...chatMessages]);
+              setIsHelloShown(true);
+
+              setTimeout(() => {
+                const current = subContainerRef.current;
+                if (current) {
+                  const afterScrollH = current.scrollHeight;
+                  current.scrollTop = afterScrollH - beforeScrollH;
+                }
+              }, 10);
             }
-          }, 10);
+            // 마지막 채팅 아님 : 챗메시지앞에 다음 채팅 넣어주고 스크롤 현재로 유지, 트리거 켜줌
+          } else {
+            const beforeScrollH = current?.scrollHeight;
+            setChatMessages([...nextHistory, ...chatMessages]);
+            setIsScrollTrigger(true);
+            setTimeout(() => {
+              const current = subContainerRef.current;
+              if (current) {
+                const afterScrollH = current.scrollHeight;
+                current.scrollTop = afterScrollH - beforeScrollH;
+              }
+            }, 10);
+          }
         }
       }
     }
   };
-
-  // 먼저 구현할 것
-
+  // 챗 튜토리얼 끌 때
   const handleChatTutorialClose = () => {
     setShowChatTutorial(false);
     localStorage.setItem(`chatTutorialShown`, "true");
     setChatMessages([...helloMessages, ...firstChat]);
     const current = subContainerRef.current;
+    // div 조정하면서 넣었던 empty-div 삭제해주기
     if (current) {
       const element = document.querySelector(".empty-div");
       if (element) current.removeChild(element);
     }
+    // 튜토리얼 끝난 뒤 생긴 채팅 리스트가 있을테니 스크롤 맨 아래로 내려줌
     setTimeout(() => {
       const current = subContainerRef.current;
       if (current) {
@@ -683,14 +733,17 @@ export const ChatRoom = (): JSX.Element => {
       }
     }, 300);
   };
+  // 답장 튜토리얼 끌 때
   const handleReplyTutorialClose = () => {
     setShowReplyTutorial(false);
     localStorage.setItem(`replyTutorialShown`, "true");
     const current = subContainerRef.current;
     const element = document.querySelector(".empty-div");
+    // div 조정하면서 넣었던 empty-div 삭제해주기
     if (current && element) {
       current.removeChild(element);
     }
+    // 튜토리얼 종료
     setIsTuto(false);
   };
 
@@ -738,7 +791,15 @@ export const ChatRoom = (): JSX.Element => {
   const onRoomOut = () => {
     // 채팅방 나가는 api콜 날리기
     setIsModalOpen(false);
-    navigate("/chatlist");
+    const res: any = apiRequestPost("/subscription/unsubscribe", {
+      characterId: id,
+    }).then((response) => {
+      if (response) {
+        navigate("/chatlist");
+      } else {
+        alert("나가는데 실패했습니다");
+      }
+    });
   };
 
   const renderMessages = ({
