@@ -3,7 +3,7 @@ import { GlobalStyle } from "src/styles/globalStyle.ts";
 // import ReactGA from "react-ga4";
 import TagManager from "react-gtm-module";
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
+import { ReactEventHandler, useEffect } from "react";
 import { getNewToken } from "src/apis/getNewToken.tsx";
 import AutoRouter from "src/components/auth/autoRouter.tsx";
 
@@ -16,6 +16,26 @@ export const App = () => {
       });
     }
     getNewToken();
+
+    // const handleMessage = (event: any) => {
+    //   console.log("Received message from WebView:", event.data);
+    //   try {
+    //     const { type, token } = JSON.parse(event.data);
+    //     if (type === "FCM_TOKEN") {
+    //       console.log("Received FCM Token:", token);
+    //       localStorage.setItem("fcmToken", token);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error handling message from WebView:", error);
+    //   }
+    // };
+
+    // window.addEventListener("message", handleMessage);
+
+    // // 컴포넌트 언마운트 시 리스너 제거
+    // return () => {
+    //   window.removeEventListener("message", handleMessage);
+    // };
   }, []);
   return (
     <>
