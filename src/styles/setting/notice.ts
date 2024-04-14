@@ -28,7 +28,7 @@ export const NoticeTitle = styled.div`
   width: 80vw;
   font-size: 1rem;
   font-weight: 500;
-  margin-bottom: 0.2rem;
+  margin-bottom: 1rem;
   text-overflow: ellipsis; // 텍스트가 너무 길면 ...으로 표시
   white-space: nowrap;
   overflow: hidden;

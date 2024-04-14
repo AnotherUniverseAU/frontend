@@ -9,6 +9,7 @@ import { PolicyToggle } from "src/components/policyToggle/policyToggle.tsx";
 import { TextFooter } from "src/components/footer/text/textFooter.tsx";
 import { apiRequestPost } from "src/apis/apiRequestPost";
 import permissionCheck from "src/assets/img/permissionCheck.png";
+import { escapeHtml } from "../chat/alterHtml";
 
 export const Create = () => {
   const [name, setName] = useState("");
@@ -83,26 +84,30 @@ export const Create = () => {
         const formData = new FormData();
 
         formData.append("image", new Blob(images));
-        formData.append("name", name);
-        formData.append("title", title);
-        formData.append("genre", genre);
-        formData.append("creatorWords", creatorWords);
-        formData.append("gender", gender);
-        formData.append("appearance", appearance);
-        formData.append("personality", personality);
-        formData.append("hobby", hobby);
-        formData.append("tone", tone);
-        formData.append("extraInfo", extraInfo);
-        formData.append("summary", summary);
-        formData.append("relationship", relationship);
-        formData.append("email", email);
+        formData.append("name", escapeHtml(name));
+        formData.append("title", escapeHtml(title));
+        formData.append("genre", escapeHtml(genre));
+        formData.append("creatorWords", escapeHtml(creatorWords));
+        formData.append("gender", escapeHtml(gender));
+        formData.append("appearance", escapeHtml(appearance));
+        formData.append("personality", escapeHtml(personality));
+        formData.append("hobby", escapeHtml(hobby));
+        formData.append("tone", escapeHtml(tone));
+        formData.append("extraInfo", escapeHtml(extraInfo));
+        formData.append("summary", escapeHtml(summary));
+        formData.append("relationship", escapeHtml(relationship));
+        formData.append("email", escapeHtml(email));
         // formData.append("creatorNickname", creatorNickname);
 
-        for (let key of formData.keys()) {
-          console.log(key, ":", formData.get(key));
+        // for (let key of formData.keys()) {
+        //   console.log(key, ":", formData.get(key));
+        // }
+        try {
+          apiRequestPost("/character/request-create", formData);
+          setIsSubmit(true);
+        } catch (err) {
+          navigate("/error");
         }
-        apiRequestPost("/character/request-create", formData);
-        setIsSubmit(true);
       }
     } else {
       setIsTextModalOpen(true);

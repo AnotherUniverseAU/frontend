@@ -1,7 +1,7 @@
 import * as S from "src/styles/home/main.ts";
 
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MainHeader } from "src/components/header/main/mainHeader.tsx";
 import { MainImage } from "src/components/mainImage/mainImage.tsx";
 import { StyledImage } from "src/components/styledImage/styledImage.tsx";
@@ -14,6 +14,7 @@ import { apiRequestPost } from "src/apis/apiRequestPost";
 
 export const Main: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [isTutorial, setIsTutorial] = useState<boolean>(
     location.state?.from === "/nickname"
@@ -27,26 +28,25 @@ export const Main: React.FC = () => {
 
   useEffect(() => {
     const fetchCharacters = async () => {
-      const result = await apiRequestGet("/character/list");
-      setCharacters(result.characters);
+      try {
+        const result = await apiRequestGet("/character/list");
+        setCharacters(result.characters);
+      } catch (error) {
+        navigate("/error");
+      }
     };
 
     const fetchMainCharacter = async () => {
-      const result = await apiRequestGet("/character/main-character");
-      setMainCharacter(result.mainCharacter);
+      try {
+        const result = await apiRequestGet("/character/main-character");
+        setMainCharacter(result.mainCharacter);
+      } catch (error) {
+        navigate("/error");
+      }
     };
 
     fetchCharacters();
     fetchMainCharacter();
-
-    function sendFCMToken() {
-      const fcmToken = localStorage.getItem("fcmToken");
-      // axios를 사용하여 백엔드로 FCM Token 전송
-      // axios.post('https://example.com/fcm-token', { token: fcmToken });
-
-      apiRequestPost("/user/fcm-token", { fcmToken: fcmToken });
-    }
-    sendFCMToken();
   }, []);
 
   useEffect(() => {

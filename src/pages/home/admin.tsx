@@ -1,24 +1,191 @@
-import { useEffect, useState } from "react";
+import { ReactEventHandler, useEffect, useRef, useState } from "react";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 
+const ad1 = process.env.REACT_APP_ADMIN_ID1;
+const ad2 = process.env.REACT_APP_ADMIN_ID2;
+const ad3 = process.env.REACT_APP_ADMIN_ID3;
+const ad4 = process.env.REACT_APP_ADMIN_ID4;
+const adminList = [ad1, ad2, ad3, ad4];
+
 export const Admin = () => {
-  const [tomorrowMessage, setTommorowMessage] = useState<string>("");
-
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [characterList, setCharacterList] = useState([]);
+  const charIdRef = useRef<HTMLSelectElement>(null);
+  const DateRef = useRef<HTMLInputElement>(null);
+  const [characterChats, setCharacterChats] = useState<any>([]);
+  const [timeValue, setTimeValue] = useState<any>();
+  // const timeRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    const fetchTomorrowMessage = async () => {
-      const result = await apiRequestGet("/admin/tomorrow-message");
-      setTommorowMessage(result.tomorrowMessage);
+    const getCharInfo = async () => {
+      await apiRequestGet("user/info").then((res) => {
+        adminList.forEach((admin) => {
+          if (res.id === admin) {
+            setIsAdmin(true);
+          }
+        });
+      });
     };
-
-    fetchTomorrowMessage();
+    getCharInfo();
+    setTimeValue(
+      new Date(new Date().getTime() + 9 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 10)
+    );
   }, []);
+  useEffect(() => {
+    if (isAdmin) {
+      const getCharList = async () => {
+        const res: any = await apiRequestGet("/character/list");
+        setCharacterList(res.characters);
+      };
+      getCharList();
+    }
+  }, [isAdmin]);
+
+  const onChange = (e: any) => {
+    setTimeValue(e.target.value);
+  };
+  const onClick = (e: any) => {
+    const charIdCurrent = charIdRef.current;
+    const DateCurrent = DateRef.current;
+    if (charIdCurrent && DateCurrent) {
+      const charId = charIdCurrent.value;
+      const date = DateCurrent.value;
+      const time = "24:00";
+
+      const timestamp = new Date(date + " " + time);
+      apiRequestGet(
+        `/chatroom/chat-history/${charId}/${timestamp}?offset=0`
+      ).then((res) => {
+        console.log(res);
+        const getCharMessages = async () => {
+          const changedList = await changeDataForm(res);
+          console.log(changedList);
+          setCharacterChats(changedList);
+        };
+        getCharMessages();
+      });
+    }
+  };
+
+  const changeDataForm = async (chatHistory: any) => {
+    const chatList = [];
+    const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+
+
+    // 형식 변환해 chatList에 모두 넣기
+    // 각 캐릭터 메시지 뭉텅이 마다
+    for (let i of chatHistory.characterChats) {
+      // 각 내용마다
+      for (let j of i.content) {
+        if (j.startsWith("https:")) {
+          // 이미지일 때
+          const newMessage = {
+            time: new Date(Date.parse(i.timeToSend) + koreaTimeOffset)
+              .toISOString()
+              .replace("T", " ")
+              .substring(0, 16),
+            content: "",
+            sentby: "character",
+            type: "image",
+            imageUrl: j,
+          };
+          chatList.push(newMessage);
+        } else {
+          // text일 때
+          const newMessage = {
+            time: new Date(Date.parse(i.timeToSend) + koreaTimeOffset)
+              .toISOString()
+              .replace("T", " ")
+              .substring(0, 16),
+            content: j,
+            sentby: "character",
+            type: "text",
+          };
+          chatList.push(newMessage);
+        }
+      }
+      // 답장이 있다면 : 5분 추가해 다 넣어주자
+      if ("reply" in i && i.reply) {
+        i.reply.forEach((text: any) => {
+          const afterFiveM = new Date(
+            Date.parse(i.timeToSend) + 5 * 60 * 1000 + koreaTimeOffset
+          )
+            .toISOString()
+            .replace("T", " ")
+            .substring(0, 16);
+          const newMessage = {
+            time: afterFiveM,
+            content: text,
+            sentby: "character",
+            type: "text",
+          };
+          chatList.push(newMessage);
+        });
+      }
+    }
+    return chatList;
+  };
 
   return (
     <>
-      <div>내일 보낼 메시지</div>
-      <br />
-      <br />
-      {tomorrowMessage}
+      {isAdmin ? (
+        <>
+          <div>
+            <select ref={charIdRef}>
+              {characterList.map((char: any, idx: number) => {
+                return (
+                  <option key={idx} value={char.characterId}>
+                    {char.name}
+                  </option>
+                );
+              })}
+            </select>
+            <input
+              ref={DateRef}
+              onChange={onChange}
+              type="date"
+              id="date"
+              min="2024-04-01"
+              max="2024-06-30"
+              value={timeValue}
+            ></input>
+            {/* <input
+            ref={timeRef}
+            type="time"
+            onChange={onChange}
+            value={new Date(new Date().getTime() + 9 * 60 * 60 * 1000)
+              .toISOString()
+              .slice(11, 16)}
+          ></input> */}
+            <button onClick={onClick}>Search</button>
+          </div>
+          <div>
+            {characterChats.map((chat: any, idx: number) => {
+              return (
+                <>
+                  <div
+                    key={"d" + String(idx)}
+                    style={{
+                      width: "100vw",
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    {chat.imageUrl ? (
+                      <p key={"i" + String(idx)}>{chat.imageUrl}</p>
+                    ) : (
+                      <p key={"c" + String(idx)}>{chat.content}</p>
+                    )}
+                    <p key={"t" + String(idx)}>{chat.time}</p>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

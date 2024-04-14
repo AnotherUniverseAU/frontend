@@ -33,19 +33,18 @@ const noticeMockdata = {
 };
 
 interface NoticeProps {
-  id: number;
   title: string;
   content: string;
   date: string;
 }
 
-const NoticeItem = ({ id, title, content, date }: NoticeProps) => {
+const NoticeItem = ({ title, content, date }: NoticeProps) => {
   const navigate = useNavigate();
   const handleClick = (route: string) => () => {
-    navigate(route);
+    navigate(route, { state: { title, content, date } });
   };
   return (
-    <S.NoticeItem onClick={handleClick(`/noticeDetail/${id}`)}>
+    <S.NoticeItem onClick={handleClick(`/noticeDetail`)}>
       <S.NoticeContainer>
         <S.NoticeTitle>{title}</S.NoticeTitle>
         <S.NoticeDate>{date}</S.NoticeDate>
@@ -59,10 +58,16 @@ const NoticeItem = ({ id, title, content, date }: NoticeProps) => {
 
 export const Notice = () => {
   const [notificiations, setNotificiations] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const noticeData: any = apiRequestGet("/notificaition");
-    setNotificiations(noticeData.notifications);
+    try {
+      apiRequestGet("/notification").then((res) =>
+        setNotificiations(res.notifications)
+      );
+    } catch (err) {
+      navigate("/error");
+    }
   }, []);
 
   return (
@@ -72,10 +77,12 @@ export const Notice = () => {
         {notificiations.map((notice: any, idx) => (
           <NoticeItem
             key={idx}
-            id={idx + 1}
             title={notice.title}
             content={notice.content}
-            date={notice.date}
+            date={new Date(Date.parse(notice.createdDate) + 9 * 60 * 60 * 1000)
+              .toISOString()
+              .replace("T", " ")
+              .substring(0, 16)}
           />
         ))}
       </S.SubContainer>
