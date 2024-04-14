@@ -54,6 +54,7 @@ interface Chat {
   characterId: string;
   lastChat: string;
   lastAccess: string;
+  lastChatDate: string;
   unreadCount: number;
   exceedCount?: "string";
 }
@@ -89,7 +90,7 @@ const ChatListComponent = ({ chatRoomDatas }: ChatListProps) => {
             </S.ChatContent>
             <S.ChatSubContent>
               <S.ChatTime>
-                {chat.lastAccess.replace("T", " ").substring(11, 16)}
+                {chat.lastChatDate.replace("T", " ").substring(11, 16)}
               </S.ChatTime>
               <S.ChatNum>
                 {chat.exceedCount ? chat.exceedCount : chat.unreadCount}
@@ -103,45 +104,64 @@ const ChatListComponent = ({ chatRoomDatas }: ChatListProps) => {
 };
 
 export const ChatList = () => {
+  const [chatrooms, setChatrooms] = useState<any>([]);
+  const [nameAndPics, setNameAndPics] = useState<any>([]);
   const [chatList, setChatList] = useState<Chat[]>([]);
 
   useEffect(() => {
-    const apiData: any = apiRequestGet("/chatroom");
+    apiRequestGet("/character/info/bulk");
+    async function getDatas() {
+      const apiData: any = await apiRequestGet("/chatroom");
+      const namePicData: any = await apiRequestGet("/character/info/bulk");
+      console.log(namePicData);
+      // setChatrooms(apiData);
+      // setNameAndPics(namePicData);
+    }
+    getDatas();
     // 에서 가져왔다 치고~
     // const apiData = chatRoomMockData;
-    const newData = [];
+  }, []);
+  useEffect(() => {
+    console.log(chatrooms);
+    console.log(nameAndPics);
 
-    const namePicData = picNameMockData;
-    // const namePicData = apiRequestGet('/character/pic-name').nameAndPics;
-    for (let i in apiData.chatRoomDatas) {
-      for (let j in namePicData.nameAndPics) {
-        if (
-          apiData.chatRoomDatas[i].characterId ===
-          namePicData.nameAndPics[j].characterId
-        ) {
-          const { name, profilePicUrl } = picNameMockData.nameAndPics[j];
-          //
-          if (apiData.chatRoomDatas[i].unreadCount > 99) {
-            const littleNewData = {
-              ...apiData.chatRoomDatas[i],
-              exceedCount: `+99`,
-              name: name,
-              profilePicUrl: profilePicUrl,
-            };
-            newData.push(littleNewData);
-          } else {
-            const littleNewData = {
-              ...apiData.chatRoomDatas[i],
-              name: name,
-              profilePicUrl: profilePicUrl,
-            };
-            newData.push(littleNewData);
+    if (chatrooms !== undefined && nameAndPics !== undefined) {
+      const newData = [];
+
+      // const namePicData = picNameMockData;
+
+      for (let i in chatrooms.chatRoomDatas) {
+        console.log(i);
+        for (let j in nameAndPics) {
+          console.log(j);
+          if (
+            chatrooms.chatRoomDatas[i].characterId ===
+            nameAndPics[j].characterId
+          ) {
+            const { name, profilePicUrl } = nameAndPics[j];
+            //
+            if (chatrooms.chatRoomDatas[i].unreadCount > 99) {
+              const littleNewData = {
+                ...chatrooms.chatRoomDatas[i],
+                exceedCount: `+99`,
+                name: name,
+                profilePicUrl: profilePicUrl,
+              };
+              newData.push(littleNewData);
+            } else {
+              const littleNewData = {
+                ...chatrooms.chatRoomDatas[i],
+                name: name,
+                profilePicUrl: profilePicUrl,
+              };
+              newData.push(littleNewData);
+            }
           }
         }
       }
+      setChatList(newData);
     }
-    setChatList(newData);
-  }, []);
+  }, [chatrooms, nameAndPics]);
 
   return (
     <S.Container>

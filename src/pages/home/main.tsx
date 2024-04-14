@@ -9,6 +9,8 @@ import { IconFooter } from "src/components/footer//icon/iconFooter.tsx";
 import { Loading } from "src/pages/setting/loading.tsx";
 
 import { apiRequestGet } from "src/apis/apiRequestGet";
+import axios from "axios";
+import { apiRequestPost } from "src/apis/apiRequestPost";
 
 export const Main: React.FC = () => {
   const location = useLocation();
@@ -36,6 +38,15 @@ export const Main: React.FC = () => {
 
     fetchCharacters();
     fetchMainCharacter();
+
+    function sendFCMToken() {
+      const fcmToken = localStorage.getItem("fcmToken");
+      // axios를 사용하여 백엔드로 FCM Token 전송
+      // axios.post('https://example.com/fcm-token', { token: fcmToken });
+
+      apiRequestPost("/user/fcm-token", { fcmToken: fcmToken });
+    }
+    sendFCMToken();
   }, []);
 
   useEffect(() => {

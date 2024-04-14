@@ -14,6 +14,7 @@ import { apiRequestPost } from "src/apis/apiRequestPost";
 
 import { getNewToken } from "../../apis/getNewToken";
 import { set } from "lodash";
+import { Loading } from "../setting/loading";
 
 interface CharacterChat {
   _id: string;
@@ -39,13 +40,8 @@ const response1 = {
       _id: "65e1c90bc66b2b0ef618daa9",
       characterId: "65c0b542c9a646697bb644aa",
       characterName: "아냐 포저",
-      content: [
-        "우와 {user name}이다!!zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
-        "12312413413ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
-        "alsdkfjas;ldkfja;lsdkjf",
-        "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec%20(1).jpg",
-      ],
-      reply: ["허허허허허허", "반가워~"],
+      content: ["우와 {user name}이다!!"],
+      reply: ["허허허허허허"],
       timeToSend: "2024-04-01T07:14:15Z",
     },
     {
@@ -55,53 +51,53 @@ const response1 = {
       content: ["근데 아냐 지금 바빠!!", "아으~~~~~", "국밥을 쩝쩝"],
       timeToSend: "2024-04-01T23:14:15Z",
     },
-    {
-      _id: "65e1c90bc66b2b0ef618daa9",
-      characterId: "65c0b542c9a646697bb644aa",
-      characterName: "아냐 포저",
-      content: ["좀이따 문자할게!"],
-      timeToSend: "2024-04-01T03:14:15Z",
-    },
-    {
-      _id: "65e1c90bc66b2b0ef618daa9",
-      characterId: "65c0b542c9a646697bb644aa",
-      characterName: "아냐 포저",
-      content: ["쫌 기다려야돼!!!", "가만히 잘 있으라구~~"],
-      reply: ["뭐해??", "진짜 갔어??"],
-      timeToSend: "2024-04-03T13:14:15Z",
-    },
+    // {
+    //   _id: "65e1c90bc66b2b0ef618daa9",
+    //   characterId: "65c0b542c9a646697bb644aa",
+    //   characterName: "아냐 포저",
+    //   content: ["좀이따 문자할게!"],
+    //   timeToSend: "2024-04-01T03:14:15Z",
+    // },
+    // {
+    //   _id: "65e1c90bc66b2b0ef618daa9",
+    //   characterId: "65c0b542c9a646697bb644aa",
+    //   characterName: "아냐 포저",
+    //   content: ["쫌 기다려야돼!!!", "가만히 잘 있으라구~~"],
+    //   reply: ["뭐해??", "진짜 갔어??"],
+    //   timeToSend: "2024-04-03T13:14:15Z",
+    // },
   ],
   userReplies: [
-    {
-      userId: "11111111",
-      characterId: "65c0b542c9a646697bb644aa",
-      userReply: "안녕?",
-      replyTime: "2024-04-01T07:14:15Z",
-    },
-    {
-      userId: "11111111",
-      characterId: "65c0b542c9a646697bb644aa",
-      userReply: "지금 뭐해?",
-      replyTime: "2024-04-01T07:14:18Z",
-    },
-    {
-      userId: "11111111",
-      characterId: "65c0b542c9a646697bb644aa",
-      userReply: "오케이~~!",
-      replyTime: "2024-04-01T23:14:16Z",
-    },
-    {
-      userId: "11111111",
-      characterId: "65c0b542c9a646697bb644aa",
-      userReply: "난 이제 출근한다~~ 아냐는 뭐해??",
-      replyTime: "2024-04-02T19:13:11Z",
-    },
-    {
-      userId: "11111111",
-      characterId: "65c0b542c9a646697bb644aa",
-      userReply: "바이바이~",
-      replyTime: "2024-04-03T13:14:15Z",
-    },
+    // {
+    //   userId: "11111111",
+    //   characterId: "65c0b542c9a646697bb644aa",
+    //   userReply: "안녕?",
+    //   replyTime: "2024-04-01T07:14:15Z",
+    // },
+    // {
+    //   userId: "11111111",
+    //   characterId: "65c0b542c9a646697bb644aa",
+    //   userReply: "지금 뭐해?",
+    //   replyTime: "2024-04-01T07:14:18Z",
+    // },
+    // {
+    //   userId: "11111111",
+    //   characterId: "65c0b542c9a646697bb644aa",
+    //   userReply: "오케이~~!",
+    //   replyTime: "2024-04-01T23:14:16Z",
+    // },
+    // {
+    //   userId: "11111111",
+    //   characterId: "65c0b542c9a646697bb644aa",
+    //   userReply: "난 이제 출근한다~~ 아냐는 뭐해??",
+    //   replyTime: "2024-04-02T19:13:11Z",
+    // },
+    // {
+    //   userId: "11111111",
+    //   characterId: "65c0b542c9a646697bb644aa",
+    //   userReply: "바이바이~",
+    //   replyTime: "2024-04-03T13:14:15Z",
+    // },
   ],
 };
 const response = {
@@ -335,9 +331,11 @@ export const ChatRoom = (): JSX.Element => {
   const [isHelloShown, setIsHelloShown] = useState<boolean>(false);
   const [isFirst, setIsFirst] = useState<boolean>(true);
   const [firstChat, setFirstChat] = useState<ChatMessage[]>([]);
+  const [isFirstChat, setIsFirstChat] = useState<boolean>(false);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [firstTime, setFirstTime] = useState(String);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 유저 맨 위 스크롤할 때 로딩창 생기게 하기
   //처음 마운팅될 때 chatTutorial이 보여진 적 없으면 보여줌
@@ -352,6 +350,23 @@ export const ChatRoom = (): JSX.Element => {
     };
     getCharInfo();
 
+    const timeStamp = new Date(new Date().getTime()).toISOString();
+    setFirstTime(timeStamp);
+
+    const getFirstChat = async function () {
+      // const chatHistory = response;
+      // setFirstChat(changeDataForm(chatHistory));
+      // setIsFirstChat(true);
+      const chatHistory = await apiRequestGet(
+        `/chatroom/chat-history/${id}/${timeStamp}?offset=0`
+      ).then((res) => {
+        const firstChats = changeDataForm(res);
+        setFirstChat(firstChats);
+        setIsFirstChat(true);
+      });
+    };
+    getFirstChat();
+
     const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
     const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
     if (chatTutorialShown && replyTutorialShown) {
@@ -360,15 +375,6 @@ export const ChatRoom = (): JSX.Element => {
       setIsTuto(true);
     }
     getHello();
-    const timeStamp = new Date(new Date().getTime()).toISOString();
-    setFirstTime(timeStamp);
-    // api로 가져온다. 가져왔다 친다
-    // const chatHistory = apiRequestGet(`/chatroom/chat-history/${id}/${timeStamp}?offset=0`);
-    // const chatHistory = response1;
-    const chatHistory = nonResponse;
-
-    const firstChats = changeDataForm(chatHistory);
-    setFirstChat(firstChats);
 
     // 일단 후순위
     // const apiCallingTimer = setInterval(() => {
@@ -418,28 +424,79 @@ export const ChatRoom = (): JSX.Element => {
   };
   // helloMessage 받아올 때 튜토리얼인지 확인, 튜토리얼이라면 받아온 데이터로 chatMessage 수정
   useEffect(() => {
-    if (isTuto) {
-      const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
-      const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
-      if (!chatTutorialShown) {
-        setShowChatTutorial(true);
-        setChatMessages([helloMessages[0]]);
-      } else if (!replyTutorialShown) {
-        setChatMessages([...helloMessages, ...firstChat]);
-        setIsHelloShown(true);
+    if (helloMessages.length > 0) {
+      if (isTuto) {
+        const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
+        const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
+        if (!chatTutorialShown) {
+          setShowChatTutorial(true);
+          setChatMessages([helloMessages[0]]);
+        } else if (!replyTutorialShown) {
+          setChatMessages([...helloMessages, ...firstChat]);
+          setIsHelloShown(true);
+        }
       }
-    } else {
-      // 튜토리얼이 아니라면 처음 가져온 메시지 보여주기
-      // 챗 히스토리가 있으면
-      if (firstChat.length > 0) {
-        setChatMessages([...firstChat]);
-        // 챗 히스토리가 비어있으면 hello 보여주기
-      } else {
-        setChatMessages([...helloMessages]);
-        setIsHelloShown(true);
-      }
+      //  else {
+      //   if (isFirstChat) {
+      //     if (firstChat.length > 0) {
+      //       setChatMessages([...firstChat]);
+      //     } else {
+      //       setChatMessages([...helloMessages]);
+      //     }
+      //   }
+      // }
     }
   }, [helloMessages]);
+
+  const getNextChat = async () => {
+    // console.log(firstChat);
+    // const res = response1;
+    // setApiOffset((cur) => cur + 1);
+    // if (res.characterChats.length === 0 && res.userReplies.length === 0) {
+    //   setIsLastChat(true);
+    //   setChatMessages([...helloMessages, ...firstChat]);
+    //   setIsHelloShown(true);
+    //   setIsScrollTrigger(false);
+    // } else {
+    //   setChatMessages([...changeDataForm(res), ...chatMessages]);
+    // }
+    const nextHistory = await apiRequestGet(
+      `/chatroom/chat-history/${id}/${firstTime}?offset=${apiOffeset + 1}`
+    ).then((res) => {
+      setApiOffset((cur) => cur + 1);
+      setNextHistory(res);
+      if (res.characterChats.length === 0 && res.userReplies.length === 0) {
+        setIsLastChat(true);
+        setChatMessages([...helloMessages, ...firstChat]);
+        setIsHelloShown(true);
+        setIsScrollTrigger(false);
+      } else {
+        setChatMessages([...changeDataForm(res), ...chatMessages]);
+      }
+    });
+  };
+  useEffect(() => {
+    if (!isTuto && isFirstChat) {
+      if (firstChat.length > 0) {
+        // 튜토리얼이 아니라면 처음 가져온 메시지 보여주기
+
+        const chatWrapper = subContainerRef.current;
+        const chatContainer = middleRef.current;
+        if (chatContainer && chatWrapper) {
+          const containerH = chatContainer.clientHeight;
+          const scrollH = chatWrapper.scrollHeight;
+          // 스크롤이 생성될만큼이 안나온다면 다음 채팅 가져오는데, 비어있으면 hello랑 합쳐주고 helloshown true
+          if (scrollH < containerH) {
+            console.log("부족");
+            getNextChat();
+          }
+          // 챗 히스토리가 쌓여서 스크롤이 생성된다면 스크롤에게 맡긴다.
+        }
+      } else {
+        setChatMessages([...helloMessages]);
+      }
+    }
+  }, [chatMessages, firstChat]);
 
   // DB -> front형식으로 dataform 바꿔주기
   const changeDataForm = (chatHistory: Response) => {
@@ -653,37 +710,42 @@ export const ChatRoom = (): JSX.Element => {
           isLastChat === false
         ) {
           // 아래 주석으로 교체할 것.
-          const nextChat = nonResponse;
-          setIsScrollTrigger(false);
-          setApiOffset((offSet) => offSet + 1);
-          // apiRequestGet(
-          //   `/chatroom/chat-history/${id}/${firstTime}?offset=${apiOffeset + 1}`
-          // ).then((response) => {
-          //   setIsScrollTrigger(false);
-          //   setApiOffset((current) => current + 1);
-          //   setNextHistory(changeDataForm(response));
-          // });
+          // const nextChat = nonResponse;
+          // setIsScrollTrigger(false);
+          // setApiOffset((offSet) => offSet + 1);
+
+          apiRequestGet(
+            `/chatroom/chat-history/${id}/${firstTime}?offset=${apiOffeset + 1}`
+          ).then((response) => {
+            setIsScrollTrigger(false);
+            setApiOffset((current) => current + 1);
+            setNextHistory(changeDataForm(response));
+
+            if (
+              response.characterChats.length === 0 &&
+              response.userReplies.length === 0
+            ) {
+              // 마지막채팅state -> true, 스크롤 트리거 막음, 다음 채팅 -> hello
+              setIsLastChat(true);
+              setIsScrollTrigger(false);
+            } else {
+              // 다음 데이터가 안 비어있다면 그대로 다음 채팅 state에 넣어줌
+              setNextHistory(changeDataForm(response));
+            }
+          });
 
           // 다음 데이터가 비어있을 시(현재까지가 마지막 채팅)
-          if (
-            nextChat.characterChats.length === 0 &&
-            nextChat.userReplies.length === 0
-          ) {
-            // 마지막채팅state -> true, 스크롤 트리거 막음, 다음 채팅 -> hello
-            setIsLastChat(true);
-            setIsScrollTrigger(false);
 
-            setNextHistory(helloMessages);
-          } else {
-            // 다음 데이터가 안 비어있다면 그대로 다음 채팅 state에 넣어줌
-            setNextHistory(changeDataForm(nextChat));
-          }
           // 만약 스크롤이 맨 위고 스크롤 트리거가 막혀있고
         } else if (e.target.scrollTop === 0 && isScrollTrigger === false) {
+          console.log("스크롤 맨 위, 스크롤 트리거 막힘");
           // 마지막 채팅일 경우
           if (isLastChat) {
-            // 헬로우 메시지가 보여진 적 없다면 : 챗메시지앞에 다음 채팅 넣어주고 스크롤 현재로 유지, 트리거 끈 상태로 유지
-            if (!isHelloShown) {
+            console.log("마지막 채팅");
+            // 헬로우 메시지가 보여진 적 없다면 : 챗메시지앞에 다음 채팅 넣어주고 스크롤 현재로 유지, 트리거 끈 상태로 유지'
+            console.log(isHelloShown);
+            if (isHelloShown === false) {
+              console.log("보여줘야 함");
               const beforeScrollH = current?.scrollHeight;
 
               setChatMessages([...helloMessages, ...chatMessages]);
@@ -791,13 +853,16 @@ export const ChatRoom = (): JSX.Element => {
   const onRoomOut = () => {
     // 채팅방 나가는 api콜 날리기
     setIsModalOpen(false);
+    setIsLoading(true);
     const res: any = apiRequestPost("/subscription/unsubscribe", {
       characterId: id,
     }).then((response) => {
       if (response) {
+        setIsLoading(false);
         navigate("/chatlist");
       } else {
-        alert("나가는데 실패했습니다");
+        // 에러 페이지 띄워주기
+        console.log("하하하");
       }
     });
   };
@@ -880,59 +945,65 @@ export const ChatRoom = (): JSX.Element => {
   };
 
   return (
-    <S.Container>
-      {isModalOpen && (
-        <S.StyledModal open={isModalOpen}>
-          <S.ModalContainer>
-            <S.ModalText>채팅방을 나가시겠습니까?</S.ModalText>
-            <S.ModalButtonContainer>
-              <S.ModalLeftButton onClick={() => setIsModalOpen(false)}>
-                취소
-              </S.ModalLeftButton>
-              <S.ModalRightButton onClick={onRoomOut}>
-                나가기
-              </S.ModalRightButton>
-            </S.ModalButtonContainer>
-          </S.ModalContainer>
-        </S.StyledModal>
+    <>
+      {isLoading === true ? (
+        <Loading></Loading>
+      ) : (
+        <S.Container>
+          {isModalOpen && (
+            <S.StyledModal open={isModalOpen}>
+              <S.ModalContainer>
+                <S.ModalText>채팅방을 나가시겠습니까?</S.ModalText>
+                <S.ModalButtonContainer>
+                  <S.ModalLeftButton onClick={() => setIsModalOpen(false)}>
+                    취소
+                  </S.ModalLeftButton>
+                  <S.ModalRightButton onClick={onRoomOut}>
+                    나가기
+                  </S.ModalRightButton>
+                </S.ModalButtonContainer>
+              </S.ModalContainer>
+            </S.StyledModal>
+          )}
+          <ChatHeader
+            route="/chatlist"
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
+            title={characterName}
+            characterId={id}
+          />
+          <S.SubContainer ref={middleRef}>
+            {(showChatTutorial || showReplyTutorial) && (
+              <S.ChatTutorialContainer>
+                <S.TutorialBox
+                  ref={sizeRef}
+                  $top={tutorialPosition[0]}
+                  $left={tutorialPosition[1]}
+                >
+                  <TutorialContainer
+                    text={
+                      showChatTutorial
+                        ? "캐릭터는 일과 중 짬날 때,\n하루 약 7번 찾아와요"
+                        : "이용자 분들의 답변 중,\n캐릭터가 선택한 답변에\n답장을 보내줘요"
+                    }
+                  ></TutorialContainer>
+                  <S.ChatTutorialButton
+                    onClick={
+                      showChatTutorial
+                        ? handleChatTutorialClose
+                        : handleReplyTutorialClose
+                    }
+                  >
+                    OK
+                  </S.ChatTutorialButton>
+                </S.TutorialBox>
+              </S.ChatTutorialContainer>
+            )}
+            {renderMessages({ showChatTutorial })}
+          </S.SubContainer>
+          <ChatFooter isTuto={isTuto} setChatMessage={addChatMessage} />
+        </S.Container>
       )}
-      <ChatHeader
-        route="/chatlist"
-        setIsModalOpen={setIsModalOpen}
-        isModalOpen={isModalOpen}
-        title={characterName}
-        characterId={id}
-      />
-      <S.SubContainer ref={middleRef}>
-        {(showChatTutorial || showReplyTutorial) && (
-          <S.ChatTutorialContainer>
-            <S.TutorialBox
-              ref={sizeRef}
-              $top={tutorialPosition[0]}
-              $left={tutorialPosition[1]}
-            >
-              <TutorialContainer
-                text={
-                  showChatTutorial
-                    ? "캐릭터는 일과 중 짬날 때,\n하루 약 7번 찾아와요"
-                    : "이용자 분들의 답변 중,\n캐릭터가 선택한 답변에\n답장을 보내줘요"
-                }
-              ></TutorialContainer>
-              <S.ChatTutorialButton
-                onClick={
-                  showChatTutorial
-                    ? handleChatTutorialClose
-                    : handleReplyTutorialClose
-                }
-              >
-                OK
-              </S.ChatTutorialButton>
-            </S.TutorialBox>
-          </S.ChatTutorialContainer>
-        )}
-        {renderMessages({ showChatTutorial })}
-      </S.SubContainer>
-      <ChatFooter isTuto={isTuto} setChatMessage={addChatMessage} />
-    </S.Container>
+    </>
   );
 };
