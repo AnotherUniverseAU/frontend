@@ -3,7 +3,7 @@ import { IconFooter } from "src/components/footer/icon/iconFooter.tsx";
 import * as S from "src/styles/chat/list.ts";
 import { useState, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { Loading } from "src/pages/setting/loading.tsx";
@@ -107,19 +107,23 @@ export const ChatList = () => {
   const [chatrooms, setChatrooms] = useState<any>([]);
   const [nameAndPics, setNameAndPics] = useState<any>([]);
   const [chatList, setChatList] = useState<Chat[]>([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    apiRequestGet("/character/info/bulk");
     async function getDatas() {
-      const apiData: any = await apiRequestGet("/chatroom");
-      const namePicData: any = await apiRequestGet("/character/info/bulk");
-
-      setChatrooms(apiData);
-      setNameAndPics(namePicData);
+      try {
+        const apiData: any = await apiRequestGet("/chatroom");
+        setChatrooms(apiData);
+      } catch (error) {
+        navigate("/error");
+      }
+      try {
+        const apiData: any = await apiRequestGet("character/info/bulk");
+        setChatrooms(apiData);
+      } catch (error) {
+        navigate("/error");
+      }
     }
     getDatas();
-    // 에서 가져왔다 치고~
-    // const apiData = chatRoomMockData;
   }, []);
   useEffect(() => {
     console.log(chatrooms);

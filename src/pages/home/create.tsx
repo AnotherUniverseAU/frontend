@@ -99,11 +99,15 @@ export const Create = () => {
         formData.append("email", escapeHtml(email));
         // formData.append("creatorNickname", creatorNickname);
 
-        for (let key of formData.keys()) {
-          console.log(key, ":", formData.get(key));
+        // for (let key of formData.keys()) {
+        //   console.log(key, ":", formData.get(key));
+        // }
+        try {
+          apiRequestPost("/character/request-create", formData);
+          setIsSubmit(true);
+        } catch (err) {
+          navigate("/error");
         }
-        apiRequestPost("/character/request-create", formData);
-        setIsSubmit(true);
       }
     } else {
       setIsTextModalOpen(true);

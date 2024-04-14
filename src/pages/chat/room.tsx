@@ -342,11 +342,15 @@ export const ChatRoom = (): JSX.Element => {
   useEffect(() => {
     // 캐릭터 정보 api콜 보내서 가져오기
     const getCharInfo = async function () {
-      const res = await apiRequestGet(`character/info/${id}`);
-      // const res = characterInfo;
+      try {
+        const res = await apiRequestGet(`character/info/${id}`);
+        setCharacterName(res.character.name);
+        setProfileImageUrl(res.character.profilePicUrl);
+      } catch (err) {
+        navigate("/error");
+      }
 
-      setCharacterName(res.character.name);
-      setProfileImageUrl(res.character.profilePicUrl);
+      // const res = characterInfo;
     };
     getCharInfo();
 
@@ -357,13 +361,17 @@ export const ChatRoom = (): JSX.Element => {
       // const chatHistory = response;
       // setFirstChat(changeDataForm(chatHistory));
       // setIsFirstChat(true);
-      const chatHistory = await apiRequestGet(
-        `/chatroom/chat-history/${id}/${timeStamp}?offset=0`
-      ).then((res) => {
-        const firstChats = changeDataForm(res);
-        setFirstChat(firstChats);
-        setIsFirstChat(true);
-      });
+      try {
+        const chatHistory = await apiRequestGet(
+          `/chatroom/chat-history/${id}/${timeStamp}?offset=0`
+        ).then((res) => {
+          const firstChats = changeDataForm(res);
+          setFirstChat(firstChats);
+          setIsFirstChat(true);
+        });
+      } catch (err) {
+        navigate("/error");
+      }
     };
     getFirstChat();
 
@@ -713,26 +721,31 @@ export const ChatRoom = (): JSX.Element => {
           // const nextChat = nonResponse;
           // setIsScrollTrigger(false);
           // setApiOffset((offSet) => offSet + 1);
-
-          apiRequestGet(
-            `/chatroom/chat-history/${id}/${firstTime}?offset=${apiOffeset + 1}`
-          ).then((response) => {
-            setIsScrollTrigger(false);
-            setApiOffset((current) => current + 1);
-            setNextHistory(changeDataForm(response));
-
-            if (
-              response.characterChats.length === 0 &&
-              response.userReplies.length === 0
-            ) {
-              // 마지막채팅state -> true, 스크롤 트리거 막음, 다음 채팅 -> hello
-              setIsLastChat(true);
+          try {
+            apiRequestGet(
+              `/chatroom/chat-history/${id}/${firstTime}?offset=${
+                apiOffeset + 1
+              }`
+            ).then((response) => {
               setIsScrollTrigger(false);
-            } else {
-              // 다음 데이터가 안 비어있다면 그대로 다음 채팅 state에 넣어줌
+              setApiOffset((current) => current + 1);
               setNextHistory(changeDataForm(response));
-            }
-          });
+
+              if (
+                response.characterChats.length === 0 &&
+                response.userReplies.length === 0
+              ) {
+                // 마지막채팅state -> true, 스크롤 트리거 막음, 다음 채팅 -> hello
+                setIsLastChat(true);
+                setIsScrollTrigger(false);
+              } else {
+                // 다음 데이터가 안 비어있다면 그대로 다음 채팅 state에 넣어줌
+                setNextHistory(changeDataForm(response));
+              }
+            });
+          } catch (error) {
+            navigate("error");
+          }
 
           // 다음 데이터가 비어있을 시(현재까지가 마지막 채팅)
 
@@ -854,17 +867,21 @@ export const ChatRoom = (): JSX.Element => {
     // 채팅방 나가는 api콜 날리기
     setIsModalOpen(false);
     setIsLoading(true);
-    const res: any = apiRequestPost("/subscription/unsubscribe", {
-      characterId: id,
-    }).then((response) => {
-      if (response) {
-        setIsLoading(false);
-        navigate("/chatlist");
-      } else {
-        // 에러 페이지 띄워주기
-        console.log("하하하");
-      }
-    });
+    try {
+      const res: any = apiRequestPost("/subscription/unsubscribe", {
+        characterId: id,
+      }).then((response) => {
+        if (response) {
+          setIsLoading(false);
+          navigate("/chatlist");
+        } else {
+          // 에러 페이지 띄워주기
+          console.log("하하하");
+        }
+      });
+    } catch (err) {
+      navigate("/error");
+    }
   };
 
   const renderMessages = ({

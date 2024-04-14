@@ -58,11 +58,16 @@ const NoticeItem = ({ title, content, date }: NoticeProps) => {
 
 export const Notice = () => {
   const [notificiations, setNotificiations] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const noticeData: any = apiRequestGet("/notification").then((res) =>
-      setNotificiations(res.notifications)
-    );
+    try {
+      apiRequestGet("/notification").then((res) =>
+        setNotificiations(res.notifications)
+      );
+    } catch (err) {
+      navigate("/error");
+    }
   }, []);
 
   return (
