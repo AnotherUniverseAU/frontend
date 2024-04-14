@@ -574,7 +574,7 @@ export const ChatRoom = (): JSX.Element => {
             .toISOString()
             .replace("T", " ")
             .substring(0, 16),
-          content: chat.userReply,
+          content: decodeHtml(chat.userReply),
           sentby: "user",
           type: "text",
         };

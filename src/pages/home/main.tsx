@@ -38,15 +38,6 @@ export const Main: React.FC = () => {
 
     fetchCharacters();
     fetchMainCharacter();
-
-    function sendFCMToken() {
-      const fcmToken = localStorage.getItem("fcmToken");
-      // axios를 사용하여 백엔드로 FCM Token 전송
-      // axios.post('https://example.com/fcm-token', { token: fcmToken });
-
-      apiRequestPost("/user/fcm-token", { fcmToken: fcmToken });
-    }
-    sendFCMToken();
   }, []);
 
   useEffect(() => {

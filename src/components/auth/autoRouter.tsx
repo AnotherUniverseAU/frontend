@@ -74,7 +74,7 @@ const RouterInfo: RouterItem[] = [
   { path: "/admin", element: <Admin />, withAuthorization: true },
   { path: "/", element: <Main />, withAuthorization: true },
   {
-    path: "/noticeDetail/:id",
+    path: "/noticeDetail",
     element: <NoticeDetail />,
     withAuthorization: true,
   },

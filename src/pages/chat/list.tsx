@@ -113,9 +113,9 @@ export const ChatList = () => {
     async function getDatas() {
       const apiData: any = await apiRequestGet("/chatroom");
       const namePicData: any = await apiRequestGet("/character/info/bulk");
-      console.log(namePicData);
-      // setChatrooms(apiData);
-      // setNameAndPics(namePicData);
+
+      setChatrooms(apiData);
+      setNameAndPics(namePicData);
     }
     getDatas();
     // 에서 가져왔다 치고~
