@@ -353,8 +353,10 @@ export const ChatRoom = (): JSX.Element => {
       // const res = characterInfo;
     };
     getCharInfo();
-
-    const timeStamp = new Date(new Date().getTime()).toISOString();
+    const koreaTimeOffset = 9 * 60 * 60 * 1000;
+    const timeStamp = new Date(
+      new Date().getTime() + koreaTimeOffset
+    ).toISOString();
     setFirstTime(timeStamp);
 
     const getFirstChat = async function () {
