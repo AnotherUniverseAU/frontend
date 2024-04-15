@@ -1,11 +1,28 @@
 import { ReactEventHandler, useEffect, useRef, useState } from "react";
 import { apiRequestGet } from "src/apis/apiRequestGet";
+import styled from "styled-components";
 
 const ad1 = process.env.REACT_APP_ADMIN_ID1;
 const ad2 = process.env.REACT_APP_ADMIN_ID2;
 const ad3 = process.env.REACT_APP_ADMIN_ID3;
 const ad4 = process.env.REACT_APP_ADMIN_ID4;
 const adminList = [ad1, ad2, ad3, ad4];
+
+const Table = styled.table``;
+const Tr = styled.tr`
+  border: 1px solid;
+`;
+const ContentTd = styled.td`
+  border: 1px solid;
+`;
+const TimeTd = styled.td`
+  border: 1px solid;
+`;
+const StyledP = styled.p`
+  overflow-wrap: break-word;
+  max-width: 70vw;
+  padding: 0.5vw;
+`;
 
 export const Admin = () => {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -159,29 +176,34 @@ export const Admin = () => {
           ></input> */}
             <button onClick={onClick}>Search</button>
           </div>
-          <div>
+          <Table>
+            <Tr>
+              <th style={{ border: "1px solid" }}>content</th>
+              <th style={{ border: "1px solid" }}>time</th>
+            </Tr>
             {characterChats.map((chat: any, idx: number) => {
               return (
-                <>
-                  <div
-                    key={"d" + String(idx)}
-                    style={{
-                      width: "100vw",
-                      display: "flex",
-                      flexDirection: "row",
-                    }}
-                  >
-                    {chat.imageUrl ? (
-                      <p key={"i" + String(idx)}>{chat.imageUrl}</p>
-                    ) : (
-                      <p key={"c" + String(idx)}>{chat.content}</p>
-                    )}
-                    <p key={"t" + String(idx)}>{chat.time}</p>
-                  </div>
-                </>
+                <Tr key={"d" + String(idx)}>
+                  {chat.imageUrl ? (
+                    <ContentTd key={"i" + String(idx)}>
+                      <img
+                        src={chat.imageUrl}
+                        alt="이미지"
+                        style={{ maxWidth: "50%" }}
+                      ></img>
+                    </ContentTd>
+                  ) : (
+                    <ContentTd key={"c" + String(idx)}>
+                      <StyledP>{chat.content}</StyledP>
+                    </ContentTd>
+                  )}
+                  <TimeTd key={"t" + String(idx)}>
+                    <StyledP>{chat.time.substring(5, 16)}</StyledP>
+                  </TimeTd>
+                </Tr>
               );
             })}
-          </div>
+          </Table>
         </>
       ) : (
         <></>
