@@ -399,8 +399,9 @@ export const ChatRoom = (): JSX.Element => {
 
   // hello 가져오기
   const getHello = async () => {
-    // const helloRes = await apiRequestGet(`/character/hello/${id}`);
-    const helloRes = firstMessage;
+    const helloRes = await apiRequestGet(`/character/hello/${id}`);
+    console.log(helloRes);
+    // const helloRes = firstMessage;
     const contentList = [...helloRes.helloMessage, helloRes.helloPicture];
     const helloList: React.SetStateAction<ChatMessage[]> = [];
     const koreaTimeOffset = 9 * 60 * 60 * 1000;
@@ -432,6 +433,7 @@ export const ChatRoom = (): JSX.Element => {
     });
     setHelloMessages(helloList);
   };
+
   // helloMessage 받아올 때 튜토리얼인지 확인, 튜토리얼이라면 받아온 데이터로 chatMessage 수정
   useEffect(() => {
     if (helloMessages.length > 0) {
@@ -445,68 +447,85 @@ export const ChatRoom = (): JSX.Element => {
           setChatMessages([...helloMessages, ...firstChat]);
           setIsHelloShown(true);
         }
+      } else {
+        if (helloMessages.length > 0 && isFirstChat === true) {
+          // 첫 대화 없다면
+          if (firstChat.length === 0) {
+            setChatMessages([...helloMessages]);
+            setIsHelloShown(true);
+            setIsLastChat(true);
+            setIsScrollTrigger(false);
+            // 맨 아래로 옮겨주기 위함
+            setIsFirst(false);
+          } else {
+            setChatMessages([...firstChat]);
+          }
+        }
       }
-      //  else {
-      //   if (isFirstChat) {
-      //     if (firstChat.length > 0) {
-      //       setChatMessages([...firstChat]);
-      //     } else {
-      //       setChatMessages([...helloMessages]);
-      //     }
-      //   }
-      // }
     }
-  }, [helloMessages]);
+  }, [helloMessages, firstChat]);
 
   const getNextChat = async () => {
-    // console.log(firstChat);
-    // const res = response1;
-    // setApiOffset((cur) => cur + 1);
-    // if (res.characterChats.length === 0 && res.userReplies.length === 0) {
-    //   setIsLastChat(true);
-    //   setChatMessages([...helloMessages, ...firstChat]);
-    //   setIsHelloShown(true);
-    //   setIsScrollTrigger(false);
-    // } else {
-    //   setChatMessages([...changeDataForm(res), ...chatMessages]);
-    // }
     const nextHistory = await apiRequestGet(
       `/chatroom/chat-history/${id}/${firstTime}?offset=${apiOffeset + 1}`
     ).then((res) => {
       setApiOffset((cur) => cur + 1);
       setNextHistory(res);
+      // 그 전 히스토리 비어있음(마지막 채팅)
       if (res.characterChats.length === 0 && res.userReplies.length === 0) {
+        // 마지막 채팅
         setIsLastChat(true);
         setChatMessages([...helloMessages, ...firstChat]);
+        // 맨 아래로 옮겨주기 위함
+        setIsFirst(false);
+        // 헬로우 더 안가져오기
         setIsHelloShown(true);
+        // 히스토리 더 없으므로 스크롤 막아줌
         setIsScrollTrigger(false);
       } else {
+        // 그 전 히스토리 안비어있으니 chatMessages에 넣어줌
         setChatMessages([...changeDataForm(res), ...chatMessages]);
       }
     });
   };
-  useEffect(() => {
-    if (!isTuto && isFirstChat) {
-      if (firstChat.length > 0) {
-        // 튜토리얼이 아니라면 처음 가져온 메시지 보여주기
 
-        const chatWrapper = subContainerRef.current;
-        const chatContainer = middleRef.current;
-        if (chatContainer && chatWrapper) {
-          const containerH = chatContainer.clientHeight;
-          const scrollH = chatWrapper.scrollHeight;
-          // 스크롤이 생성될만큼이 안나온다면 다음 채팅 가져오는데, 비어있으면 hello랑 합쳐주고 helloshown true
-          if (scrollH < containerH) {
-            console.log("부족");
-            getNextChat();
+  useEffect(() => {
+    // 챗메시지 변경될 때마다
+    // 처음이라면
+    if (isFirst === true) {
+      if (helloMessages.length > 0 && isFirstChat === true) {
+        if (firstChat.length > 0) {
+          const chatWrapper = subContainerRef.current;
+          const chatContainer = middleRef.current;
+          if (chatContainer && chatWrapper) {
+            const containerH = chatContainer.clientHeight;
+            const scrollH = chatWrapper.scrollHeight;
+            if (scrollH < containerH) {
+              // 스크롤이 생성될만큼이 안나온다면 다음 채팅 가져오는데, 비어있으면 hello랑 합쳐주고 helloshown true
+              getNextChat();
+            } else {
+              setIsFirst(false);
+            }
+            // 챗 히스토리가 쌓여서 스크롤이 생성된다면 스크롤에게 맡긴다.
           }
-          // 챗 히스토리가 쌓여서 스크롤이 생성된다면 스크롤에게 맡긴다.
         }
-      } else {
-        setChatMessages([...helloMessages]);
       }
     }
-  }, [chatMessages, firstChat]);
+  }, [chatMessages]);
+
+  // 최초 chatMessages 설정됐을 때 한 번만 맨 아래 보여주는 로직
+  useEffect(() => {
+    if (isFirst === false) {
+      setTimeout(() => {
+        const current = subContainerRef.current;
+        if (current) {
+          current.scrollTop = current.scrollHeight;
+        }
+      }, 100);
+
+      setIsFirst(false);
+    }
+  }, [isFirst]);
 
   // DB -> front형식으로 dataform 바꿔주기
   const changeDataForm = (chatHistory: Response) => {
@@ -690,18 +709,6 @@ export const ChatRoom = (): JSX.Element => {
               }
             }
           }
-        }
-        // 튜토리얼 아닌데 chatMessages 변경될 때 : 최초 챗룸 들어왔을 때 한 번만 맨 아래 보여주는 로직
-      } else {
-        if (isFirst) {
-          setTimeout(() => {
-            const current = subContainerRef.current;
-            if (current) {
-              current.scrollTop = current.scrollHeight;
-            }
-          }, 100);
-
-          setIsFirst(false);
         }
       }
     }
