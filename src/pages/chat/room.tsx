@@ -384,7 +384,16 @@ export const ChatRoom = (): JSX.Element => {
     } else {
       setIsTuto(true);
     }
-    getHello();
+    const getHelloTime = async () => {
+      const res = await apiRequestGet("/chatroom");
+      for (let i of res.chatRoomDatas) {
+        if (i.characterId === id) {
+          const firstTime = i.createdDate;
+          return firstTime;
+        }
+      }
+    };
+    getHelloTime().then((firstTime) => getHello(firstTime));
 
     // 일단 후순위
     // const apiCallingTimer = setInterval(() => {
@@ -398,21 +407,22 @@ export const ChatRoom = (): JSX.Element => {
   }, []);
 
   // hello 가져오기
-  const getHello = async () => {
-    const helloRes = await apiRequestGet(`/character/hello/${id}`);
-    console.log(helloRes);
-    // const helloRes = firstMessage;
+  const getHello = async (firstTime: string) => {
+    // const helloRes = await apiRequestGet(`/character/hello/${id}`);
+    // console.log(helloRes);
+    const helloRes = firstMessage;
     const contentList = [...helloRes.helloMessage, helloRes.helloPicture];
     const helloList: React.SetStateAction<ChatMessage[]> = [];
     const koreaTimeOffset = 9 * 60 * 60 * 1000;
+    const newTime = new Date(Date.parse(firstTime) + koreaTimeOffset)
+      .toISOString()
+      .replace("T", " ")
+      .substring(0, 16);
     contentList.forEach((message) => {
       if (message.startsWith("https:")) {
         helloList.push({
           // 시간은 챗룸 생성 시간
-          time: new Date(Date.parse("2024-03-27T07:14:15Z") + koreaTimeOffset)
-            .toISOString()
-            .replace("T", " ")
-            .substring(0, 16),
+          time: newTime,
           content: "",
           sentby: "character",
           type: "image",
@@ -421,10 +431,7 @@ export const ChatRoom = (): JSX.Element => {
       } else {
         helloList.push({
           // 시간은 챗룸 생성 시간
-          time: new Date(Date.parse("2024-03-27T07:14:15Z") + koreaTimeOffset)
-            .toISOString()
-            .replace("T", " ")
-            .substring(0, 16),
+          time: newTime,
           content: message,
           sentby: "character",
           type: "text",
