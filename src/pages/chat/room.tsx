@@ -354,8 +354,9 @@ export const ChatRoom = (): JSX.Element => {
     };
     getCharInfo();
     const koreaTimeOffset = 9 * 60 * 60 * 1000;
+    const nowTime = new Date(new Date().getTime()).toISOString();
     const timeStamp = new Date(
-      new Date().getTime() + koreaTimeOffset
+      Date.parse(nowTime) + koreaTimeOffset
     ).toISOString();
     setFirstTime(timeStamp);
 
@@ -365,9 +366,10 @@ export const ChatRoom = (): JSX.Element => {
       // setIsFirstChat(true);
       try {
         const chatHistory = await apiRequestGet(
-          `/chatroom/chat-history/${id}/${timeStamp}?offset=0`
+          `/chatroom/chat-history/${id}/${nowTime}?offset=0`
         ).then((res) => {
           const firstChats = changeDataForm(res);
+          console.log(firstChats);
           setFirstChat(firstChats);
           setIsFirstChat(true);
         });
@@ -408,41 +410,44 @@ export const ChatRoom = (): JSX.Element => {
 
   // hello 가져오기
   const getHello = async (firstTime: string) => {
-    // const helloRes = await apiRequestGet(`/character/hello/${id}`);
-    // console.log(helloRes);
-    const helloRes = firstMessage;
-    const contentList = [...helloRes.helloMessage, helloRes.helloPicture];
-    const helloList: React.SetStateAction<ChatMessage[]> = [];
-    const koreaTimeOffset = 9 * 60 * 60 * 1000;
-    const newTime = new Date(Date.parse(firstTime) + koreaTimeOffset)
-      .toISOString()
-      .replace("T", " ")
-      .substring(0, 16);
-    contentList.forEach((message) => {
-      if (message.startsWith("https:")) {
-        helloList.push({
-          // 시간은 챗룸 생성 시간
-          time: newTime,
-          content: "",
-          sentby: "character",
-          type: "image",
-          imageUrl: message,
+    const helloRes = await apiRequestGet(`/character/hello/${id}`).then(
+      (res) => {
+        const contentList = [...res.helloMessage];
+        const helloList: React.SetStateAction<ChatMessage[]> = [];
+        const koreaTimeOffset = 9 * 60 * 60 * 1000;
+        const newTime = new Date(Date.parse(firstTime) + koreaTimeOffset)
+          .toISOString()
+          .replace("T", " ")
+          .substring(0, 16);
+
+        contentList.forEach((message) => {
+          if (message.startsWith("https:")) {
+            helloList.push({
+              // 시간은 챗룸 생성 시간
+              time: newTime,
+              content: "",
+              sentby: "character",
+              type: "image",
+              imageUrl: message,
+            });
+          } else {
+            helloList.push({
+              // 시간은 챗룸 생성 시간
+              time: newTime,
+              content: message,
+              sentby: "character",
+              type: "text",
+            });
+          }
         });
-      } else {
-        helloList.push({
-          // 시간은 챗룸 생성 시간
-          time: newTime,
-          content: message,
-          sentby: "character",
-          type: "text",
-        });
+        setHelloMessages(helloList);
       }
-    });
-    setHelloMessages(helloList);
+    );
   };
 
   // helloMessage 받아올 때 튜토리얼인지 확인, 튜토리얼이라면 받아온 데이터로 chatMessage 수정
   useEffect(() => {
+    console.log(helloMessages, firstChat);
     if (helloMessages.length > 0) {
       if (isTuto) {
         const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
@@ -455,9 +460,11 @@ export const ChatRoom = (): JSX.Element => {
           setIsHelloShown(true);
         }
       } else {
-        if (helloMessages.length > 0 && isFirstChat === true) {
+        console.log("카카카카");
+        if (isFirstChat === true) {
           // 첫 대화 없다면
           if (firstChat.length === 0) {
+            console.log("첫 대화 없음");
             setChatMessages([...helloMessages]);
             setIsHelloShown(true);
             setIsLastChat(true);
@@ -465,6 +472,7 @@ export const ChatRoom = (): JSX.Element => {
             // 맨 아래로 옮겨주기 위함
             setIsFirst(false);
           } else {
+            console.log("첫 대화 있음");
             setChatMessages([...firstChat]);
           }
         }
@@ -482,7 +490,7 @@ export const ChatRoom = (): JSX.Element => {
       if (res.characterChats.length === 0 && res.userReplies.length === 0) {
         // 마지막 채팅
         setIsLastChat(true);
-        setChatMessages([...helloMessages, ...firstChat]);
+        setChatMessages([...helloMessages, ...chatMessages]);
         // 맨 아래로 옮겨주기 위함
         setIsFirst(false);
         // 헬로우 더 안가져오기
@@ -491,15 +499,19 @@ export const ChatRoom = (): JSX.Element => {
         setIsScrollTrigger(false);
       } else {
         // 그 전 히스토리 안비어있으니 chatMessages에 넣어줌
-        setChatMessages([...changeDataForm(res), ...chatMessages]);
+        const changedRes = changeDataForm(res);
+        console.log(changedRes);
+        setChatMessages([...changedRes, ...chatMessages]);
       }
     });
   };
 
   useEffect(() => {
+    console.log(chatMessages);
     // 챗메시지 변경될 때마다
     // 처음이라면
     if (isFirst === true) {
+      console.log("처음");
       if (helloMessages.length > 0 && isFirstChat === true) {
         if (firstChat.length > 0) {
           const chatWrapper = subContainerRef.current;
@@ -508,9 +520,14 @@ export const ChatRoom = (): JSX.Element => {
             const containerH = chatContainer.clientHeight;
             const scrollH = chatWrapper.scrollHeight;
             if (scrollH < containerH) {
+              console.log("스크롤 생성 안됨");
               // 스크롤이 생성될만큼이 안나온다면 다음 채팅 가져오는데, 비어있으면 hello랑 합쳐주고 helloshown true
-              getNextChat();
+              const getChat = async () => {
+                await getNextChat();
+              };
+              getChat();
             } else {
+              console.log("스크롤 생성됨!");
               setIsFirst(false);
             }
             // 챗 히스토리가 쌓여서 스크롤이 생성된다면 스크롤에게 맡긴다.
@@ -786,7 +803,7 @@ export const ChatRoom = (): JSX.Element => {
                   const afterScrollH = current.scrollHeight;
                   current.scrollTop = afterScrollH - beforeScrollH;
                 }
-              }, 10);
+              }, 0);
             }
             // 마지막 채팅 아님 : 챗메시지앞에 다음 채팅 넣어주고 스크롤 현재로 유지, 트리거 켜줌
           } else {
@@ -844,6 +861,7 @@ export const ChatRoom = (): JSX.Element => {
     imageUrl?: string;
     isSent: boolean;
   }) => {
+    console.log("하하하");
     const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+9
     const timeInKorea = new Date(new Date().getTime() + koreaTimeOffset)
       .toISOString()

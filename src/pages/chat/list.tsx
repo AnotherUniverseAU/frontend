@@ -76,6 +76,7 @@ const NoChatsComponent = () => {
 const StyledLink = styled(Link)``;
 
 const ChatListComponent = ({ chatRoomDatas }: ChatListProps) => {
+  const koreaTimeOffset = 9 * 60 * 60 * 1000;
   return (
     <>
       {chatRoomDatas.map((chat) => (
@@ -90,7 +91,10 @@ const ChatListComponent = ({ chatRoomDatas }: ChatListProps) => {
             </S.ChatContent>
             <S.ChatSubContent>
               <S.ChatTime>
-                {chat.lastChatDate.replace("T", " ").substring(11, 16)}
+                {new Date(Date.parse(chat.lastChatDate) + koreaTimeOffset)
+                  .toISOString()
+                  .replace("T", " ")
+                  .substring(11, 16)}
               </S.ChatTime>
               <S.ChatNum>
                 {chat.exceedCount ? chat.exceedCount : chat.unreadCount}
@@ -118,7 +122,7 @@ export const ChatList = () => {
       }
       try {
         const apiData: any = await apiRequestGet("character/info/bulk");
-        setChatrooms(apiData);
+        setNameAndPics(apiData);
       } catch (error) {
         navigate("/error");
       }
@@ -136,17 +140,25 @@ export const ChatList = () => {
 
       for (let i in chatrooms.chatRoomDatas) {
         console.log(i);
-        for (let j in nameAndPics) {
+        for (let j in nameAndPics.characters) {
           console.log(j);
           if (
             chatrooms.chatRoomDatas[i].characterId ===
-            nameAndPics[j].characterId
+            nameAndPics.characters[j].characterId
           ) {
-            const { name, profilePicUrl } = nameAndPics[j];
+            const { name, profilePicUrl } = nameAndPics.characters[j];
             //
+            let lastChat;
+            if (chatrooms.chatRoomDatas[i].lastChat) {
+              chatrooms.chatRoomDatas[i].lastChat.startsWith("https")
+                ? (lastChat = "사진")
+                : (lastChat = chatrooms.chatRoomDatas[i].lastChat);
+            }
+
             if (chatrooms.chatRoomDatas[i].unreadCount > 99) {
               const littleNewData = {
                 ...chatrooms.chatRoomDatas[i],
+                lastChat: lastChat,
                 exceedCount: `+99`,
                 name: name,
                 profilePicUrl: profilePicUrl,
@@ -155,6 +167,7 @@ export const ChatList = () => {
             } else {
               const littleNewData = {
                 ...chatrooms.chatRoomDatas[i],
+                lastChat: lastChat,
                 name: name,
                 profilePicUrl: profilePicUrl,
               };
