@@ -22,7 +22,7 @@ export const EachNicknameEdit = () => {
   useEffect(() => {
     const getNickname = async function () {
       // api는 각 채팅방 닉네임 가져오는 걸로 변경하기
-      const res = await apiRequestGet("/user/nickname");
+      const res = await apiRequestGet(`/chatroom/user-nickname/${characterId}`);
       console.log(res);
       setNicknameEdit(res.nickname);
     };
