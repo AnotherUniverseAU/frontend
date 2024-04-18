@@ -31,6 +31,15 @@ jobs:
           app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "build" # Built app content directory - optional
+        env:
+          REACT_APP_KAKAO_CLIENT_ID: ${{ secrets.REACT_APP_KAKAO_CLIENT_ID }}
+          REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+          REACT_APP_GTM_ID: ${{ secrets.REACT_APP_GTM_ID }}
+          REACT_APP_ADMIN_ID1: ${{ secrets.REACT_APP_ADMIN_ID1 }}
+          REACT_APP_ADMIN_ID2: ${{ secrets.REACT_APP_ADMIN_ID2 }}
+          REACT_APP_ADMIN_ID3: ${{ secrets.REACT_APP_ADMIN_ID3 }}
+          REACT_APP_ADMIN_ID4: ${{ secrets.REACT_APP_ADMIN_ID4 }}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
