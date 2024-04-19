@@ -41,8 +41,10 @@ export const Nickname = () => {
                     console.log('Received FCM Token:', token);
                     localStorage.setItem('fcmToken', token);
                 }
+                alert(`전달 받은 fcmtoken: ${type}이고 ${token}`);
             } catch (error) {
                 console.error('Error handling message from WebView:', error);
+                alert(`FCMToken 수신 중 오류가 발생했습니다. 다시 시도해 주세요, ${error}`);
             }
         };
 
@@ -99,6 +101,7 @@ export const Nickname = () => {
                     // 닉네임 업데이트 성공 시, FCM 토큰 전송을 시도합니다.
                     try {
                         const fcmToken = localStorage.getItem('fcmToken');
+                        alert('fcmToken: ' + fcmToken);
                         const tokenRes = await apiRequestPost('/user/fcm-token', { fcmToken: fcmToken });
 
                         if (tokenRes) {
@@ -107,7 +110,7 @@ export const Nickname = () => {
                         } else {
                             // FCM 토큰 업데이트 실패
                             console.error('FCM 토큰 업데이트 실패:', tokenRes);
-                            alert('FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요.');
+                            alert(`FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`);
                         }
                     } catch (error) {
                         console.error('FCM 토큰 전송 중 오류 발생:', error);
