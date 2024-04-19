@@ -19,47 +19,47 @@ export const Nickname = () => {
 
     const navigate = useNavigate();
 
-    // const handleMessage = async (event: any) => {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //     const testData = event.data;
-    //     alert(`받은 메시지: ${testData}`);
-    //     console.log('Received message from WebView:', testData);
-    //     try {
-    //         const { type, data } = event.data;
-    //         alert('data입니다' + data);
-    //         if (type === 'FCM_TOKEN') {
-    //             console.log('Received FCM Token:', data);
-    //             localStorage.setItem('fcmToken', data);
-    //         }
-    //         alert(`전달 받은 fcmtoken: ${type}이고 ${data}`);
-    //     } catch (error) {
-    //         console.error('Error handling message from WebView:', error);
-    //         alert(`FCMToken 수신 중 오류가 발생했습니다. 다시 시도해 주세요, ${error}`);
-    //     }
-    // };
-
     const handleMessage = async (event: any) => {
         event.preventDefault();
         event.stopPropagation();
-
-        // 이 예제에서는 테스트를 위해 임의의 데이터를 사용합니다.
-        // 실제 사용 시에는 event.data가 실제로 존재하는지 확인하고 사용해야 합니다.
-        const testData = event.data || { type: 'FCM_TOKEN', data: 'test-token-from-event' };
-
+        const testData = event.data;
+        alert(`받은 메시지: ${testData}`);
         console.log('Received message from WebView:', testData);
         try {
-            const { type, data } = testData;
+            const { type, data } = event.data;
+            alert('data입니다' + data);
             if (type === 'FCM_TOKEN') {
                 console.log('Received FCM Token:', data);
                 localStorage.setItem('fcmToken', data);
-                alert(`전달 받은 FCM 토큰: ${type}이고 ${data}`);
             }
+            alert(`전달 받은 fcmtoken: ${type}이고 ${data}`);
         } catch (error) {
             console.error('Error handling message from WebView:', error);
-            alert(`FCM 토큰 수신 중 오류가 발생했습니다. 다시 시도해 주세요. ${error}`);
+            alert(`FCMToken 수신 중 오류가 발생했습니다. 다시 시도해 주세요, ${error}`);
         }
     };
+
+    // const handleMessage = async (event: any) => {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+
+    //     // 이 예제에서는 테스트를 위해 임의의 데이터를 사용합니다.
+    //     // 실제 사용 시에는 event.data가 실제로 존재하는지 확인하고 사용해야 합니다.
+    //     const testData = event.data || { type: 'FCM_TOKEN', data: 'test-token-from-event' };
+
+    //     console.log('Received message from WebView:', testData);
+    //     try {
+    //         const { type, data } = testData;
+    //         if (type === 'FCM_TOKEN') {
+    //             console.log('Received FCM Token:', data);
+    //             localStorage.setItem('fcmToken', data);
+    //             alert(`전달 받은 FCM 토큰: ${type}이고 ${data}`);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error handling message from WebView:', error);
+    //         alert(`FCM 토큰 수신 중 오류가 발생했습니다. 다시 시도해 주세요. ${error}`);
+    //     }
+    // };
 
     useEffect(() => {
         const getNickname = async () => {
@@ -195,7 +195,6 @@ export const Nickname = () => {
                     <S.InfoContainer>
                         <button
                             onClick={(e: any) => {
-                                e.data = { type: 'FCM_TOKEN', data: 'example-token' }; // 이벤트 객체에 데이터를 추가합니다.
                                 handleMessage(e);
                             }}
                         >
