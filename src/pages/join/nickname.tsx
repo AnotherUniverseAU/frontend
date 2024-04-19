@@ -195,7 +195,6 @@ export const Nickname = () => {
                     <S.InfoContainer>
                         <button
                             onClick={(e: any) => {
-                                e.data = { type: 'FCM_TOKEN', data: 'example-token' }; // 이벤트 객체에 데이터를 추가합니다.
                                 handleMessage(e);
                             }}
                         >
