@@ -34,6 +34,7 @@ export const Nickname = () => {
         getNickname();
 
         const handleMessage = async (event: any) => {
+            await alert(`받은 메시지: ${event.data}`);
             console.log('Received message from WebView:', event.data);
             try {
                 const { type, token } = JSON.parse(event.data);
