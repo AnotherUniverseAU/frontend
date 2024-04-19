@@ -53,7 +53,7 @@ export const Nickname = () => {
         };
         getNickname();
 
-        document.addEventListener('message', handleMessage);
+        window.addEventListener('message', handleMessage);
     }, []);
 
     // const updateNickname = async (nickname: string) => {
