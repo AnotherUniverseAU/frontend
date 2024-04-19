@@ -20,6 +20,8 @@ export const Nickname = () => {
     const navigate = useNavigate();
 
     const handleMessage = async (event: any) => {
+        event.preventDefault();
+        event.stopPropagation();
         const testData = event.data;
         alert(`받은 메시지: ${testData}`);
         console.log('Received message from WebView:', testData);
@@ -51,7 +53,7 @@ export const Nickname = () => {
         };
         getNickname();
 
-        window.addEventListener('message', handleMessage);
+        document.addEventListener('message', handleMessage);
     }, []);
 
     // const updateNickname = async (nickname: string) => {
