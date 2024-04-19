@@ -27,6 +27,14 @@ export const Main: React.FC = () => {
   const [selectedGenre, setSelectedGenre] = useState<string>("all");
 
   useEffect(() => {
+    if (location.state) {
+      const { fromLogin } = location.state;
+      console.log(fromLogin);
+      if (fromLogin === true) {
+        window.location.reload();
+      }
+    }
+
     const fetchCharacters = async () => {
       try {
         const result = await apiRequestGet("/character/list");

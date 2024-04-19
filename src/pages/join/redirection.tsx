@@ -26,6 +26,7 @@ export const Redirection = () => {
     };
 
     getToken().then((res) => {
+      console.log("로그인 완료");
       setTimeout(() => {
         setIsLogin(true);
       }, 1000);
@@ -34,7 +35,7 @@ export const Redirection = () => {
 
   useEffect(() => {
     if (isLogin === true) {
-      navigate("/");
+      navigate("/", { state: { fromLogin: true } });
     }
   }, [isLogin]);
 
