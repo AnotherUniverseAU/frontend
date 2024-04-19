@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import * as S from "src/styles/join/nickname.ts";
@@ -21,9 +21,13 @@ export const Nickname = () => {
 
   useEffect(() => {
     const getNickname = async () => {
-      const res = await apiRequestGet("user/nickname");
-      if (res.nickname !== "") {
-        setNickname(res.nickname);
+      try {
+        const res = await apiRequestGet("user/nickname");
+        if (res.nickname !== "") {
+          setNickname(res.nickname);
+        }
+      } catch (e) {
+        window.location.reload();
       }
     };
     getNickname();
