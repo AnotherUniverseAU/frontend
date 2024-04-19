@@ -53,18 +53,22 @@ export const Nickname = () => {
         };
         getNickname();
 
-        document.addEventListener('message', (event) => {
-            alert('메시지 받음' + event.data);
-            try {
-                const data = JSON.parse(event.data);
-                if (data.type === 'FCM_TOKEN') {
-                    console.log('Received FCM Token:', data.token);
-                    localStorage.setItem('fcmToken', data.token);
+        window.addEventListener(
+            'message',
+            (event) => {
+                alert('메시지 받음' + event.data);
+                try {
+                    const data = JSON.parse(event.data);
+                    if (data.type === 'FCM_TOKEN') {
+                        console.log('Received FCM Token:', data.token);
+                        localStorage.setItem('fcmToken', data.token);
+                    }
+                } catch (error) {
+                    console.error('Error handling message from WebView:', error);
                 }
-            } catch (error) {
-                console.error('Error handling message from WebView:', error);
-            }
-        });
+            },
+            true
+        );
     }, []);
 
     // const updateNickname = async (nickname: string) => {
