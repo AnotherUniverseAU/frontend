@@ -19,6 +19,22 @@ export const Nickname = () => {
 
     const navigate = useNavigate();
 
+    const handleMessage = async (event: any) => {
+        alert(`받은 메시지: ${event.data}`);
+        console.log('Received message from WebView:', event.data);
+        try {
+            const { type, token } = JSON.parse(event.data);
+            if (type === 'FCM_TOKEN') {
+                console.log('Received FCM Token:', token);
+                localStorage.setItem('fcmToken', token);
+            }
+            alert(`전달 받은 fcmtoken: ${type}이고 ${token}`);
+        } catch (error) {
+            console.error('Error handling message from WebView:', error);
+            alert(`FCMToken 수신 중 오류가 발생했습니다. 다시 시도해 주세요, ${error}`);
+        }
+    };
+
     useEffect(() => {
         const getNickname = async () => {
             // try {
@@ -32,21 +48,6 @@ export const Nickname = () => {
             // }
         };
         getNickname();
-
-        const handleMessage = async (event: any) => {
-            console.log('Received message from WebView:', event.data);
-            try {
-                const { type, token } = JSON.parse(event.data);
-                if (type === 'FCM_TOKEN') {
-                    console.log('Received FCM Token:', token);
-                    localStorage.setItem('fcmToken', token);
-                }
-                alert(`전달 받은 fcmtoken: ${type}이고 ${token}`);
-            } catch (error) {
-                console.error('Error handling message from WebView:', error);
-                alert(`FCMToken 수신 중 오류가 발생했습니다. 다시 시도해 주세요, ${error}`);
-            }
-        };
 
         window.addEventListener('message', handleMessage);
 
