@@ -35,7 +35,7 @@ export const Redirection = () => {
 
   useEffect(() => {
     if (isLogin === true) {
-      navigate("/", { state: { fromLogin: true } });
+      navigate("/nickname");
     }
   }, [isLogin]);
 
