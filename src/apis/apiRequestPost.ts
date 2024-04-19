@@ -2,10 +2,10 @@ import { getNewToken } from "src/apis/getNewToken";
 import { AuthVerify } from "./authVerify";
 import type { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import axios from "axios";
+import { getCookie } from "src/hooks/cookie";
 
-const accessToken = localStorage.getItem("accessToken") as string;
+const accessToken = getCookie("accessToken") as string;
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-// const refresh = localStorage.getItem("refreshToken");
 
 export const apiRequestPost = async (path: string, data: any) => {
   const customHttp = axios.create({

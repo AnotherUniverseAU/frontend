@@ -13,8 +13,8 @@ import { apiRequestGet } from "src/apis/apiRequestGet";
 import { apiRequestPost } from "src/apis/apiRequestPost";
 
 import { getNewToken } from "../../apis/getNewToken";
-import { set } from "lodash";
 import { Loading } from "../setting/loading";
+import { getCookie, setCookie } from "src/hooks/cookie";
 
 interface CharacterChat {
   _id: string;
@@ -24,165 +24,6 @@ interface CharacterChat {
   reply?: string[];
   timeToSend: string;
 }
-const characterInfo = {
-  character: {
-    characterId: "65c0b542c9a646697bb644aa",
-    name: "이영찬",
-    profilePicUrl:
-      "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec (1).jpg",
-  },
-};
-
-const nonResponse = { characterChats: [], userReplies: [] };
-const response1 = {
-  characterChats: [
-    {
-      _id: "65e1c90bc66b2b0ef618daa9",
-      characterId: "65c0b542c9a646697bb644aa",
-      characterName: "아냐 포저",
-      content: ["우와 {user name}이다!!"],
-      reply: ["허허허허허허"],
-      timeToSend: "2024-04-01T07:14:15Z",
-    },
-    {
-      _id: "65e1c90bc66b2b0ef618daa9",
-      characterId: "65c0b542c9a646697bb644aa",
-      characterName: "아냐 포저",
-      content: ["근데 아냐 지금 바빠!!", "아으~~~~~", "국밥을 쩝쩝"],
-      timeToSend: "2024-04-01T23:14:15Z",
-    },
-    // {
-    //   _id: "65e1c90bc66b2b0ef618daa9",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   characterName: "아냐 포저",
-    //   content: ["좀이따 문자할게!"],
-    //   timeToSend: "2024-04-01T03:14:15Z",
-    // },
-    // {
-    //   _id: "65e1c90bc66b2b0ef618daa9",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   characterName: "아냐 포저",
-    //   content: ["쫌 기다려야돼!!!", "가만히 잘 있으라구~~"],
-    //   reply: ["뭐해??", "진짜 갔어??"],
-    //   timeToSend: "2024-04-03T13:14:15Z",
-    // },
-  ],
-  userReplies: [
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "안녕?",
-    //   replyTime: "2024-04-01T07:14:15Z",
-    // },
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "지금 뭐해?",
-    //   replyTime: "2024-04-01T07:14:18Z",
-    // },
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "오케이~~!",
-    //   replyTime: "2024-04-01T23:14:16Z",
-    // },
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "난 이제 출근한다~~ 아냐는 뭐해??",
-    //   replyTime: "2024-04-02T19:13:11Z",
-    // },
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "바이바이~",
-    //   replyTime: "2024-04-03T13:14:15Z",
-    // },
-  ],
-};
-const response = {
-  characterChats: [
-    {
-      _id: "65e1c90bc66b2b0ef618daa9",
-      characterId: "65c0b542c9a646697bb644aa",
-      characterName: "아냐 포저",
-      content: [
-        "우와 {user name}이다!!",
-        "12312413413",
-        "alsdkfjas;ldkfja;lsdkjf",
-        "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec%20(1).jpg",
-      ],
-      reply: ["허허허허허허", "반가워~"],
-      timeToSend: "2024-04-01T07:14:15Z",
-    },
-    {
-      _id: "65e1c90bc66b2b0ef618daa9",
-      characterId: "65c0b542c9a646697bb644aa",
-      characterName: "아냐 포저",
-      content: ["근데 아냐 지금 바빠!!", "아으~~~~~", "국밥을 쩝쩝"],
-      timeToSend: "2024-04-01T23:14:15Z",
-    },
-    {
-      _id: "65e1c90bc66b2b0ef618daa9",
-      characterId: "65c0b542c9a646697bb644aa",
-      characterName: "아냐 포저",
-      content: ["좀이따 문자할게!"],
-      timeToSend: "2024-04-01T03:14:15Z",
-    },
-    {
-      _id: "65e1c90bc66b2b0ef618daa9",
-      characterId: "65c0b542c9a646697bb644aa",
-      characterName: "아냐 포저",
-      content: ["쫌 기다려야돼!!!", "가만히 잘 있으라구~~"],
-      timeToSend: "2024-04-03T13:14:15Z",
-    },
-  ],
-  userReplies: [
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "안녕?",
-    //   replyTime: "2024-04-01T07:14:15Z",
-    // },
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "지금 뭐해?",
-    //   replyTime: "2024-04-01T07:14:18Z",
-    // },
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "오케이~~!",
-    //   replyTime: "2024-04-01T23:14:16Z",
-    // },
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "난 이제 출근한다~~ 아냐는 뭐해??",
-    //   replyTime: "2024-04-02T19:13:11Z",
-    // },
-    // {
-    //   userId: "11111111",
-    //   characterId: "65c0b542c9a646697bb644aa",
-    //   userReply: "바이바이~",
-    //   replyTime: "2024-04-03T13:14:15Z",
-    // },
-  ],
-};
-const firstMessage = {
-  characterId: "65c0b542c9a646697bb644aa",
-  helloMessage: [
-    "우와 이영찬이다!!",
-    "근데 아냐 지금 바빠!!",
-    "좀이따 문자할게!",
-    "쫌 기다려야돼!!!",
-    "ㅎㅎㅎㅎㅎ",
-    "ㅎㅎㅎㅎㅎ",
-  ],
-  helloPicture:
-    "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec (1).jpg",
-};
 interface Response {
   characterChats: CharacterChat[];
   userReplies: UserReply[];
@@ -270,18 +111,6 @@ const UserMessage: React.FC<UserMessageProps> = ({
   showReplyTutorial,
   showMessageTime,
 }) => {
-  // if (showMessageTime) {
-  //   let time = message.time.split(" ")[1];
-  //   if (time.substring(0, 1) === "0") {
-  //     time = time.substring(1);
-  //     const timeMA = "오전 " + time;
-
-  //   } else {
-  //     const timeMA =
-  //       Number(time.substring(0, 2)) < 12 ? "오전 " + time : "오후 " + time;
-
-  //   }
-  // }
   return (
     <S.UserMessageWrapper
       sentby="user"
@@ -349,8 +178,6 @@ export const ChatRoom = (): JSX.Element => {
       } catch (err) {
         navigate("/error");
       }
-
-      // const res = characterInfo;
     };
     getCharInfo();
     const koreaTimeOffset = 9 * 60 * 60 * 1000;
@@ -361,15 +188,11 @@ export const ChatRoom = (): JSX.Element => {
     setFirstTime(timeStamp);
 
     const getFirstChat = async function () {
-      // const chatHistory = response;
-      // setFirstChat(changeDataForm(chatHistory));
-      // setIsFirstChat(true);
       try {
         const chatHistory = await apiRequestGet(
           `/chatroom/chat-history/${id}/${nowTime}?offset=0`
         ).then((res) => {
           const firstChats = changeDataForm(res);
-          console.log(firstChats);
           setFirstChat(firstChats);
           setIsFirstChat(true);
         });
@@ -379,8 +202,8 @@ export const ChatRoom = (): JSX.Element => {
     };
     getFirstChat();
 
-    const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
-    const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
+    const chatTutorialShown = getCookie(`chatTutorialShown`);
+    const replyTutorialShown = getCookie(`replyTutorialShown`);
     if (chatTutorialShown && replyTutorialShown) {
       setIsTuto(false);
     } else {
@@ -447,24 +270,21 @@ export const ChatRoom = (): JSX.Element => {
 
   // helloMessage 받아올 때 튜토리얼인지 확인, 튜토리얼이라면 받아온 데이터로 chatMessage 수정
   useEffect(() => {
-    console.log(helloMessages, firstChat);
     if (helloMessages.length > 0) {
       if (isTuto) {
-        const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
-        const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
-        if (!chatTutorialShown) {
+        const chatTutorialShown = getCookie(`chatTutorialShown`);
+        const replyTutorialShown = getCookie(`replyTutorialShown`);
+        if (chatTutorialShown !== true) {
           setShowChatTutorial(true);
           setChatMessages([helloMessages[0]]);
-        } else if (!replyTutorialShown) {
+        } else if (replyTutorialShown !== true) {
           setChatMessages([...helloMessages, ...firstChat]);
           setIsHelloShown(true);
         }
       } else {
-        console.log("카카카카");
         if (isFirstChat === true) {
           // 첫 대화 없다면
           if (firstChat.length === 0) {
-            console.log("첫 대화 없음");
             setChatMessages([...helloMessages]);
             setIsHelloShown(true);
             setIsLastChat(true);
@@ -472,7 +292,6 @@ export const ChatRoom = (): JSX.Element => {
             // 맨 아래로 옮겨주기 위함
             setIsFirst(false);
           } else {
-            console.log("첫 대화 있음");
             setChatMessages([...firstChat]);
           }
         }
@@ -500,18 +319,15 @@ export const ChatRoom = (): JSX.Element => {
       } else {
         // 그 전 히스토리 안비어있으니 chatMessages에 넣어줌
         const changedRes = changeDataForm(res);
-        console.log(changedRes);
         setChatMessages([...changedRes, ...chatMessages]);
       }
     });
   };
 
   useEffect(() => {
-    console.log(chatMessages);
     // 챗메시지 변경될 때마다
     // 처음이라면
     if (isFirst === true) {
-      console.log("처음");
       if (helloMessages.length > 0 && isFirstChat === true) {
         if (firstChat.length > 0) {
           const chatWrapper = subContainerRef.current;
@@ -520,14 +336,12 @@ export const ChatRoom = (): JSX.Element => {
             const containerH = chatContainer.clientHeight;
             const scrollH = chatWrapper.scrollHeight;
             if (scrollH < containerH) {
-              console.log("스크롤 생성 안됨");
               // 스크롤이 생성될만큼이 안나온다면 다음 채팅 가져오는데, 비어있으면 hello랑 합쳐주고 helloshown true
               const getChat = async () => {
                 await getNextChat();
               };
               getChat();
             } else {
-              console.log("스크롤 생성됨!");
               setIsFirst(false);
             }
             // 챗 히스토리가 쌓여서 스크롤이 생성된다면 스크롤에게 맡긴다.
@@ -784,14 +598,10 @@ export const ChatRoom = (): JSX.Element => {
 
           // 만약 스크롤이 맨 위고 스크롤 트리거가 막혀있고
         } else if (e.target.scrollTop === 0 && isScrollTrigger === false) {
-          console.log("스크롤 맨 위, 스크롤 트리거 막힘");
           // 마지막 채팅일 경우
           if (isLastChat) {
-            console.log("마지막 채팅");
             // 헬로우 메시지가 보여진 적 없다면 : 챗메시지앞에 다음 채팅 넣어주고 스크롤 현재로 유지, 트리거 끈 상태로 유지'
-            console.log(isHelloShown);
             if (isHelloShown === false) {
-              console.log("보여줘야 함");
               const beforeScrollH = current?.scrollHeight;
 
               setChatMessages([...helloMessages, ...chatMessages]);
@@ -803,7 +613,7 @@ export const ChatRoom = (): JSX.Element => {
                   const afterScrollH = current.scrollHeight;
                   current.scrollTop = afterScrollH - beforeScrollH;
                 }
-              }, 0);
+              }, 10);
             }
             // 마지막 채팅 아님 : 챗메시지앞에 다음 채팅 넣어주고 스크롤 현재로 유지, 트리거 켜줌
           } else {
@@ -825,7 +635,7 @@ export const ChatRoom = (): JSX.Element => {
   // 챗 튜토리얼 끌 때
   const handleChatTutorialClose = () => {
     setShowChatTutorial(false);
-    localStorage.setItem(`chatTutorialShown`, "true");
+    setCookie("chatTutorialShown", "true", "tuto");
     setChatMessages([...helloMessages, ...firstChat]);
     const current = subContainerRef.current;
     // div 조정하면서 넣었던 empty-div 삭제해주기
@@ -844,7 +654,7 @@ export const ChatRoom = (): JSX.Element => {
   // 답장 튜토리얼 끌 때
   const handleReplyTutorialClose = () => {
     setShowReplyTutorial(false);
-    localStorage.setItem(`replyTutorialShown`, "true");
+    setCookie(`replyTutorialShown`, "true", "tuto");
     const current = subContainerRef.current;
     const element = document.querySelector(".empty-div");
     // div 조정하면서 넣었던 empty-div 삭제해주기
@@ -861,7 +671,6 @@ export const ChatRoom = (): JSX.Element => {
     imageUrl?: string;
     isSent: boolean;
   }) => {
-    console.log("하하하");
     const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+9
     const timeInKorea = new Date(new Date().getTime() + koreaTimeOffset)
       .toISOString()
@@ -890,8 +699,8 @@ export const ChatRoom = (): JSX.Element => {
 
     //replyTutorial가 보여진 적 없으면 답장 튜토리얼 보여줌
     if (isTuto) {
-      const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
-      if (replyTutorialShown === null) {
+      const replyTutorialShown = getCookie(`replyTutorialShown`);
+      if (!replyTutorialShown) {
         setShowReplyTutorial(true);
       }
     }
@@ -910,7 +719,6 @@ export const ChatRoom = (): JSX.Element => {
           navigate("/chatlist");
         } else {
           // 에러 페이지 띄워주기
-          console.log("하하하");
         }
       });
     } catch (err) {

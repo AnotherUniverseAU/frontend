@@ -116,6 +116,14 @@ export const Container = styled.div`
   background: #f2f3f6;
   overflow: scroll;
 `;
+export const SubContainer = styled.div`
+  margin: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex;
+
+  height: calc(100vh - 10rem);
+`;
 
 export const TItleContainer = styled.div`
   width: 90vw;
@@ -129,4 +137,5 @@ export const Title = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0.8rem 0;
+  padding-left: 5vw;
 `;

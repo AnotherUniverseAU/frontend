@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Loading } from "../setting/loading";
+import { setCookie } from "src/hooks/cookie";
 
 export const Redirection = () => {
   const params = new URLSearchParams(window.location.search);
@@ -21,8 +22,8 @@ export const Redirection = () => {
       );
       const { access_token, refresh_token } = res.data;
 
-      localStorage.setItem("accessToken", access_token);
-      localStorage.setItem("refreshToken", refresh_token);
+      setCookie("accessToken", access_token, "accToken");
+      setCookie("refreshToken", refresh_token, "refToken");
     };
 
     getToken().then((res) => {

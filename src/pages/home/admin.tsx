@@ -36,6 +36,7 @@ export const Admin = () => {
     const getCharInfo = async () => {
       await apiRequestGet("user/info").then((res) => {
         adminList.forEach((admin) => {
+          console.log(res.id, admin);
           if (res.id === admin) {
             setIsAdmin(true);
           }
@@ -206,7 +207,7 @@ export const Admin = () => {
           </Table>
         </>
       ) : (
-        <></>
+        <>어드민 아님</>
       )}
     </>
   );
