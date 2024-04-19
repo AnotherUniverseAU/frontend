@@ -8,46 +8,6 @@ import styled from "styled-components";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { Loading } from "src/pages/setting/loading.tsx";
 
-const picNameMockData = {
-  nameAndPics: [
-    {
-      characterId: "6617e54d2957fc21b66eaf2f",
-      name: "이영찬",
-      profilePicUrl:
-        "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec (1).jpg",
-    },
-    {
-      characterId: "65c0b542c9a646697bb644ab",
-      name: "강동혁",
-      profilePicUrl:
-        "https://anotheruniverse.blob.core.windows.net/user-reply-image/18822cf2b4512c2ec (1).jpg",
-    },
-  ],
-};
-
-const chatRoomMockData = {
-  chatRoomDatas: [
-    {
-      characterId: "65c0b542c9a646697bb644aa",
-      lastAccess: "2024-04-03T13:14:15Z",
-      lastChat: "하하하하하하하",
-      unreadCount: 4,
-    },
-    {
-      characterId: "65c0b542c9a646697bb644ab",
-      lastAccess: "2024-04-03T13:28:15Z",
-      lastChat: "음허허허허허허",
-      unreadCount: 1,
-    },
-    {
-      characterId: "65c0b542c9a646697bb644ac",
-      lastAccess: "2024-04-08T13:50:10Z",
-      lastChat: ";;;;;",
-      unreadCount: 110,
-    },
-  ],
-};
-
 interface Chat {
   name: string;
   profilePicUrl: string;
@@ -183,15 +143,16 @@ export const ChatList = () => {
   return (
     <S.Container>
       <MainHeader toCreate={true} isTutorial={false} />
-      <S.TItleContainer>
-        <S.Title>CHATS</S.Title>
-      </S.TItleContainer>
-      {chatList.length === 0 ? (
-        <NoChatsComponent />
-      ) : (
-        <ChatListComponent chatRoomDatas={chatList} />
-      )}
-
+      <S.SubContainer>
+        <S.TItleContainer>
+          <S.Title>CHATS</S.Title>
+        </S.TItleContainer>
+        {chatList.length === 0 ? (
+          <NoChatsComponent />
+        ) : (
+          <ChatListComponent chatRoomDatas={chatList} />
+        )}
+      </S.SubContainer>
       <IconFooter activepage="/chatlist" />
     </S.Container>
   );

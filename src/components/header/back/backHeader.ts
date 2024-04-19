@@ -5,7 +5,7 @@ export const HeaderContainer = styled.div`
   width: 100vw;
   height: 5rem;
   border-bottom: 0.1rem solid #e5e5e5;
-  position: relative;
+  position: fixed;
 
   display: flex;
   flex-direction: row;

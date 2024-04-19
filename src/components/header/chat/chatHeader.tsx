@@ -23,8 +23,6 @@ export const ChatHeader: FC<FooterProps> = ({
 }) => {
   const [showSetting, setShowSetting] = useState(false);
   // const [isAlarm, setIsAlarm] = useState<boolean>(true);
-  const [nickname, setNickname] = useState(String);
-
   const navigate = useNavigate();
 
   const handleShowSetting = () => {
@@ -38,7 +36,6 @@ export const ChatHeader: FC<FooterProps> = ({
   const handleEachNicknameEdit = () => {
     navigate("/eachNicknameEdit", {
       state: {
-        nickname: nickname,
         characterId: characterId,
         characterName: title,
       },
@@ -47,12 +44,6 @@ export const ChatHeader: FC<FooterProps> = ({
   const handleRoomOut = () => {
     setIsModalOpen(!isModalOpen);
   };
-  useEffect(() => {
-    // const nicknameRes = apiRequestGet('/user/nickname').nickname;
-    // 해당 채팅방 nickname 가져오는 api
-    const nicknameRes = "베이지색바다표범";
-    setNickname(nicknameRes);
-  }, []);
 
   useEffect(() => {
     if (showSetting === true) {

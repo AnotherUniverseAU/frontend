@@ -1,7 +1,8 @@
 import axios from "axios";
+import { getCookie, setCookie } from "src/hooks/cookie";
 
 export const getNewToken = async () => {
-  const refreshToken = localStorage.getItem("refreshToken");
+  const refreshToken = getCookie("refreshToken");
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   try {
@@ -15,12 +16,12 @@ export const getNewToken = async () => {
       const data = response.data;
       if (data.refresh_token) {
         const accessToken = data.access_token;
-        localStorage.setItem("refreshToken", data.refresh_token);
-        localStorage.setItem("accessToken", accessToken);
+        setCookie("refreshToken", data.refresh_token, "refToken");
+        setCookie("accessToken", accessToken, "accToken");
         return accessToken;
       } else {
         const accessToken = data.access_token;
-        localStorage.setItem("accessToken", data.access_token);
+        setCookie("accessToken", accessToken, "accToken");
         return accessToken;
       }
     } else {

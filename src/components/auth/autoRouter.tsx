@@ -24,6 +24,7 @@ import { Admin } from "src/pages/home/admin.tsx";
 import { Error } from "src/pages/join/error.tsx";
 
 import { Navigate, Route, Routes } from "react-router-dom";
+import { getCookie } from "src/hooks/cookie";
 
 type RouterItem = {
   path: string;
@@ -37,7 +38,7 @@ interface AuthorizationProps {
 }
 
 const Authorization = ({ redirectTo, children }: AuthorizationProps) => {
-  const isAuthenticated: string | null = localStorage.getItem("refreshToken");
+  const isAuthenticated: string | null = getCookie("refreshToken");
   if (isAuthenticated) {
     return <>{children}</>;
   } else {
