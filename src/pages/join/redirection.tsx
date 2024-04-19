@@ -23,11 +23,13 @@ export const Redirection = () => {
 
       localStorage.setItem("accessToken", access_token);
       localStorage.setItem("refreshToken", refresh_token);
-
-      setIsLogin(true);
     };
 
-    getToken();
+    getToken().then((res) => {
+      setTimeout(() => {
+        setIsLogin(true);
+      }, 1000);
+    });
   }, []);
 
   useEffect(() => {
