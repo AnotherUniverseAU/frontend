@@ -19,23 +19,26 @@ export const Nickname = () => {
 
     const navigate = useNavigate();
 
-    const handleMessage = async (event: any) => {
+    const handleMessage = (event: any) => {
         event.preventDefault();
         event.stopPropagation();
-        const testData = event.data;
-        alert(`받은 메시지: ${testData}`);
-        console.log('Received message from WebView:', testData);
+
         try {
-            const { type, data } = event.data;
-            alert('data입니다' + data);
+            // JSON 데이터 파싱
+            const messageData = JSON.parse(event.data);
+            alert('메시지 받음' + event.data);
+            alert('메시지 받음' + messageData);
+            console.log('Received message from WebView:', messageData);
+
+            const { type, data } = messageData;
             if (type === 'FCM_TOKEN') {
                 console.log('Received FCM Token:', data);
                 localStorage.setItem('fcmToken', data);
+                alert(`Received FCM token: ${data}`);
             }
-            alert(`전달 받은 fcmtoken: ${type}이고 ${data}`);
         } catch (error) {
             console.error('Error handling message from WebView:', error);
-            alert(`FCMToken 수신 중 오류가 발생했습니다. 다시 시도해 주세요, ${error}`);
+            alert(`Error receiving FCM Token. Please try again, ${error}`);
         }
     };
 
@@ -78,7 +81,6 @@ export const Nickname = () => {
         window.addEventListener(
             'message',
             (event) => {
-                alert('메시지 받음' + event.data);
                 try {
                     const data = JSON.parse(event.data);
                     if (data.type === 'FCM_TOKEN') {
@@ -92,40 +94,6 @@ export const Nickname = () => {
             true
         );
     }, []);
-
-    // const updateNickname = async (nickname: string) => {
-    //     if (nickname !== '') {
-    //         console.log('닉네임은 입력됨');
-    //         const res = await apiRequestPost('/user/nickname', {
-    //             nickname: nickname,
-    //         });
-
-    //         if (res.nickname) {
-    //             setIsLoading(true);
-    //             // fcm 토큰도 여기서 해주자
-    //             async function sendFCMToken() {
-    //                 const fcmToken = localStorage.getItem('fcmToken');
-    //                 console.log('FCM Token:', fcmToken);
-    //                 // axios를 사용하여 백엔드로 FCM Token 전송
-    //                 // axios.post('https://example.com/fcm-token', { token: fcmToken });
-
-    //                 return apiRequestPost('/user/fcm-token', { fcmToken: fcmToken });
-    //             }
-    //             sendFCMToken().then(() => {
-    //                 if (res.fcmToken) {
-    //                     navigate('/', { state: { from: '/nickname' } });
-    //                 } else {
-    //                     // 에러 페이지
-    //                     console.log('err');
-    //                 }
-    //             });
-    //         }
-    //     } else {
-    //         if (load === false) {
-    //             setLoad(true);
-    //         }
-    //     }
-    // };
 
     const updateNickname = async (nickname: string) => {
         if (nickname !== '') {
@@ -193,14 +161,6 @@ export const Nickname = () => {
                 <S.Container>
                     <BackHeader type="first" title="프로필 설정" />
                     <S.InfoContainer>
-                        <button
-                            onClick={(e: any) => {
-                                handleMessage(e);
-                            }}
-                        >
-                            FCM 토큰 받아오기
-                        </button>
-
                         <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
                         <S.Info>기본 호칭을 입력해주세요</S.Info>
                         <StyledInput
