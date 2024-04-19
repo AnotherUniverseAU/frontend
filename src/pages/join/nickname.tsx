@@ -107,7 +107,6 @@ export const Nickname = () => {
                     // 닉네임 업데이트 성공 시, FCM 토큰 전송을 시도합니다.
                     try {
                         const fcmToken = localStorage.getItem('fcmToken');
-                        alert('fcmToken: ' + fcmToken);
                         const tokenRes = await apiRequestPost('/user/fcm-token', { fcmToken: fcmToken });
 
                         if (tokenRes) {
