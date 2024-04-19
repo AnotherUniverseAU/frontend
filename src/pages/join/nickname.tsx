@@ -49,7 +49,6 @@ export const Nickname = () => {
   }, []);
 
   const updateNickname = async (nickname: string) => {
-    navigate("/", { state: { from: "/nickname" } });
     if (nickname !== "") {
       const res = await apiRequestPost("/user/nickname", {
         nickname: nickname,
