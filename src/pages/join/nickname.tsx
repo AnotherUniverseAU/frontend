@@ -53,7 +53,7 @@ export const Nickname = () => {
         };
         getNickname();
 
-        window.addEventListener('message', (event) => {
+        document.addEventListener('message', (event) => {
             alert('메시지 받음' + event.data);
             try {
                 const data = JSON.parse(event.data);
@@ -167,7 +167,7 @@ export const Nickname = () => {
                 <S.Container>
                     <BackHeader type="first" title="프로필 설정" />
                     <S.InfoContainer>
-                        <S.Info>수정중 캐릭터가 나를 부를 때 사용할</S.Info>
+                        <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
                         <S.Info>기본 호칭을 입력해주세요</S.Info>
                         <StyledInput
                             placeholder={isEmpty ? '호칭은 한 글자 이상이어야 합니다.' : '호칭을 입력해주세요'}
