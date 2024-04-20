@@ -64,5 +64,6 @@ export const Container = styled.div`
 export const SubContainer = styled.div`
   width: 90vw;
   height: calc(100vh - 10rem);
-  margin: 1rem 0;
+  margin: 5rem 0;
+  padding: 1rem 0;
 `;

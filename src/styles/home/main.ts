@@ -2,12 +2,11 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  position: fixed;
   background-color: #f2f3f6;
 `;
 
@@ -21,14 +20,23 @@ export const MainContainer = styled.div`
   background-color: white;
 `;
 
+export const SubContainer = styled.div`
+  margin: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex;
+  z-index: 0;
+
+  height: calc(100vh - 10rem);
+`;
+
 export const NavContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
-
-  padding-bottom: 6rem;
+  padding-bottom: 5rem;
 `;
 
 export const ButtonNav = styled.div`

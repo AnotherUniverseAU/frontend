@@ -21,7 +21,7 @@ import { TokenTest } from "src/pages/tokentest.tsx";
 import { Loading } from "src/pages/setting/loading.tsx";
 import { EachNicknameEdit } from "src/pages/chat/eachNicknameEdit.tsx";
 import { Admin } from "src/pages/home/admin.tsx";
-import { Error } from "src/pages/join/error.tsx";
+// import { Error } from "src/pages/join/error.tsx";
 
 import { Navigate, Route, Routes } from "react-router-dom";
 import { getCookie } from "src/hooks/cookie";
@@ -81,7 +81,7 @@ const RouterInfo: RouterItem[] = [
     withAuthorization: true,
   },
   { path: "/chatroom/:id", element: <ChatRoom />, withAuthorization: true },
-  { path: "/error", element: <Error />, withAuthorization: false },
+  // { path: "/error", element: <Error />, withAuthorization: false },
 ];
 
 const AutoRouter = () => {

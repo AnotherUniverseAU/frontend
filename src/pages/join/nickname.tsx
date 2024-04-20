@@ -183,7 +183,7 @@ export const Nickname = () => {
           </S.InfoContainer>
           <TextFooter
             route="/"
-            text="수정완료"
+            text="시작하기"
             onClick={() => updateNickname(nickname)}
           />
         </S.Container>

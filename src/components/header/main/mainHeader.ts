@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 export const HeaderContainer = styled.div`
   width: 100vw;
   height: 5rem;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 
   display: flex;
   flex-direction: row;

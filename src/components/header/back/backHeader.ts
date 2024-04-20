@@ -6,6 +6,9 @@ export const HeaderContainer = styled.div`
   height: 5rem;
   border-bottom: 0.1rem solid #e5e5e5;
   position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
 
   display: flex;
   flex-direction: row;
@@ -18,9 +21,6 @@ export const HeaderContainer = styled.div`
 export const StyledLink = styled(Link)`
   width: 15vw;
   height: 5rem;
-  position: absolute;
-  top: 0rem;
-  left: 0rem;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -102,12 +102,9 @@ export const Create = () => {
         // for (let key of formData.keys()) {
         //   console.log(key, ":", formData.get(key));
         // }
-        try {
-          apiRequestPost("/character/request-create", formData);
-          setIsSubmit(true);
-        } catch (err) {
-          navigate("/error");
-        }
+
+        apiRequestPost("/character/request-create", formData);
+        setIsSubmit(true);
       }
     } else {
       setIsTextModalOpen(true);

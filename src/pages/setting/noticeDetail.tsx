@@ -7,31 +7,6 @@ import * as S from "src/styles/setting/noticeDetail";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { useLocation } from "react-router-dom";
 
-const noticeMockdata = {
-  notificiations: [
-    {
-      title: "????????????",
-      content:
-        "금일 몇 시부터 어쩌구저쩌구 취소/환불 규정 및 이용자 약관 관련 공지사항 안내드립니다 금일 몇 시부터 어쩌구저쩌구 취소/환불 규정 및 이용자 약관 관련 공지사항 안내드립니다",
-      date: "2024-02-16 11:00:00",
-    },
-
-    {
-      title: "취소/환불 규정 및 이용자 약관 관련 공지사항 안내드립니다",
-      content:
-        "금일 몇 시부터 어쩌구저쩌구 취소/환불 규정 및 이용자 약관 관련 공지사항 안내드립니다 금일 몇 시부터 어쩌구저쩌구 취소/환불 규정 및 이용자 약관 관련 공지사항 안내드립니다",
-      date: "2024-02-19 11:00:00",
-    },
-
-    {
-      title: "취소/환불 규정 및 이용자 약관 관련 공지사항 안내드립니다",
-      content:
-        "금일 몇 시부터 어쩌구저쩌구 취소/환불 규정 및 이용자 약관 관련 공지사항 안내드립니다 금일 몇 시부터 어쩌구저쩌구 취소/환불 규정 및 이용자 약관 관련 공지사항 안내드립니다",
-      date: "2024-02-20 11:00:00",
-    },
-  ],
-};
-
 interface NoticeProps {
   title: string;
   content: string;

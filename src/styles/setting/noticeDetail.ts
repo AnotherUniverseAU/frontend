@@ -7,14 +7,14 @@ export const Container = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  width: 100%;
+  width: 100vh;
   height: calc(100vh - 10rem);
+  margin: 5rem 0;
 `;
 export const ContentWrapper = styled.div`
-  width: 90%;
-  padding: 5% 0;
+  width: 100vw;
   height: 100%;
-  margin: 0 5%;
+  padding: 2rem;
   overflow: scroll;
 `;
 export const Title = styled.div`
