@@ -8,6 +8,7 @@ const accessToken = getCookie("accessToken") as string;
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const apiRequestPost = async (path: string, data: any) => {
+  console.log(accessToken);
   const customHttp = axios.create({
     baseURL: `${BASE_URL}`,
     timeout: 8000,
