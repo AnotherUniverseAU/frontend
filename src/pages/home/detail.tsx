@@ -21,30 +21,23 @@ export const Detail = () => {
   useEffect(() => {
     const fetchDetail = async () => {
       setLoading(true); // 데이터를 가져오기 전에 로딩 상태를 true로 설정
-      try {
-        const result: any = await apiRequestGet(`character/info/${params.id}`);
-        setDetail(result.character);
-        setLoading(false); // 데이터를 가져온 후에 로딩 상태를 false로 설정
-      } catch (error) {
-        navigate("/error");
-      }
+      const result: any = await apiRequestGet(`character/info/${params.id}`);
+      setDetail(result.character);
+      setLoading(false); // 데이터를 가져온 후에 로딩 상태를 false로 설정
     };
     fetchDetail();
   }, [params.id]);
 
   const handleStartChat = async () => {
     setLoading(true);
-    try {
-      const res: any = await apiRequestPost("/subscription/subscribe", {
-        characterId: String(params.id),
-      });
-      setTimeout(() => {
-        setLoading(false);
-        navigate(`/chatroom/${params.id}`);
-      }, 500);
-    } catch (error) {
-      navigate("/error");
-    }
+
+    const res: any = await apiRequestPost("/subscription/subscribe", {
+      characterId: String(params.id),
+    });
+    setTimeout(() => {
+      setLoading(false);
+      navigate(`/chatroom/${params.id}`);
+    }, 500);
   };
 
   return (

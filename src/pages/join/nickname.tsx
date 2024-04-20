@@ -144,31 +144,4 @@ export const Nickname = () => {
                 setLoad(true);
             }
         }
-    }, [nickname, load]);
-    return (
-        <>
-            {isLoading ? (
-                <Loading></Loading>
-            ) : (
-                <S.Container>
-                    <BackHeader type="first" title="프로필 설정" />
-                    <S.InfoContainer>
-                        <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
-                        <S.Info>기본 호칭을 입력해주세요</S.Info>
-                        <StyledInput
-                            placeholder={isEmpty ? '호칭은 한 글자 이상이어야 합니다.' : '호칭을 입력해주세요'}
-                            content={nickname}
-                            setContent={setNickname}
-                            limit={20}
-                            height="3.8rem"
-                            marginTop="2rem"
-                            isEmpty={isEmpty}
-                        />
-                        <button onClick={sendTokenToWebView}>토큰 가져오기</button>
-                    </S.InfoContainer>
-                    <TextFooter route="/" text="수정완료" onClick={() => updateNickname(nickname)} />
-                </S.Container>
-            )}
-        </>
-    );
 };

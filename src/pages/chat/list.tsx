@@ -74,18 +74,11 @@ export const ChatList = () => {
   const navigate = useNavigate();
   useEffect(() => {
     async function getDatas() {
-      try {
-        const apiData: any = await apiRequestGet("/chatroom");
-        setChatrooms(apiData);
-      } catch (error) {
-        navigate("/error");
-      }
-      try {
-        const apiData: any = await apiRequestGet("character/info/bulk");
-        setNameAndPics(apiData);
-      } catch (error) {
-        navigate("/error");
-      }
+      const chatroomData: any = await apiRequestGet("/chatroom");
+      setChatrooms(chatroomData);
+
+      const bulkData: any = await apiRequestGet("character/info/bulk");
+      setNameAndPics(bulkData);
     }
     getDatas();
   }, []);

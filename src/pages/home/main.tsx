@@ -28,21 +28,13 @@ export const Main: React.FC = () => {
 
   useEffect(() => {
     const fetchCharacters = async () => {
-      try {
-        const result = await apiRequestGet("/character/list");
-        setCharacters(result.characters);
-      } catch (error) {
-        navigate("/error");
-      }
+      const result = await apiRequestGet("/character/list");
+      setCharacters(result.characters);
     };
 
     const fetchMainCharacter = async () => {
-      try {
-        const result = await apiRequestGet("/character/main-character");
-        setMainCharacter(result.mainCharacter);
-      } catch (error) {
-        navigate("/error");
-      }
+      const result = await apiRequestGet("/character/main-character");
+      setMainCharacter(result.mainCharacter);
     };
 
     fetchCharacters();
@@ -75,50 +67,52 @@ export const Main: React.FC = () => {
         </S.TutorialContainer>
       )}
       <MainHeader toCreate={true} isTutorial={isTutorial} />
-      <S.MainContainer>
-        <MainImage
-          route={`/detail/${mainCharacter?.characterId}`}
-          imgurl={mainCharacter.mainImageUrl}
-          name={mainCharacter.name}
-          title={mainCharacter.title}
-          creatorNickname={mainCharacter.creatorNickname}
-        />
-      </S.MainContainer>
-      <S.NavContainer>
-        <S.ButtonNav>
-          <S.StyledButton
-            active={selectedGenre === "all"}
-            onClick={() => setSelectedGenre("all")}
-          >
-            전체
-          </S.StyledButton>
-          <S.StyledButton
-            active={selectedGenre === "anime"}
-            onClick={() => setSelectedGenre("anime")}
-          >
-            애니
-          </S.StyledButton>
-          <S.StyledButton
-            active={selectedGenre === "game"}
-            onClick={() => setSelectedGenre("game")}
-          >
-            게임
-          </S.StyledButton>
-        </S.ButtonNav>
-        <S.ImageContainer>
-          {filteredCharacters.map((character: any) => (
-            <S.StyledImageMargin key={character.characterId}>
-              <StyledImage
-                route={`/detail/${character.characterId}`}
-                imgurl={character.coverImageUrl}
-                name={character.name}
-                title={character.title}
-                creatorNickname={character.creatorNickname}
-              />
-            </S.StyledImageMargin>
-          ))}
-        </S.ImageContainer>
-      </S.NavContainer>
+      <S.SubContainer>
+        <S.MainContainer>
+          <MainImage
+            route={`/detail/${mainCharacter?.characterId}`}
+            imgurl={mainCharacter.mainImageUrl}
+            name={mainCharacter.name}
+            title={mainCharacter.title}
+            creatorNickname={mainCharacter.creatorNickname}
+          />
+        </S.MainContainer>
+        <S.NavContainer>
+          <S.ButtonNav>
+            <S.StyledButton
+              active={selectedGenre === "all"}
+              onClick={() => setSelectedGenre("all")}
+            >
+              전체
+            </S.StyledButton>
+            <S.StyledButton
+              active={selectedGenre === "anime"}
+              onClick={() => setSelectedGenre("anime")}
+            >
+              애니
+            </S.StyledButton>
+            <S.StyledButton
+              active={selectedGenre === "game"}
+              onClick={() => setSelectedGenre("game")}
+            >
+              게임
+            </S.StyledButton>
+          </S.ButtonNav>
+          <S.ImageContainer>
+            {filteredCharacters.map((character: any) => (
+              <S.StyledImageMargin key={character.characterId}>
+                <StyledImage
+                  route={`/detail/${character.characterId}`}
+                  imgurl={character.coverImageUrl}
+                  name={character.name}
+                  title={character.title}
+                  creatorNickname={character.creatorNickname}
+                />
+              </S.StyledImageMargin>
+            ))}
+          </S.ImageContainer>
+        </S.NavContainer>
+      </S.SubContainer>
       <IconFooter activepage="/" />
     </S.Container>
   );
