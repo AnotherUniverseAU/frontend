@@ -19,48 +19,26 @@ export const Nickname = () => {
 
     const navigate = useNavigate();
 
-    const handleMessage = (event: any) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        try {
-            // JSON 데이터 파싱
-            const messageData = JSON.parse(event.data);
-            alert('메시지 받음' + event.data);
-            alert('메시지 받음' + messageData);
-            console.log('Received message from WebView:', messageData);
-
-            const { type, data } = messageData;
-            if (type === 'FCM_TOKEN') {
-                console.log('Received FCM Token:', data);
-                localStorage.setItem('fcmToken', data);
-                alert(`Received FCM token: ${data}`);
-            }
-        } catch (error) {
-            console.error('Error handling message from WebView:', error);
-            alert(`Error receiving FCM Token. Please try again, ${error}`);
-        }
-    };
-
-    // const handleMessage = async (event: any) => {
+    // const handleMessage = (event: any) => {
     //     event.preventDefault();
     //     event.stopPropagation();
 
-    //     // 이 예제에서는 테스트를 위해 임의의 데이터를 사용합니다.
-    //     // 실제 사용 시에는 event.data가 실제로 존재하는지 확인하고 사용해야 합니다.
-    //     const testData = event.data || { type: 'FCM_TOKEN', data: 'test-token-from-event' };
-
-    //     console.log('Received message from WebView:', testData);
     //     try {
-    //         const { type, data } = testData;
+    //         // JSON 데이터 파싱
+    //         const messageData = JSON.parse(event.data);
+    //         alert('메시지 받음' + event.data);
+    //         alert('메시지 받음' + messageData);
+    //         console.log('Received message from WebView:', messageData);
+
+    //         const { type, data } = messageData;
     //         if (type === 'FCM_TOKEN') {
     //             console.log('Received FCM Token:', data);
     //             localStorage.setItem('fcmToken', data);
-    //             alert(`전달 받은 FCM 토큰: ${type}이고 ${data}`);
+    //             alert(`Received FCM token: ${data}`);
     //         }
     //     } catch (error) {
     //         console.error('Error handling message from WebView:', error);
-    //         alert(`FCM 토큰 수신 중 오류가 발생했습니다. 다시 시도해 주세요. ${error}`);
+    //         alert(`Error receiving FCM Token. Please try again, ${error}`);
     //     }
     // };
 
@@ -77,6 +55,19 @@ export const Nickname = () => {
             // }
         };
         getNickname();
+
+        const sendTokenToWebView = () => {
+            if ((window as any).ReactNativeWebView) {
+                console.log('Sending token to WebView');
+                (window as any).ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        type: 'SendTokenToWebview',
+                    })
+                );
+            }
+        };
+
+        sendTokenToWebView();
 
         window.addEventListener(
             'message',
