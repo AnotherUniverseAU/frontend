@@ -83,7 +83,7 @@ export const Create = () => {
         setIsTextModalOpen(false);
         const formData = new FormData();
 
-        formData.append("image", new Blob(images));
+        // formData.append("image", new Blob(images));
         formData.append("name", escapeHtml(name));
         formData.append("title", escapeHtml(title));
         formData.append("genre", escapeHtml(genre));
