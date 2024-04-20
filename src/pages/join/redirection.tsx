@@ -2,7 +2,6 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Loading } from "../setting/loading";
-import { setCookie } from "src/hooks/cookie";
 
 export const Redirection = () => {
   const params = new URLSearchParams(window.location.search);
@@ -22,15 +21,24 @@ export const Redirection = () => {
       );
       const { access_token, refresh_token } = res.data;
 
-      setCookie("accessToken", access_token, "accToken");
-      setCookie("refreshToken", refresh_token, "refToken");
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
+
+      if ((window as any).ReactNativeWebView) {
+        (window as any).ReactNativeWebView.postMessage(
+          JSON.stringify({
+            type: "STORE_REFRESH_TOKEN",
+            token: refresh_token,
+          })
+        );
+      }
     };
 
     getToken().then((res) => {
       console.log("로그인 완료");
       setTimeout(() => {
         setIsLogin(true);
-      }, 1000);
+      }, 500);
     });
   }, []);
 
