@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Landing } from "src/pages/join/landing.tsx";
 import { Login } from "src/pages/join/login.tsx";
 import { Redirection } from "src/pages/join/redirection.tsx";
@@ -38,8 +38,7 @@ interface AuthorizationProps {
 }
 
 const Authorization = ({ redirectTo, children }: AuthorizationProps) => {
-  const isAuthenticated: string | null = getCookie("refreshToken");
-
+  const isAuthenticated = getCookie("chatTutorialShown");
   if (isAuthenticated) {
     return <>{children}</>;
   } else {
