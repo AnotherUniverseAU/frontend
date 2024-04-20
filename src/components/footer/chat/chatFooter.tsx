@@ -116,7 +116,7 @@ export const ChatFooter: React.FC<{
           maxLength={isTuto ? 50 : 2000}
         />
       </S.TextAreaDiv>
-      <S.SendIcon onClick={sendChatMessage} />
+      <S.SendIcon onClick={sendChatMessage} id="chat-send-button" />
     </S.Container>
   );
 };
