@@ -17,6 +17,7 @@ export const Nickname = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [load, setLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [accToken, setAccToken] = useState(String);
 
   const navigate = useNavigate();
 
@@ -66,18 +67,12 @@ export const Nickname = () => {
   // };
 
   useEffect(() => {
-    const getNickname = async () => {
-      // try {
-      const res = await apiRequestGet("user/nickname");
-      if (res.nickname !== "") {
-        setNickname(res.nickname);
-      }
-      // }
-      // } catch (e) {
-      //     window.location.reload();
-      // }
-    };
-    getNickname();
+    const accToken = getCookie("accessToken");
+    if (!accToken) {
+      window.location.reload();
+    } else {
+      setAccToken(accToken);
+    }
 
     window.addEventListener(
       "message",
@@ -95,6 +90,22 @@ export const Nickname = () => {
       true
     );
   }, []);
+  useEffect(() => {
+    if (accToken) {
+      const getNickname = async () => {
+        // try {
+        const res = await apiRequestGet("user/nickname");
+        if (res.nickname !== "") {
+          setNickname(res.nickname);
+        }
+        // }
+        // } catch (e) {
+        //     window.location.reload();
+        // }
+      };
+      getNickname();
+    }
+  }, [accToken]);
 
   const updateNickname = async (nickname: string) => {
     if (nickname !== "") {
