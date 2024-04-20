@@ -38,12 +38,24 @@ interface AuthorizationProps {
 }
 
 const Authorization = ({ redirectTo, children }: AuthorizationProps) => {
-  const isAuthenticated = getCookie("chatTutorialShown");
-  if (isAuthenticated) {
-    return <>{children}</>;
-  } else {
-    return <Navigate to={redirectTo} />;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const token = await getCookie("refreshToken");
+      setIsAuthenticated(!!token);
+      setIsLoading(false);
+    };
+
+    checkAuthentication();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
+
+  return isAuthenticated ? <>{children}</> : <Navigate to={redirectTo} />;
 };
 
 const RouterInfo: RouterItem[] = [
