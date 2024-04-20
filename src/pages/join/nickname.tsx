@@ -11,6 +11,7 @@ import { apiRequestGet } from 'src/apis/apiRequestGet';
 import { apiRequestPost } from 'src/apis/apiRequestPost';
 import { Loading } from '../setting/loading';
 import { getCookie, setCookie } from 'src/hooks/cookie';
+import { send } from 'process';
 
 export const Nickname = () => {
     const [nickname, setNickname] = useState('');
@@ -43,6 +44,17 @@ export const Nickname = () => {
     //     }
     //   };
 
+    const sendTokenToWebView = () => {
+        if ((window as any).ReactNativeWebView) {
+            console.log('Sending token to WebView');
+            (window as any).ReactNativeWebView.postMessage(
+                JSON.stringify({
+                    type: 'Send_Token_To_Webview',
+                })
+            );
+        }
+    };
+
     useEffect(() => {
         const getNickname = async () => {
             // try {
@@ -56,20 +68,6 @@ export const Nickname = () => {
             // }
         };
         getNickname();
-
-        const sendTokenToWebView = () => {
-            if ((window as any).ReactNativeWebView) {
-                console.log('Sending token to WebView');
-                (window as any).ReactNativeWebView.postMessage(
-                    JSON.stringify({
-                        type: 'SendTokenToWebview',
-                    })
-                );
-            }
-        };
-
-        // Call the function to send the message
-        sendTokenToWebView();
 
         window.addEventListener(
             'message',
@@ -155,6 +153,7 @@ export const Nickname = () => {
                 <S.Container>
                     <BackHeader type="first" title="프로필 설정" />
                     <S.InfoContainer>
+                        <button onClick={sendTokenToWebView}>토큰 가져오기</button>
                         <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
                         <S.Info>기본 호칭을 입력해주세요</S.Info>
                         <StyledInput
