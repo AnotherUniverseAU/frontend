@@ -69,7 +69,6 @@ body {
   margin: 0;
   /* overflow: hidden; */
   width: 100%;
-  height: 100%;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
   height: var(--app-height);
