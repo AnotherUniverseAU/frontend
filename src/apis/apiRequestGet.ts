@@ -10,6 +10,7 @@ import axios from "axios";
 import { getCookie } from "src/hooks/cookie";
 
 const accessToken = getCookie("accessToken") as string;
+console.log(accessToken);
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 // const refresh = localStorage.getItem("refreshToken");
 
