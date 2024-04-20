@@ -624,6 +624,7 @@ export const ChatRoom = (): JSX.Element => {
     setShowChatTutorial(false);
     setCookie("chatTutorialShown", "true", "tuto");
     setChatMessages([...helloMessages, ...firstChat]);
+    setIsHelloShown(true);
     const current = subContainerRef.current;
     // div 조정하면서 넣었던 empty-div 삭제해주기
     if (current) {
