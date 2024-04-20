@@ -6,11 +6,13 @@ const parseJwt = (token: string | null) => {
 
 export const AuthVerify = () => {
   const accessToken = getCookie("accessToken");
-  const decodedAccess = parseJwt(accessToken);
-  if (accessToken === null || undefined) {
+  if (!accessToken) {
     return "None Access Token";
-  } else if (decodedAccess.exp * 1000 < Date.now()) {
-    return "Access Token Expired";
+  } else {
+    const decodedAccess = parseJwt(accessToken);
+    if (decodedAccess.exp * 1000 < Date.now()) {
+      return "Access Token Expired";
+    }
   }
   return true;
 };
