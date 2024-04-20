@@ -1,11 +1,9 @@
-import { getCookie } from "src/hooks/cookie";
-
 const parseJwt = (token: string | null) => {
   if (token) return JSON.parse(atob(token.split(".")[1]));
 };
 
 export const AuthVerify = () => {
-  const accessToken = getCookie("accessToken");
+  const accessToken = localStorage.getItem("accessToken") as string;
   if (!accessToken) {
     return "None Access Token";
   } else {

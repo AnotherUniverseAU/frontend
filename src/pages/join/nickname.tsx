@@ -10,7 +10,6 @@ import { StyledInput } from "src/components/styledInput/styledInput.tsx";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { apiRequestPost } from "src/apis/apiRequestPost";
 import { Loading } from "../setting/loading";
-import { getCookie, setCookie } from "src/hooks/cookie";
 import { getNewToken } from "src/apis/getNewToken";
 
 export const Nickname = () => {
@@ -36,7 +35,7 @@ export const Nickname = () => {
       const { type, data } = messageData;
       if (type === "FCM_TOKEN") {
         console.log("Received FCM Token:", data);
-        setCookie("fcmToken", data, "fcmToken");
+        localStorage.setItem("fcmToken", data);
         alert(`Received FCM token: ${data}`);
       }
     } catch (error) {
@@ -58,7 +57,7 @@ export const Nickname = () => {
   //         const { type, data } = testData;
   //         if (type === 'FCM_TOKEN') {
   //             console.log('Received FCM Token:', data);
-  //             localStorage.setItem('fcmToken', data);
+  //             localStorage.setItem);
   //             alert(`전달 받은 FCM 토큰: ${type}이고 ${data}`);
   //         }
   //     } catch (error) {
@@ -68,7 +67,7 @@ export const Nickname = () => {
   // };
 
   useEffect(() => {
-    const accToken = getCookie("accessToken");
+    const accToken = localStorage.getItem("accessToken");
     if (!accToken) {
       getNewToken().then((res) => {
         window.location.reload();
@@ -84,7 +83,7 @@ export const Nickname = () => {
           const data = JSON.parse(event.data);
           if (data.type === "FCM_TOKEN") {
             console.log("Received FCM Token:", data.token);
-            setCookie("fcmToken", data.token, "fcmToken");
+            localStorage.setItem("fcmToken", data.token);
           }
         } catch (error) {
           console.error("Error handling message from WebView:", error);
@@ -121,7 +120,7 @@ export const Nickname = () => {
         if (res && res.nickname) {
           // 닉네임 업데이트 성공 시, FCM 토큰 전송을 시도합니다.
           try {
-            const fcmToken = getCookie("fcmToken");
+            const fcmToken = localStorage.getItem("fcmToken");
             const tokenRes = await apiRequestPost("/user/fcm-token", {
               fcmToken: fcmToken,
             });
