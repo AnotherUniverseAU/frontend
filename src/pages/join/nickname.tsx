@@ -11,6 +11,7 @@ import { apiRequestGet } from "src/apis/apiRequestGet";
 import { apiRequestPost } from "src/apis/apiRequestPost";
 import { Loading } from "../setting/loading";
 import { getCookie, setCookie } from "src/hooks/cookie";
+import { getNewToken } from "src/apis/getNewToken";
 
 export const Nickname = () => {
   const [nickname, setNickname] = useState("");
@@ -69,7 +70,9 @@ export const Nickname = () => {
   useEffect(() => {
     const accToken = getCookie("accessToken");
     if (!accToken) {
-      window.location.reload();
+      getNewToken().then((res) => {
+        window.location.reload();
+      });
     } else {
       setAccToken(accToken);
     }
