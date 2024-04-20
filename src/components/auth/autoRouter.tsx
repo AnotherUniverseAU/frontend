@@ -39,6 +39,7 @@ interface AuthorizationProps {
 
 const Authorization = ({ redirectTo, children }: AuthorizationProps) => {
   const isAuthenticated: string | null = getCookie("refreshToken");
+
   if (isAuthenticated) {
     return <>{children}</>;
   } else {
