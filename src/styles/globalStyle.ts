@@ -53,6 +53,16 @@ table {
 
 a {
   text-decoration: none;
+  color: black;
+}
+a:hover{
+	none;
+}
+a:active {
+	color: black;
+}
+a:visited {
+	color: black;
 }
 
 div {
