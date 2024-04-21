@@ -60,7 +60,11 @@ div {
 }
 
 :root {
-  --app-height: 100%;
+  --app-height: 100vh;
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --safe-area-inset-right: env(safe-area-inset-right);
 }
 
 html,
@@ -71,7 +75,7 @@ body {
   width: 100%;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
-  height: var(--app-height);
+  height: calc(var(--app-height) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
 }
 
 ${fonts}
