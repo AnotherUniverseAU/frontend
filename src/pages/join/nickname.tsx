@@ -144,6 +144,7 @@ export const Nickname = () => {
           // 서버 응답이 올바르지 않을 때
           console.error("닉네임 업데이트 실패:", res);
           alert("닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.");
+          window.location.reload();
         }
       } catch (error) {
         console.error("닉네임 업데이트 중 오류 발생:", error);
