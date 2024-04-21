@@ -115,3 +115,34 @@ export const TutorialButton = styled.div`
   justify-content: center;
   margin-top: 1rem;
 `;
+
+export const VirtualHeader = styled.div`
+  width: 100vw;
+  height: 5rem;
+  z-index: 99;
+  position: absolute;
+  display: flex;
+`;
+export const VirtualLeft = styled.div`
+  width: 80%;
+  height: 100%;
+`;
+export const VirtualRight = styled.div`
+  width: 20%;
+  height: 100%;
+  padding: 1rem;
+`;
+
+export const CircleImg = styled.img`
+  width: 6rem;
+  height: 3rem;
+  position: relative;
+  right: 3rem;
+`;
+export const CreateImg = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  margin-left: 0.75rem;
+  margin-top: 0.75rem;
+`;

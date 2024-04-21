@@ -16,7 +16,9 @@ export const BackHeader: FC<FooterProps> = ({ title, type }) => {
     <S.HeaderContainer>
       {type === "first" ? (
         <>
+          <S.LeftDiv />
           <S.TitleContainer>{title}</S.TitleContainer>
+          <S.RightDiv />
         </>
       ) : (
         <>
@@ -24,6 +26,7 @@ export const BackHeader: FC<FooterProps> = ({ title, type }) => {
             <S.StyledLinkArrow src={backArrow} alt="back arrow" />
           </S.StyledBackDiv>
           <S.TitleContainer>{title}</S.TitleContainer>
+          <S.RightDiv />
         </>
       )}
     </S.HeaderContainer>

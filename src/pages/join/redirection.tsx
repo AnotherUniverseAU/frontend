@@ -20,26 +20,28 @@ export const Redirection = () => {
         }
       );
       const { access_token, refresh_token } = res.data;
-
-      localStorage.setItem("accessToken", access_token);
-      localStorage.setItem("refreshToken", refresh_token);
-
-      if ((window as any).ReactNativeWebView) {
-        (window as any).ReactNativeWebView.postMessage(
-          JSON.stringify({
-            type: "STORE_REFRESH_TOKEN",
-            token: refresh_token,
-          })
-        );
-      }
+      return { access_token, refresh_token };
     };
 
-    getToken().then((res) => {
-      console.log("로그인 완료");
-      setTimeout(() => {
+    getToken()
+      .then((res) => {
+        localStorage.setItem("accessToken", res.access_token);
+        localStorage.setItem("refreshToken", res.refresh_token);
+        return res.refresh_token;
+      })
+      .then((res) => {
+        if ((window as any).ReactNativeWebView) {
+          (window as any).ReactNativeWebView.postMessage(
+            JSON.stringify({
+              type: "STORE_REFRESH_TOKEN",
+              token: res,
+            })
+          );
+        }
+      })
+      .then(() => {
         setIsLogin(true);
-      }, 500);
-    });
+      });
   }, []);
 
   useEffect(() => {

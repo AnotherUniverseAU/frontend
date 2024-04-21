@@ -19,19 +19,16 @@ export const HeaderContainer = styled.div`
 `;
 
 export const StyledLink = styled(Link)`
-  width: 15vw;
-  height: 5rem;
+  width: 15%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
 export const StyledBackDiv = styled.div`
-  width: 15vw;
-  height: 5rem;
-  position: absolute;
-  top: 0rem;
-  left: 0rem;
+  width: 15%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -41,13 +38,21 @@ export const StyledBackDiv = styled.div`
 export const StyledLinkArrow = styled.img`
   width: 1rem;
   height: 1.5rem;
-  /* position: absolute;
-  top: 1.7rem;
-  left: 1rem; */
 `;
 
 export const TitleContainer = styled.div`
   color: black;
   font-size: 1.2rem;
   font-weight: 700;
+  flex-grow: 1;
+  text-align: center;
+`;
+
+export const LeftDiv = styled.div`
+  width: 15%;
+  height: 100%;
+`;
+export const RightDiv = styled.div`
+  width: 15%;
+  height: 100%;
 `;

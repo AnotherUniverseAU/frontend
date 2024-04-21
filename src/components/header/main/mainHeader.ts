@@ -18,10 +18,8 @@ export const HeaderContainer = styled.div`
 `;
 
 export const StyledLink = styled(Link)`
-  width: 20vw;
-  height: 5rem;
-  position: absolute;
-  top: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -55,16 +53,29 @@ export const CircleImg = styled.img`
   position: absolute;
   top: -0.75rem;
   right: -0.8rem;
-  z-index: 99;
+  z-index: 1000;
 `;
 
 export const TitleText = styled.div`
-  width: 60vw;
-  height: 5rem;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
   font-weight: 900;
+`;
+
+export const LeftDiv = styled.div`
+  width: 20%;
+  height: 100%;
+`;
+export const CenterDiv = styled.div`
+  width: 60%;
+  height: 100%;
+`;
+export const RightDiv = styled.div`
+  width: 20%;
+  height: 100%;
 `;
