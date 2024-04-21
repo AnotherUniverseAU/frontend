@@ -19,13 +19,11 @@ export const App = () => {
     const chatTutorialShown = localStorage.getItem("chatTutorialShown");
     const replyTutorialShown = localStorage.getItem("replyTutorialShown");
     const fcmToken = localStorage.getItem("fcmToken");
-    alert({
-      ref: refreshToken,
-      acc: accessToken,
-      chatTut: chatTutorialShown,
-      repTut: replyTutorialShown,
-      fcm: fcmToken,
-    });
+    alert(refreshToken);
+    alert(accessToken);
+    alert(chatTutorialShown);
+    alert(replyTutorialShown);
+    alert(fcmToken);
   }, []);
   return (
     <>
