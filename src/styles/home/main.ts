@@ -36,6 +36,7 @@ export const NavContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100vw;
+  background-color: #f2f3f6;
 `;
 
 export const ButtonNav = styled.div`
