@@ -2,9 +2,18 @@ import * as S from "src/styles/join/login.ts";
 import purpleLogo from "src/assets/img/purpleLogo.png";
 import kakaoIcon from "src/assets/img/kakaoIcon.png";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Login = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const refToken = localStorage.getItem("refreshToken");
+    if (refToken) {
+      navigate(-1);
+    }
+  }, []);
+
   const handleLogin = () => {
     const kakaoOauthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
     window.location.href = kakaoOauthUrl;
@@ -28,7 +37,7 @@ export const Login = () => {
   return (
     <S.Container>
       <S.Logo src={purpleLogo} alt="au logo" />
-      <div>Web ver 1.1.1</div>
+      <div>Web ver 1.1.2</div>
       <S.TopInfoWrapper>
         <S.TopInfo>간편하게 로그인하고</S.TopInfo>
         <S.TopInfo>다양한 서비스를 이용해보세요</S.TopInfo>
