@@ -139,6 +139,7 @@ export const Nickname = () => {
           } catch (error) {
             console.error("FCM 토큰 전송 중 오류 발생:", error);
             alert("FCM 토큰 전송 중 오류가 발생했습니다.");
+            window.location.reload();
           }
         } else {
           // 서버 응답이 올바르지 않을 때
