@@ -22,9 +22,6 @@ export const HeaderContainer = styled.div`
 export const StyledLink = styled(Link)`
   width: 15vw;
   height: 5rem;
-  position: absolute;
-  top: 0rem;
-  left: 0rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -34,23 +31,19 @@ export const StyledLink = styled(Link)`
 export const StyledLinkArrow = styled.img`
   width: 1rem;
   height: 1.5rem;
-  /* position: absolute;
-  top: 1.7rem;
-  left: 1rem; */
 `;
 
 export const TitleContainer = styled.div`
   color: black;
   font-size: 1.2rem;
   font-weight: 700;
+  flex-grow: 1;
+  text-align: center;
 `;
 
 export const ChatSettingButton = styled.div`
   width: 15vw;
   height: 5rem;
-  position: absolute;
-  top: 0rem;
-  right: 0rem;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -12,12 +12,18 @@ import { apiRequestGet } from "src/apis/apiRequestGet";
 import axios from "axios";
 import { apiRequestPost } from "src/apis/apiRequestPost";
 
+const circleWhiteImg =
+  require("src/components/header/main/circleWhiteImg.png") as string;
+const createWhiteImg =
+  require("src/components/header/main/createWhiteImg.png") as string;
+
 export const Main: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [isTutorial, setIsTutorial] = useState<boolean>(
-    location.state?.from === "/nickname"
+    true
+    // location.state?.from === "/nickname"
   );
 
   const [characters, setCharacters] = useState<any[]>([]);
@@ -65,6 +71,15 @@ export const Main: React.FC = () => {
             </S.TutorialButton>
           </S.TutorialTextContainer>
         </S.TutorialContainer>
+      )}
+      {isTutorial && (
+        <S.VirtualHeader>
+          <S.VirtualLeft />
+          <S.VirtualRight>
+            <S.CreateImg src={createWhiteImg} alt="createImg" />
+            <S.CircleImg src={circleWhiteImg} alt="circle White Img" />
+          </S.VirtualRight>
+        </S.VirtualHeader>
       )}
       <MainHeader toCreate={true} isTutorial={isTutorial} />
       <S.SubContainer>
