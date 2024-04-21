@@ -6,6 +6,7 @@ import { MainHeader } from "src/components/header/main/mainHeader.tsx";
 import { IconFooter } from "src/components/footer/icon/iconFooter.tsx";
 
 import { apiRequestGet } from "src/apis/apiRequestGet";
+import { BackgroundFull } from "src/components/background/background";
 
 interface NavItemProps {
   text: string;
@@ -97,6 +98,7 @@ export const Profile = () => {
         </S.NavWrapper>
       </S.SubContainer>
       <IconFooter activepage="/profile" />
+      <BackgroundFull color="#f2f3f6" />
     </S.Container>
   );
 };

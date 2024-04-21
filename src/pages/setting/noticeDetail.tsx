@@ -6,6 +6,7 @@ import { IconFooter } from "src/components/footer/icon/iconFooter.tsx";
 import * as S from "src/styles/setting/noticeDetail";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { useLocation } from "react-router-dom";
+import { BackgroundFull } from "src/components/background/background";
 
 interface NoticeProps {
   title: string;
@@ -48,6 +49,7 @@ export const NoticeDetail = () => {
         </S.ContentWrapper>
       </S.SubContainer>
       <IconFooter activepage="/profile" />
+      <BackgroundFull color="#f2f3f6" />
     </S.Container>
   );
 };

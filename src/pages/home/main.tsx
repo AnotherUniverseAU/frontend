@@ -11,6 +11,10 @@ import { Loading } from "src/pages/setting/loading.tsx";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import axios from "axios";
 import { apiRequestPost } from "src/apis/apiRequestPost";
+import {
+  BackgroundLower,
+  BackgroundUpper,
+} from "src/components/background/background";
 
 const circleWhiteImg =
   require("src/components/header/main/circleWhiteImg.png") as string;
@@ -128,6 +132,8 @@ export const Main: React.FC = () => {
         </S.NavContainer>
       </S.SubContainer>
       <IconFooter activepage="/" />
+      <BackgroundUpper color="white" />
+      <BackgroundLower color="#f2f3f6" />
     </S.Container>
   );
 };

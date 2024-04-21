@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { Loading } from "src/pages/setting/loading.tsx";
+import { BackgroundFull } from "src/components/background/background";
 
 interface Chat {
   name: string;
@@ -147,6 +148,7 @@ export const ChatList = () => {
         )}
       </S.SubContainer>
       <IconFooter activepage="/chatlist" />
+      <BackgroundFull color="#f2f3f6" />
     </S.Container>
   );
 };
