@@ -19,6 +19,7 @@ export const BackgroundLower = styled.div<{ color: string }>`
 export const BackgroundFull = styled.div<{ color: string }>`
   width: 100%;
   height: 100%;
+  top: 0;
   position: fixed;
   background-color: ${(props) => props.color};
   z-index: -1;
