@@ -67,14 +67,17 @@ export const Nickname = () => {
   // };
 
   useEffect(() => {
-    const accToken = localStorage.getItem("accessToken");
-    if (!accToken) {
-      getNewToken().then((res) => {
-        window.location.reload();
-      });
-    } else {
-      setAccToken(accToken);
-    }
+    setTimeout(() => {
+      const accToken = localStorage.getItem("accessToken");
+      console.log(accToken);
+      if (!accToken) {
+        getNewToken().then((res) => {
+          window.location.reload();
+        });
+      } else {
+        setAccToken(accToken);
+      }
+    }, 300);
 
     window.addEventListener(
       "message",
