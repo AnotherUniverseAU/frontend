@@ -22,8 +22,7 @@ export const Main: React.FC = () => {
   const navigate = useNavigate();
 
   const [isTutorial, setIsTutorial] = useState<boolean>(
-    true
-    // location.state?.from === "/nickname"
+    location.state?.from === "/nickname"
   );
 
   const [characters, setCharacters] = useState<any[]>([]);
