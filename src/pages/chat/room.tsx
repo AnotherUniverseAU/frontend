@@ -15,6 +15,7 @@ import { apiRequestPost } from "src/apis/apiRequestPost";
 import { getNewToken } from "../../apis/getNewToken";
 import { Loading } from "../setting/loading";
 import { getCookie, setCookie } from "src/hooks/cookie";
+import { BackgroundFull } from "src/components/background/background";
 
 interface CharacterChat {
   _id: string;
@@ -844,6 +845,7 @@ export const ChatRoom = (): JSX.Element => {
             {renderMessages({ showChatTutorial })}
           </S.SubContainer>
           <ChatFooter isTuto={isTuto} setChatMessage={addChatMessage} />
+          <BackgroundFull color="#f2f3f6" />
         </S.Container>
       )}
     </>

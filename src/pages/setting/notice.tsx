@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import * as S from "src/styles/setting/notice";
 import { useEffect, useState } from "react";
 import { apiRequestGet } from "src/apis/apiRequestGet";
+import { BackgroundFull } from "src/components/background/background";
 
 interface NoticeProps {
   title: string;
@@ -58,6 +59,7 @@ export const Notice = () => {
         ))}
       </S.SubContainer>
       <IconFooter activepage="/profile" />
+      <BackgroundFull color="#f2f3f6" />
     </S.Container>
   );
 };
