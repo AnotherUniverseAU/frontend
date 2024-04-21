@@ -9,7 +9,6 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: #f2f3f6;
 `;
 
 export const MainContainer = styled.div`

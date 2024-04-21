@@ -7,12 +7,12 @@ export const Container = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  width: 100vh;
-  height: calc(100vh - 10rem);
+  width: 100%;
+  height: calc(100% - 10rem);
   margin: 5rem 0;
 `;
 export const ContentWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100%;
   padding: 2rem;
   overflow: scroll;
