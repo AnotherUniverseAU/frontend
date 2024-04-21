@@ -72,6 +72,7 @@ export const Nickname = () => {
         window.addEventListener(
             'message',
             (event) => {
+                alert(JSON.parse(event.data));
                 try {
                     const data = JSON.parse(event.data);
                     if (data.type === 'FCM_TOKEN') {
