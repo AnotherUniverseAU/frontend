@@ -2,8 +2,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.div`
-  width: 100vw;
-  height: 5rem;
+  width: 100%;
+  height: calc(5rem + env(safe-area-inset-top));
+
+  padding-top: constant(safe-area-inset-top); /* iOS 11.0 이전 */
+  padding-top: env(safe-area-inset-top);
+
   position: fixed;
   top: 0;
   left: 0;
