@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   height: calc(
-    var(--app-height) - var(--safe-area-inset-top) -
-      var(--safe-area-inset-bottom)
+    100% - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - 10rem -
+      6rem
   );
 
   width: 100%;
