@@ -7,7 +7,7 @@ import { ReactComponent as Arrow } from "src/assets/img/Arrow.svg";
 export const NavItem = styled.div`
   width: 90vw;
   height: 3rem;
-  padding: 0 10vw;
+  padding: 0 10%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -28,11 +28,9 @@ export const NavArrow = styled(Arrow)`
 //////////////Profile/////////////
 
 export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+  width: 100%;
+  height: 100%;
   background: #f2f3f6;
-  padding: 0 0 5rem;
 `;
 
 export const SubContainer = styled.div`
@@ -50,8 +48,8 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ProfileImg = styled(ProfileImgComponent)`
-  width: 30vw;
-  height: 30vw;
+  width: 30%;
+  height: 30%;
   border-radius: 50%;
 `;
 
@@ -60,7 +58,7 @@ export const NicknameContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
+  padding-top: 1rem;
 `;
 
 export const Nickname = styled.span`
@@ -80,13 +78,13 @@ export const NavWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  padding-top: 2rem;
 `;
 
 export const WithDraw = styled.div`
-  width: 90vw;
+  width: 90%;
   height: 3rem;
-  padding: 0 10vw;
+  padding: 0 10%;
   display: flex;
   justify-content: flex-start;
   align-items: center;

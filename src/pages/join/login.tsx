@@ -37,7 +37,7 @@ export const Login = () => {
   return (
     <S.Container>
       <S.Logo src={purpleLogo} alt="au logo" />
-      <div>Web ver 1.2.2</div>
+      <div>Web ver 1.2.3</div>
       <S.TopInfoWrapper>
         <S.TopInfo>간편하게 로그인하고</S.TopInfo>
         <S.TopInfo>다양한 서비스를 이용해보세요</S.TopInfo>

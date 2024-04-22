@@ -6,6 +6,9 @@ export const GlobalStyle = createGlobalStyle`
 	user-select: none;
 	-webkit-tap-highlight-color:rgba(255,255,255,0);
 	-webkit-touch-callout: none;
+	::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 html, body, div, span, applet, object, iframe,
@@ -70,7 +73,7 @@ div {
 }
 
 :root {
-  --app-height: 100vh;
+  --app-height: 100%;
   --safe-area-inset-top: env(safe-area-inset-top);
   --safe-area-inset-bottom: env(safe-area-inset-bottom);
   --safe-area-inset-left: env(safe-area-inset-left);
@@ -81,7 +84,6 @@ html,
 body {
   padding: 0;
   margin: 0;
-  /* overflow: hidden; */
   width: 100%;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
@@ -94,5 +96,4 @@ ${fonts}
     font-family: "Noto Sans KR", sans-serif;
 	font-weight: 500;
   }
-
 `;
