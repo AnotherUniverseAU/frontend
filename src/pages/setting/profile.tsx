@@ -64,38 +64,40 @@ export const Profile = () => {
           </S.NicknameContainer>
         </S.ProfileContainer>
         <S.NavWrapper>
-          <NavItem
-            text={"알림설정"}
-            onClick={function openAppSettings() {
-              if ((window as any).ReactNativeWebView) {
-                console.log("설정 이동 요청");
-                (window as any).ReactNativeWebView.postMessage(
-                  JSON.stringify({
-                    type: "OPEN_APP_SETTINGS",
-                  })
-                );
-                console.log("설정 이동 완료");
-              }
-            }}
-            style={{ paddingBottom: "1rem" }}
-          />
-          <NavItem
-            text={"공지사항"}
-            onClick={() => handleNavigate({ to: "/notice" })}
-            style={{ borderRadius: "0.5rem 0.5rem 0 0" }}
-          />
-          <NavItem
-            text={"문의하기"}
-            onClick={() => handleCSOpen()}
-            style={{
-              paddingBottom: "1rem",
-              borderRadius: "0 0 0.5rem 0.5rem",
-            }}
-          />
-          {/* <NavItem text={'로그아웃'} onClick={() => handleNavigate({ to: '/logout' })} /> */}
-          <S.WithDraw onClick={() => handleNavigate({ to: "/withdraw" })}>
-            탈퇴하기
-          </S.WithDraw>
+          <div>
+            <NavItem
+              text={"알림설정"}
+              onClick={function openAppSettings() {
+                if ((window as any).ReactNativeWebView) {
+                  console.log("설정 이동 요청");
+                  (window as any).ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                      type: "OPEN_APP_SETTINGS",
+                    })
+                  );
+                  console.log("설정 이동 완료");
+                }
+              }}
+              style={{ marginBottom: "1rem" }}
+            />
+            <NavItem
+              text={"공지사항"}
+              onClick={() => handleNavigate({ to: "/notice" })}
+              style={{ borderRadius: "0.5rem 0.5rem 0 0" }}
+            />
+            <NavItem
+              text={"문의하기"}
+              onClick={() => handleCSOpen()}
+              style={{
+                marginBottom: "1rem",
+                borderRadius: "0 0 0.5rem 0.5rem",
+              }}
+            />
+            {/* <NavItem text={'로그아웃'} onClick={() => handleNavigate({ to: '/logout' })} /> */}
+            <S.WithDraw onClick={() => handleNavigate({ to: "/withdraw" })}>
+              탈퇴하기
+            </S.WithDraw>
+          </div>
         </S.NavWrapper>
       </S.SubContainer>
       <IconFooter activepage="/profile" />

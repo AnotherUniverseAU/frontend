@@ -114,7 +114,6 @@ export const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   background: #f2f3f6;
-  overflow: scroll;
 `;
 export const SubContainer = styled.div`
   margin: 5rem 0;
@@ -122,7 +121,8 @@ export const SubContainer = styled.div`
   flex-direction: column;
   justify-content: flex;
 
-  height: calc(100% - 10rem);
+  height: calc(100vh - 10rem);
+  overflow: scroll;
 `;
 
 export const TItleContainer = styled.div`

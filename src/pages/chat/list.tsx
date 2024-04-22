@@ -144,7 +144,9 @@ export const ChatList = () => {
         {chatList.length === 0 ? (
           <NoChatsComponent />
         ) : (
-          <ChatListComponent chatRoomDatas={chatList} />
+          <div>
+            <ChatListComponent chatRoomDatas={chatList} />
+          </div>
         )}
       </S.SubContainer>
       <IconFooter activepage="/chatlist" />
