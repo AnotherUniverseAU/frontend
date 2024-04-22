@@ -15,8 +15,6 @@ export const App = () => {
         gtmId: REACT_APP_GTM_ID,
       });
     }
-
-    alert(refreshToken);
   }, []);
   return (
     <>

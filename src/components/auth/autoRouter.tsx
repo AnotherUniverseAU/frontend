@@ -123,54 +123,27 @@ const RouterInfo: RouterItem[] = [
 ];
 
 const AutoRouter = (refreshToken: any) => {
-  alert(refreshToken.refreshToken);
-  if (refreshToken.refreshToken !== null) {
-    alert("리프레시 있다");
-    return (
-      <Routes>
-        {RouterInfoWithRefToken.map((route) => {
-          return (
-            <Route
-              key={route.path}
-              path={route.path}
-              element={
-                route.withAuthorization ? (
-                  <Authorization redirectTo="/login">
-                    {route.element}
-                  </Authorization>
-                ) : (
-                  route.element
-                )
-              }
-            ></Route>
-          );
-        })}
-      </Routes>
-    );
-  } else {
-    alert("리프레시 없다");
-    return (
-      <Routes>
-        {RouterInfo.map((route) => {
-          return (
-            <Route
-              key={route.path}
-              path={route.path}
-              element={
-                route.withAuthorization ? (
-                  <Authorization redirectTo="/login">
-                    {route.element}
-                  </Authorization>
-                ) : (
-                  route.element
-                )
-              }
-            ></Route>
-          );
-        })}
-      </Routes>
-    );
-  }
+  return (
+    <Routes>
+      {RouterInfo.map((route) => {
+        return (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={
+              route.withAuthorization ? (
+                <Authorization redirectTo="/login">
+                  {route.element}
+                </Authorization>
+              ) : (
+                route.element
+              )
+            }
+          ></Route>
+        );
+      })}
+    </Routes>
+  );
 };
 
 export default AutoRouter;
