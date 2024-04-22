@@ -2,14 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background: #f2f3f6;
 `;
 
 export const SubContainer = styled.div`
   width: 100%;
-  height: calc(100% - 10rem);
-  margin: 5rem 0;
 `;
 export const ContentWrapper = styled.div`
   width: 100%;
