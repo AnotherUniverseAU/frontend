@@ -299,6 +299,7 @@ export const ChatRoom = (): JSX.Element => {
       setApiOffset((cur) => cur + 1);
       setNextHistory(res);
       // 그 전 히스토리 비어있음(마지막 채팅)
+      console.log(res);
       if (res.characterChats.length === 0 && res.userReplies.length === 0) {
         // 마지막 채팅
         setIsLastChat(true);
@@ -321,14 +322,17 @@ export const ChatRoom = (): JSX.Element => {
     // 챗메시지 변경될 때마다
     // 처음이라면
     if (isFirst === true) {
+      console.log("처음");
       if (helloMessages.length > 0 && isFirstChat === true) {
         if (firstChat.length > 0) {
           const chatWrapper = subContainerRef.current;
           const chatContainer = middleRef.current;
+          console.log(chatWrapper, chatContainer);
           if (chatContainer && chatWrapper) {
             const containerH = chatContainer.clientHeight;
             const scrollH = chatWrapper.scrollHeight;
             if (scrollH < containerH) {
+              console.log("스크롤 없잖아");
               // 스크롤이 생성될만큼이 안나온다면 다음 채팅 가져오는데, 비어있으면 hello랑 합쳐주고 helloshown true
               const getChat = async () => {
                 await getNextChat();
