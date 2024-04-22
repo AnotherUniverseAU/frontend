@@ -156,6 +156,14 @@ export const Container = styled.div`
 `;
 
 export const SubContainer = styled.div`
+  height: calc(
+    100vh - constant(safe-area-inset-top) - constant(safe-area-inset-bottom) -
+      10rem
+  );
+  height: calc(
+    100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10rem
+  );
+
   display: flex;
   flex-direction: column;
   justify-content: flex;
