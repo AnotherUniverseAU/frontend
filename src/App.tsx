@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import { ReactEventHandler, useEffect } from "react";
 import AutoRouter from "src/components/auth/autoRouter.tsx";
 
+const refreshToken = localStorage.getItem("refreshToken");
 const REACT_APP_GTM_ID = process.env.REACT_APP_GTM_ID;
 export const App = () => {
   useEffect(() => {
@@ -14,6 +15,8 @@ export const App = () => {
         gtmId: REACT_APP_GTM_ID,
       });
     }
+
+    alert(refreshToken);
   }, []);
   return (
     <>
@@ -25,7 +28,7 @@ export const App = () => {
         ></meta>
       </Helmet>
       <GlobalStyle />
-      <AutoRouter />
+      <AutoRouter refreshToken={refreshToken} />
     </>
   );
 };
