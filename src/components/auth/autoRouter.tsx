@@ -125,10 +125,10 @@ const RouterInfo: RouterItem[] = [
 const AutoRouter = (refreshToken: any) => {
   alert(refreshToken.refreshToken);
   if (refreshToken.refreshToken !== null) {
+    alert("리프레시 있다");
     return (
       <Routes>
         {RouterInfoWithRefToken.map((route) => {
-          console.log("리프레시 있다");
           return (
             <Route
               key={route.path}
@@ -148,10 +148,10 @@ const AutoRouter = (refreshToken: any) => {
       </Routes>
     );
   } else {
+    alert("리프레시 없다");
     return (
       <Routes>
         {RouterInfo.map((route) => {
-          console.log("리프레시 없다");
           return (
             <Route
               key={route.path}
