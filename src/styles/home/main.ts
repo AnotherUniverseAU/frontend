@@ -20,10 +20,10 @@ export const MainContainer = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  margin: 5rem 0;
+  margin: calc(5rem + var(--safe-area-inset-top)) 0
+    calc(5rem + var(--safe-area-inset-bottom));
   height: calc(
-    100% - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - 10rem -
-      6rem
+    100% - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - 10rem
   );
   display: flex;
   flex-direction: column;
