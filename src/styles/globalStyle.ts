@@ -96,10 +96,10 @@ body {
 }
 .container{
 	height: calc(
-		100vh - constant(safe-area-inset-top) - constant(safe-area-inset-bottom) - 10rem
+		100% - constant(safe-area-inset-top) - constant(safe-area-inset-bottom) - 10rem
 	);
 	height: calc(
-		100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10rem
+		100% - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10rem
 	);
 	
 	margin: calc(5rem + constant(safe-area-inset-top)) 0
