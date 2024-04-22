@@ -6,6 +6,10 @@ import { Switch } from "@mui/material";
 export const HeaderContainer = styled.div`
   width: 100%;
   height: 5rem;
+
+  padding-top: constant(safe-area-inset-top); /* iOS 11.0 이전 */
+  padding-top: env(safe-area-inset-top);
+
   border-bottom: 0.1rem solid #e5e5e5;
   position: fixed;
   top: 0;

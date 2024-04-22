@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  height: calc(
+    var(--app-height) - var(--safe-area-inset-top) -
+      var(--safe-area-inset-bottom)
+  );
+
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
