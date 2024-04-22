@@ -11,9 +11,10 @@ interface IconFooterProps {
 
 export const Container = styled.div`
   width: 100%;
-  height: calc(5rem + var(--safe-area-inset-bottom));
+  height: 5rem;
   background-color: rgba(255, 255, 255, 0.9);
   position: fixed;
+  left: 0;
   bottom: 0;
   border-top-left-radius: 2rem;
   border-top-right-radius: 2rem;
@@ -24,7 +25,6 @@ export const Container = styled.div`
   box-shadow: -0.1rem -0.1rem 0.2rem rgba(0, 0, 0, 0.05),
     0.1rem -0.1rem 0.2rem rgba(0, 0, 0, 0.05);
   z-index: 5;
-  padding-bottom: var(--safe-area-inset-bottom);
 `;
 
 export const IconContainer = styled(Link)`
