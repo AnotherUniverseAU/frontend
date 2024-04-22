@@ -23,11 +23,11 @@ export const MainContainer = styled.div`
 
 export const SubContainer = styled.div`
   margin: 5rem 0;
+  height: calc(100% - 10rem);
   display: flex;
   flex-direction: column;
   justify-content: flex;
   z-index: 0;
-  height: 100%;
 `;
 
 export const NavContainer = styled.div`
