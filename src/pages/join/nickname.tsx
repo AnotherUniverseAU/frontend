@@ -17,7 +17,8 @@ export const Nickname = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [load, setLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [accToken, setAccToken] = useState(String);
+  const [accToken, setAccToken] = useState<any>();
+  const [fcmToken, setFcmToken] = useState(String);
 
   const navigate = useNavigate();
 
@@ -67,14 +68,15 @@ export const Nickname = () => {
   // };
 
   useEffect(() => {
-    const accToken = localStorage.getItem("accessToken");
-    console.log(accToken);
-    if (!accToken) {
+    const accessToken = localStorage.getItem("accessToken");
+    alert(accessToken);
+    if (accessToken === null) {
       getNewToken().then((res) => {
-        window.location.reload();
+        localStorage.setItem("accessToken", res);
+        setAccToken(res);
       });
     } else {
-      setAccToken(accToken);
+      setAccToken(accessToken);
     }
 
     window.addEventListener(
@@ -84,6 +86,7 @@ export const Nickname = () => {
           const data = JSON.parse(event.data);
           if (data.type === "FCM_TOKEN") {
             console.log("Received FCM Token:", data.token);
+            setFcmToken(data.token);
             localStorage.setItem("fcmToken", data.token);
           }
         } catch (error) {
@@ -110,43 +113,41 @@ export const Nickname = () => {
     }
   }, [accToken]);
 
-  const updateNickname = async (nickname: string) => {
+  const updateNickname = async () => {
     if (nickname !== "") {
       console.log("닉네임은 입력됨");
       try {
-        const res = await apiRequestPost("/user/nickname", {
+        await apiRequestPost("/user/nickname", {
           nickname: nickname,
-        });
-
-        if (res && res.nickname) {
-          // 닉네임 업데이트 성공 시, FCM 토큰 전송을 시도합니다.
-          try {
-            const fcmToken = localStorage.getItem("fcmToken");
-            const tokenRes = await apiRequestPost("/user/fcm-token", {
-              fcmToken: fcmToken,
-            });
-
-            if (tokenRes) {
-              // FCM 토큰 업데이트가 성공하면 홈으로 네비게이트합니다.
-              navigate("/", { state: { from: "/nickname" } });
-            } else {
-              // FCM 토큰 업데이트 실패
-              console.error("FCM 토큰 업데이트 실패:", tokenRes);
-              alert(
-                `FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`
-              );
-              window.location.reload();
+        }).then((res: any) => {
+          console.log(res);
+          if (res && res.nickname) {
+            // 닉네임 업데이트 성공 시, FCM 토큰 전송을 시도합니다.
+            try {
+              apiRequestPost("/user/fcm-token", {
+                fcmToken: fcmToken,
+              }).then((tokenRes) => {
+                if (tokenRes) {
+                  // FCM 토큰 업데이트가 성공하면 홈으로 네비게이트합니다.
+                  navigate("/", { state: { from: "/nickname" } });
+                } else {
+                  // FCM 토큰 업데이트 실패
+                  console.error("FCM 토큰 업데이트 실패:", tokenRes);
+                  alert(
+                    `FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`
+                  );
+                }
+              });
+            } catch (error) {
+              console.error("FCM 토큰 전송 중 오류 발생:", error);
+              alert("FCM 토큰 전송 중 오류가 발생했습니다.");
             }
-          } catch (error) {
-            console.error("FCM 토큰 전송 중 오류 발생:", error);
-            alert("FCM 토큰 전송 중 오류가 발생했습니다.");
+          } else {
+            // 서버 응답이 올바르지 않을 때
+            console.error("닉네임 업데이트 실패:", res);
+            alert("닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.");
           }
-        } else {
-          // 서버 응답이 올바르지 않을 때
-          console.error("닉네임 업데이트 실패:", res);
-          alert("닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.");
-          window.location.reload();
-        }
+        });
       } catch (error) {
         console.error("닉네임 업데이트 중 오류 발생:", error);
         alert("닉네임 업데이트 중 오류가 발생했습니다.");
@@ -200,7 +201,7 @@ export const Nickname = () => {
           <TextFooter
             route="/"
             text="시작하기"
-            onClick={() => updateNickname(nickname)}
+            onClick={() => updateNickname()}
           />
         </S.Container>
       )}
