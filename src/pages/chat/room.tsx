@@ -815,7 +815,7 @@ export const ChatRoom = (): JSX.Element => {
             title={characterName}
             characterId={id}
           />
-          <S.SubContainer ref={middleRef}>
+          <S.SubContainer className="container" ref={middleRef}>
             {(showChatTutorial || showReplyTutorial) && (
               <S.ChatTutorialContainer>
                 <S.TutorialBox

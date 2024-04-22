@@ -13,7 +13,7 @@ interface FooterProps {
 export const BackHeader: FC<FooterProps> = ({ title, type }) => {
   const navigate = useNavigate();
   return (
-    <S.HeaderContainer>
+    <S.HeaderContainer className="header">
       {type === "first" ? (
         <>
           <S.LeftDiv />

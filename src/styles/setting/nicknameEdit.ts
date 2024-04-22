@@ -9,8 +9,8 @@ export const Container = styled.div`
 
 export const InfoContainer = styled.div`
   width: 90vw;
-  height: calc(100vh - 10rem);
-  margin: 5rem 5vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
   padding-top: 3rem;
   display: flex;
   flex-direction: column;

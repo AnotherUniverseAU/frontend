@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.div`
   width: 100%;
-  height: 5rem;
   border-bottom: 0.1rem solid #e5e5e5;
   position: fixed;
   left: 0;

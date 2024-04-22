@@ -137,7 +137,7 @@ export const ChatList = () => {
   return (
     <S.Container>
       <MainHeader toCreate={true} isTutorial={false} />
-      <S.SubContainer>
+      <S.SubContainer className="container">
         <S.TItleContainer>
           <S.Title>CHATS</S.Title>
         </S.TItleContainer>

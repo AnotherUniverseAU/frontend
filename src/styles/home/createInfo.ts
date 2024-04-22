@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100vw;
   height: 100%;
-  margin: 5rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,7 +10,6 @@ export const Container = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  height: calc(100vh - 10rem);
   display: flex;
   flex-direction: column;
 `;

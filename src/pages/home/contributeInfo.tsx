@@ -7,7 +7,7 @@ export const ContributeInfo = () => {
   return (
     <S.Container>
       <BackHeader route="/createInfo" title="AI 캐릭터 만들기" />
-      <S.SubContainer>
+      <S.SubContainer className="container">
         <S.TitleContainer>
           <S.Title>
             <S.Highlight>기존</S.Highlight> 캐릭터를 보완하면

@@ -57,7 +57,7 @@ export const EachNicknameEdit = () => {
   return (
     <S.Container>
       <BackHeader route="/profile" type="each" title="기본 호칭" />
-      <S.InfoContainer>
+      <S.InfoContainer className="container">
         <S.Info>{characterName}이/가 나를 부를 때 사용할</S.Info>
         <S.Info>호칭을 설정해주세요</S.Info>
         <StyledInput

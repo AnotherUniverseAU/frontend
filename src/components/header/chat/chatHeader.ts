@@ -5,7 +5,6 @@ import { Switch } from "@mui/material";
 
 export const HeaderContainer = styled.div`
   width: 100%;
-  height: 5rem;
   border-bottom: 0.1rem solid #e5e5e5;
   position: fixed;
   top: 0;

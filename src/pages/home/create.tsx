@@ -167,7 +167,7 @@ export const Create = () => {
       )}
 
       <BackHeader route="/contributeInfo" title="AI 캐릭터 만들기" />
-      <S.SubContainer>
+      <S.SubContainer className="container">
         <ListTitle listNumber={1} listText="캐릭터 정보" textColor="#6D2FEF" />
         <S.InputTitle>
           이름 <S.RedText>*</S.RedText>

@@ -45,7 +45,7 @@ export const Notice = () => {
   return (
     <S.Container>
       <BackHeader route="/profile" title={"공지사항"} />
-      <S.SubContainer>
+      <S.SubContainer className="container">
         {notificiations.map((notice: any, idx) => (
           <NoticeItem
             key={idx}

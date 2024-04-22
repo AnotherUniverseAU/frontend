@@ -51,7 +51,7 @@ export const Profile = () => {
   return (
     <S.Container>
       <MainHeader toCreate={false} isTutorial={false} />
-      <S.SubContainer>
+      <S.SubContainer className="container">
         <S.ProfileContainer>
           <S.ProfileImg />
           <S.NicknameContainer>

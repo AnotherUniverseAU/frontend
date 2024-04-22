@@ -116,12 +116,10 @@ export const Container = styled.div`
   background: #f2f3f6;
 `;
 export const SubContainer = styled.div`
-  margin: 5rem 0;
   display: flex;
   flex-direction: column;
   justify-content: flex;
 
-  height: calc(100vh - 10rem);
   overflow: scroll;
 `;
 

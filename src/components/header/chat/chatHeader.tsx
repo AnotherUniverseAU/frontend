@@ -72,7 +72,7 @@ export const ChatHeader: FC<FooterProps> = ({
   // }, [isAlarm]);
 
   return (
-    <S.HeaderContainer>
+    <S.HeaderContainer className="header">
       <S.StyledLink to={route}>
         <S.StyledLinkArrow src={backArrow} alt="back arrow" />
       </S.StyledLink>

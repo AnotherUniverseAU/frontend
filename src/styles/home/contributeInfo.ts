@@ -10,13 +10,10 @@ export const Container = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  margin: 5rem 0;
   display: flex;
   flex-direction: column;
   justify-content: flex;
   z-index: 0;
-
-  height: calc(100vh - 10rem);
 `;
 export const TitleContainer = styled.div``;
 
