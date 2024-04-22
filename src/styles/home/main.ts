@@ -1,12 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: calc(
-    100% - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - 10rem -
-      6rem
-  );
-
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -25,7 +21,10 @@ export const MainContainer = styled.div`
 
 export const SubContainer = styled.div`
   margin: 5rem 0;
-  height: calc(100% - 10rem);
+  height: calc(
+    100% - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - 10rem -
+      6rem
+  );
   display: flex;
   flex-direction: column;
   justify-content: flex;
