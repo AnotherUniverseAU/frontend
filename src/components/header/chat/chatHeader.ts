@@ -4,7 +4,7 @@ import { styled as muiStyled } from "@mui/system";
 import { Switch } from "@mui/material";
 
 export const HeaderContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 5rem;
   border-bottom: 0.1rem solid #e5e5e5;
   position: fixed;
@@ -20,7 +20,7 @@ export const HeaderContainer = styled.div`
 `;
 
 export const StyledLink = styled(Link)`
-  width: 15vw;
+  width: 15%;
   height: 5rem;
   display: flex;
   flex-direction: row;
@@ -42,7 +42,7 @@ export const TitleContainer = styled.div`
 `;
 
 export const ChatSettingButton = styled.div`
-  width: 15vw;
+  width: 15%;
   height: 5rem;
   display: flex;
   flex-direction: row;

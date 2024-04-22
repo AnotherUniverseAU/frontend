@@ -15,6 +15,8 @@ export const HeaderContainer = styled.div`
   justify-content: center;
 
   background-color: white;
+
+  padding-top: env(safe-area-inset-top);
 `;
 
 export const StyledLink = styled(Link)`

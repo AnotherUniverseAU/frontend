@@ -7,6 +7,7 @@ import { IconFooter } from "src/components/footer/icon/iconFooter.tsx";
 
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { BackgroundFull } from "src/components/background/background";
+import { BackHeader } from "src/components/header/back/backHeader.tsx";
 
 interface NavItemProps {
   text: string;
@@ -76,7 +77,7 @@ export const Profile = () => {
                 console.log("설정 이동 완료");
               }
             }}
-            style={{ marginBottom: "1rem" }}
+            style={{ paddingBottom: "1rem" }}
           />
           <NavItem
             text={"공지사항"}
@@ -87,7 +88,7 @@ export const Profile = () => {
             text={"문의하기"}
             onClick={() => handleCSOpen()}
             style={{
-              marginBottom: "1rem",
+              paddingBottom: "1rem",
               borderRadius: "0 0 0.5rem 0.5rem",
             }}
           />

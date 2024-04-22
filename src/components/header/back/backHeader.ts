@@ -2,14 +2,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 5rem;
   border-bottom: 0.1rem solid #e5e5e5;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 10;
-
   display: flex;
   flex-direction: row;
   align-items: center;
