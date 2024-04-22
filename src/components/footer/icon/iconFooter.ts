@@ -11,10 +11,6 @@ interface IconFooterProps {
 
 export const Container = styled.div`
   width: 100%;
-  height: calc(5rem + env(safe-area-inset-bottom));
-
-  padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 이전 */
-  padding-bottom: env(safe-area-inset-bottom);
 
   background-color: rgba(255, 255, 255, 0.9);
   position: fixed;

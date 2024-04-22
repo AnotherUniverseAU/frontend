@@ -94,7 +94,7 @@ export const ChatFooter: React.FC<{
     }
   };
   return (
-    <S.Container currentRow={currentRow}>
+    <S.Container className="footer" currentRow={currentRow}>
       <S.AttachIcon onClick={handleIconClick} />
       <input
         type="file"

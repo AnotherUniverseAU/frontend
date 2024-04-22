@@ -5,8 +5,6 @@ import { ReactComponent as SendIconSvg } from "src/assets/img/sendIcon.svg";
 
 export const Container = styled.div`
   width: 100vw;
-  height: 5rem;
-  padding: 0 2vw;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

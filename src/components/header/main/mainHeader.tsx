@@ -14,7 +14,7 @@ export function MainHeader({
   isTutorial: boolean;
 }) {
   return (
-    <S.HeaderContainer>
+    <S.HeaderContainer className="header">
       <S.LeftDiv>
         <S.StyledLink to={"/"} style={{ left: 0 }}>
           <S.ImgLogo src={imgLogo} alt="Img Logo" />

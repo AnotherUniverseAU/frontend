@@ -74,10 +74,6 @@ div {
 
 :root {
   --app-height: 100%;
-  --safe-area-inset-top: env(safe-area-inset-top);
-  --safe-area-inset-bottom: env(safe-area-inset-bottom);
-  --safe-area-inset-left: env(safe-area-inset-left);
-  --safe-area-inset-right: env(safe-area-inset-right);
 }
 
 html{
@@ -89,6 +85,35 @@ html{
 body {
   width: 100%;
   height: 100%;
+}
+
+.header{
+	height: calc(5rem + env(safe-area-inset-top));
+	height: calc(5rem + constant(safe-area-inset-top));
+
+	padding-top: constant(safe-area-inset-top);
+	padding-top: env(safe-area-inset-top);
+}
+.container{
+	height: calc(
+		100% - constant(safe-area-inset-top) - constant(safe-area-inset-bottom) - 10rem
+	);
+	height: calc(
+		100% - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10rem
+	);
+	
+	margin: calc(5rem + constant(safe-area-inset-top)) 0
+    calc(5rem + constant(safe-area-inset-bottom));
+
+	margin: calc(5rem + env(safe-area-inset-top)) 0
+    calc(5rem + env(safe-area-inset-bottom));
+}
+.footer{
+	height: calc(5rem + env(safe-area-inset-bottom));
+	height: calc(5rem + constant(safe-area-inset-bottom));
+
+	padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 이전 */
+	padding-bottom: env(safe-area-inset-bottom);
 }
 
 ${fonts}
