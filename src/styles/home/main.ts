@@ -20,7 +20,8 @@ export const MainContainer = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  margin: 5rem 0;
+  margin: calc(5rem + var(--safe-area-inset-top)) 0
+    calc(5rem + var(--safe-area-inset-top));
   height: calc(
     100% - 10rem - var(--safe-area-inset-top) - var(--safe-area-inset-bottom)
   );
