@@ -84,7 +84,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  width: 100vh;
+  width: 100%;
   
   padding-top: constant(safe-area-inset-top); /* iOS 11.0 이전 */
   padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 이전 */
