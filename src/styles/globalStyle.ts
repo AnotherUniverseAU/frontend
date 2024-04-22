@@ -80,12 +80,13 @@ div {
   --safe-area-inset-right: env(safe-area-inset-right);
 }
 
-html,
-body {
+html{
   padding: 0;
   margin: 0;
   width: 100%;
-  
+  height: var(--app-height);
+}
+body {
   padding-top: constant(safe-area-inset-top); /* iOS 11.0 이전 */
   padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 이전 */
 
