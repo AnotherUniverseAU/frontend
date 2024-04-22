@@ -21,7 +21,7 @@ export const TextFooter: FC<FooterProps> = ({ route, text, onClick }) => {
   };
 
   return (
-    <S.StyledLink onClick={handleClick}>
+    <S.StyledLink className="footer" onClick={handleClick}>
       <S.StyledLinkText>{text}</S.StyledLinkText>
     </S.StyledLink>
   );

@@ -85,7 +85,7 @@ export const Main: React.FC = () => {
         </S.VirtualHeader>
       )}
       <MainHeader toCreate={true} isTutorial={isTutorial} />
-      <S.SubContainer>
+      <S.SubContainer className="container">
         <S.MainContainer>
           <MainImage
             route={`/detail/${mainCharacter?.characterId}`}

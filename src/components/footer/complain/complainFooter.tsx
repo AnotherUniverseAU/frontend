@@ -13,7 +13,7 @@ export const ComplainFooter: React.FC<{
   };
 
   return (
-    <S.Container>
+    <S.Container className="footer">
       <S.ChatInput
         type="text"
         value={inputValue}

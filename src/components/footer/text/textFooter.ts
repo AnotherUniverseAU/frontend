@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const StyledLink = styled.div`
   width: 100vw;
-  height: 5rem;
   background-color: #6d2fef;
   position: fixed;
+  left: 0;
   bottom: 0;
   border-top-left-radius: 2rem;
   border-top-right-radius: 2rem;

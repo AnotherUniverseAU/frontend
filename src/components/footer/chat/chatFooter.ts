@@ -8,8 +8,16 @@ export const Container = styled.div<{
 }>`
   width: 100%;
   height: ${(props) =>
-    props.currentRow < 3 ? "5rem" : props.currentRow + 2 + "rem"};
-  padding: 0 2vw;
+    props.currentRow < 3
+      ? "calc(5rem + constant(safe-area-inset-bottom))"
+      : `calc(${
+          props.currentRow * 1 + 2
+        }rem + constant(safe-area-inset-bottom))`};
+  height: ${(props) =>
+    props.currentRow < 3
+      ? "calc(5rem + env(safe-area-inset-bottom))"
+      : `calc(${props.currentRow * 1 + 2}rem + env(safe-area-inset-bottom))`};
+
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -17,6 +25,7 @@ export const Container = styled.div<{
   background: white;
   position: fixed;
   bottom: 0;
+  left: 0;
   z-index: 5;
 `;
 

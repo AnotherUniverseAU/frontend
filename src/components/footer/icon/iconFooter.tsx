@@ -7,7 +7,7 @@ interface IconFooterProps {
 
 export const IconFooter = ({ activepage }: IconFooterProps) => {
   return (
-    <S.Container>
+    <S.Container className="footer">
       <S.IconContainer to="/">
         <S.StyledHomeIcon activepage={activepage} />
       </S.IconContainer>
