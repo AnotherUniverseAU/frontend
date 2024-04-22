@@ -56,14 +56,12 @@ export const NavArrow = styled(Arrow)`
 //////////Notice//////////
 export const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   position: relative;
   background: #f2f3f5;
 `;
 
 export const SubContainer = styled.div`
   width: 90vw;
-  height: calc(100vh - 10rem);
-  margin: 5rem 0;
   padding: 1rem 0;
 `;

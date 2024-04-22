@@ -150,19 +150,18 @@ export const DateLabel = styled.div`
 
 export const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background: #f2f3f6;
   overflow: scroll;
 `;
 
 export const SubContainer = styled.div`
-  margin: 5rem 0;
   display: flex;
   flex-direction: column;
   justify-content: flex;
 
-  height: calc(100vh - 10rem);
-  padding: 0 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 //////ChatTutorial//////

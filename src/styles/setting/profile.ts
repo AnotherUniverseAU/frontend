@@ -34,8 +34,6 @@ export const Container = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  height: calc(100vh - 10rem);
-  margin: 5rem 0;
   padding: 2rem 0;
 `;
 
