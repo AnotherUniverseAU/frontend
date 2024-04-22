@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Landing } from "src/pages/join/landing.tsx";
 import { Login } from "src/pages/join/login.tsx";
 import { Redirection } from "src/pages/join/redirection.tsx";
@@ -36,27 +36,15 @@ interface AuthorizationProps {
   children: React.ReactNode;
 }
 
+const refreshToken = localStorage.getItem("refreshToken");
+alert(refreshToken);
 const Authorization = ({ redirectTo, children }: AuthorizationProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const token = localStorage.getItem("refreshToken");
-    if (token) {
-      setIsAuthenticated(true);
-    }
-    setIsLoading(false);
-  }, []);
-
-  if (isLoading) {
-    return <div>로딩 중</div>; // 로딩 상태를 표시할 컴포넌트 또는 요소
-  }
-
-  if (!isAuthenticated) {
+  const isAuthenticated: string | null | undefined = refreshToken;
+  if (isAuthenticated) {
+    return <>{children}</>;
+  } else {
     return <Navigate to={redirectTo} />;
   }
-
-  return <>{children}</>;
 };
 
 const RouterInfo: RouterItem[] = [
