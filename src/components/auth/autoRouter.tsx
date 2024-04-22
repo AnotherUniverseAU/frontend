@@ -36,16 +36,53 @@ interface AuthorizationProps {
   children: React.ReactNode;
 }
 
-const refreshToken = localStorage.getItem("refreshToken");
-alert(refreshToken);
 const Authorization = ({ redirectTo, children }: AuthorizationProps) => {
-  const isAuthenticated: string | null | undefined = refreshToken;
+  const isAuthenticated: string | null | undefined =
+    localStorage.getItem("refreshToken");
   if (isAuthenticated) {
     return <>{children}</>;
   } else {
     return <Navigate to={redirectTo} />;
   }
 };
+
+const RouterInfoWithRefToken: RouterItem[] = [
+  { path: "/landing", element: <Landing />, withAuthorization: true },
+  { path: "/login", element: <Login />, withAuthorization: false },
+  { path: "/redirection", element: <Redirection />, withAuthorization: false },
+  // { path: "/permission", element: <Permission />, withAuthorization: true },
+  { path: "/nickname", element: <Nickname />, withAuthorization: true },
+  { path: "/createInfo", element: <CreateInfo />, withAuthorization: true },
+  {
+    path: "/contributeInfo",
+    element: <ContributeInfo />,
+    withAuthorization: true,
+  },
+  { path: "/create", element: <Create />, withAuthorization: true },
+  { path: "/detail/:id", element: <Detail />, withAuthorization: true },
+  { path: "/profile", element: <Profile />, withAuthorization: true },
+  { path: "/nicknameEdit", element: <NicknameEdit />, withAuthorization: true },
+  { path: "/notification", element: <Notification />, withAuthorization: true },
+  { path: "/notice", element: <Notice />, withAuthorization: true },
+  { path: "/withdraw", element: <Withdraw />, withAuthorization: true },
+  { path: "/chatlist", element: <ChatList />, withAuthorization: true },
+  { path: "/tokentest", element: <TokenTest />, withAuthorization: true },
+  { path: "/loading", element: <Loading />, withAuthorization: false },
+  {
+    path: "/eachNicknameEdit",
+    element: <EachNicknameEdit />,
+    withAuthorization: true,
+  },
+  { path: "/au_admin_2023", element: <Admin />, withAuthorization: true },
+  { path: "/", element: <Main />, withAuthorization: false },
+  {
+    path: "/noticeDetail",
+    element: <NoticeDetail />,
+    withAuthorization: true,
+  },
+  { path: "/chatroom/:id", element: <ChatRoom />, withAuthorization: true },
+  // { path: "/error", element: <Error />, withAuthorization: false },
+];
 
 const RouterInfo: RouterItem[] = [
   { path: "/landing", element: <Landing />, withAuthorization: true },
@@ -85,28 +122,55 @@ const RouterInfo: RouterItem[] = [
   // { path: "/error", element: <Error />, withAuthorization: false },
 ];
 
-const AutoRouter = () => {
-  return (
-    <Routes>
-      {RouterInfo.map((route) => {
-        return (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={
-              route.withAuthorization ? (
-                <Authorization redirectTo="/login">
-                  {route.element}
-                </Authorization>
-              ) : (
-                route.element
-              )
-            }
-          ></Route>
-        );
-      })}
-    </Routes>
-  );
+const AutoRouter = (refreshToken: any) => {
+  alert(refreshToken.refreshToken);
+  if (refreshToken.refreshToken !== null) {
+    return (
+      <Routes>
+        {RouterInfoWithRefToken.map((route) => {
+          console.log("리프레시 있다");
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                route.withAuthorization ? (
+                  <Authorization redirectTo="/login">
+                    {route.element}
+                  </Authorization>
+                ) : (
+                  route.element
+                )
+              }
+            ></Route>
+          );
+        })}
+      </Routes>
+    );
+  } else {
+    return (
+      <Routes>
+        {RouterInfo.map((route) => {
+          console.log("리프레시 없다");
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                route.withAuthorization ? (
+                  <Authorization redirectTo="/login">
+                    {route.element}
+                  </Authorization>
+                ) : (
+                  route.element
+                )
+              }
+            ></Route>
+          );
+        })}
+      </Routes>
+    );
+  }
 };
 
 export default AutoRouter;
