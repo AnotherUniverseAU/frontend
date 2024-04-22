@@ -6,13 +6,9 @@ import { ReactComponent as SendIconSvg } from "src/assets/img/sendIcon.svg";
 export const Container = styled.div<{
   currentRow: number;
 }>`
-  width: 100vw;
+  width: 100%;
   height: ${(props) =>
-    props.currentRow < 3
-      ? "calc(5rem + var(--safe-area-inset-bottom))"
-      : `calc(${
-          props.currentRow + 2 + "rem"
-        } + var(--safe-area-inset-bottom))`};
+    props.currentRow < 3 ? "5rem" : props.currentRow + 2 + "rem"};
   padding: 0 2vw;
   display: flex;
   flex-direction: row;
@@ -22,7 +18,6 @@ export const Container = styled.div<{
   position: fixed;
   bottom: 0;
   z-index: 5;
-  padding-bottom: var(--safe-area-inset-bottom);
 `;
 
 export const AttachIcon = styled(AttachIconSvg)`
