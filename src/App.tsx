@@ -14,16 +14,6 @@ export const App = () => {
         gtmId: REACT_APP_GTM_ID,
       });
     }
-    const refreshToken = localStorage.getItem("refreshToken");
-    const accessToken = localStorage.getItem("accessToken");
-    const chatTutorialShown = localStorage.getItem("chatTutorialShown");
-    const replyTutorialShown = localStorage.getItem("replyTutorialShown");
-    const fcmToken = localStorage.getItem("fcmToken");
-    alert(refreshToken);
-    alert(accessToken);
-    alert(chatTutorialShown);
-    alert(replyTutorialShown);
-    alert(fcmToken);
   }, []);
   return (
     <>
