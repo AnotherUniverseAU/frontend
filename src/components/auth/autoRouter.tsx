@@ -133,15 +133,7 @@ const AutoRouter = (refreshToken: any) => {
             <Route
               key={route.path}
               path={route.path}
-              element={
-                route.withAuthorization ? (
-                  <Authorization redirectTo="/login">
-                    {route.element}
-                  </Authorization>
-                ) : (
-                  route.element
-                )
-              }
+              element={route.element}
             ></Route>
           );
         })}
