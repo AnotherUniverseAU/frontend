@@ -197,7 +197,7 @@ export const Nickname = () => {
       {isLoading ? (
         <Loading></Loading>
       ) : (
-        <S.Container>
+        <S.Container className="container">
           <BackHeader type="first" title="프로필 설정" />
           <S.InfoContainer>
             <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>

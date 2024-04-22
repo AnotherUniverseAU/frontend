@@ -45,7 +45,7 @@ export const Detail = () => {
       <BackHeader route="/" title="상세 보기" />
       {!loading ? (
         <>
-          <S.MainContainer>
+          <S.MainContainer className="container">
             <S.MainImg src={detail.coverImageUrl} alt={detail.name} />
             <S.MainInfo>
               <S.MainName>{detail.name}</S.MainName>

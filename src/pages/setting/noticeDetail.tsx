@@ -41,7 +41,7 @@ export const NoticeDetail = () => {
   return (
     <S.Container>
       <BackHeader route="/notice" title={"공지사항"} />
-      <S.SubContainer>
+      <S.SubContainer className="container">
         <S.ContentWrapper>
           <S.Title>{noticeInfo.title}</S.Title>
           <S.Date>수정일 : {noticeInfo.date}</S.Date>

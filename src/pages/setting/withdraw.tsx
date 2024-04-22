@@ -64,94 +64,96 @@ export const Withdraw = () => {
         </S.StyledModal>
       )}
       <BackHeader route="/profile" title={"회원탈퇴"} />
-      <S.TitleContainer>
-        <S.SubTitle>{nickname}님이 떠나신다니 아쉬워요</S.SubTitle>
-        <S.Title>{nickname}님이 탈퇴하시려는 이유가 궁금해요</S.Title>
-      </S.TitleContainer>
-      <S.SubContainer>
-        <S.OptionContainer>
-          <S.Option
-            selected={selectedOption === 1}
-            onClick={() => setSelectedOption(selectedOption === 1 ? 0 : 1)}
-          >
-            캐릭터의 채팅 내용이 맘에 들지 않아요
-          </S.Option>
-          <S.Option
-            selected={selectedOption === 2}
-            onClick={() => setSelectedOption(selectedOption === 2 ? 0 : 2)}
-          >
-            앱을 자주 사용하지 않아요
-          </S.Option>
-          <S.Option
-            selected={selectedOption === 3}
-            onClick={() => setSelectedOption(selectedOption === 3 ? 0 : 3)}
-          >
-            개인정보 유출이 우려돼요
-          </S.Option>
-          <S.Option
-            selected={selectedOption === 4}
-            onClick={() => setSelectedOption(selectedOption === 4 ? 0 : 4)}
-          >
-            직접 입력
-          </S.Option>
-        </S.OptionContainer>
-        <S.ReplyContainer>
-          {selectedOption === 1 && (
-            <S.Reply>
-              AU는 {}
-              <b>
-                캐릭터의 미공개 영상, GIF, 미공개 만화/일러스트를 빠른 시일 내에
-                런칭
-              </b>
-              할 예정입니다. <br /> <br />
-              나아가 캐릭터의 페르소나를 강화하고 컨텐츠를 확대하기 위해 {}
-              <b>지속적으로 노력</b>하고 있으니, AU를 조금만 더 이용해 보시는건
-              어떨까요?
-            </S.Reply>
-          )}
-          {selectedOption === 2 && (
-            <S.Reply>
-              AU는 {}
-              <b>
-                캐릭터의 미공개 영상, GIF, 미공개 만화/일러스트를 빠른 시일 내에
-                런칭
-              </b>
-              할 예정입니다. <br /> <br />
-              나아가 캐릭터의 페르소나를 강화하고 컨텐츠를 확대하기 위해 {}
-              <b>지속적으로 노력</b>하고 있으니, AU를 조금만 더 이용해 보시는건
-              어떨까요?
-            </S.Reply>
-          )}
-          {selectedOption === 3 && (
-            <S.Reply>
-              캐릭터와의 대화 내역을 비롯한 이용자님의 정보는 {}
-              <b>절대로 타인에게 노출되지 않아요.</b> <br /> <br />
-              AU는 이용자님의 {}
-              <b>개인정보 보호를 위해 최선</b>을 다하고 있으니, AU를 조금만 더
-              이용해 보시는건 어떨까요?
-            </S.Reply>
-          )}{" "}
-          {selectedOption === 4 && (
-            <S.Reply>
-              사용하면서 <b>불편하셨던 내용</b>을 알려주시면 더 나은 서비스를
-              제공할 수 있도록 노력하겠습니다.
-            </S.Reply>
-          )}
-        </S.ReplyContainer>
-        {complain && (
+      <div className="container">
+        <S.TitleContainer>
+          <S.SubTitle>{nickname}님이 떠나신다니 아쉬워요</S.SubTitle>
+          <S.Title>{nickname}님이 탈퇴하시려는 이유가 궁금해요</S.Title>
+        </S.TitleContainer>
+        <S.SubContainer>
           <S.OptionContainer>
-            <S.Complain>{complain}</S.Complain>
+            <S.Option
+              selected={selectedOption === 1}
+              onClick={() => setSelectedOption(selectedOption === 1 ? 0 : 1)}
+            >
+              캐릭터의 채팅 내용이 맘에 들지 않아요
+            </S.Option>
+            <S.Option
+              selected={selectedOption === 2}
+              onClick={() => setSelectedOption(selectedOption === 2 ? 0 : 2)}
+            >
+              앱을 자주 사용하지 않아요
+            </S.Option>
+            <S.Option
+              selected={selectedOption === 3}
+              onClick={() => setSelectedOption(selectedOption === 3 ? 0 : 3)}
+            >
+              개인정보 유출이 우려돼요
+            </S.Option>
+            <S.Option
+              selected={selectedOption === 4}
+              onClick={() => setSelectedOption(selectedOption === 4 ? 0 : 4)}
+            >
+              직접 입력
+            </S.Option>
           </S.OptionContainer>
-        )}
-        {complain && selectedOption === 4 && (
-          <S.ComplainReplyContainer>
-            <S.ComplainReply>
-              이용자님의 불편 사항을 이해했습니다. 해당 불편 사항을 빠르게 해결
-              할 예정이니, AU를 조금만 더 이용해 보시는건 어떨까요?
-            </S.ComplainReply>
-          </S.ComplainReplyContainer>
-        )}
-      </S.SubContainer>
+          <S.ReplyContainer>
+            {selectedOption === 1 && (
+              <S.Reply>
+                AU는 {}
+                <b>
+                  캐릭터의 미공개 영상, GIF, 미공개 만화/일러스트를 빠른 시일
+                  내에 런칭
+                </b>
+                할 예정입니다. <br /> <br />
+                나아가 캐릭터의 페르소나를 강화하고 컨텐츠를 확대하기 위해 {}
+                <b>지속적으로 노력</b>하고 있으니, AU를 조금만 더 이용해
+                보시는건 어떨까요?
+              </S.Reply>
+            )}
+            {selectedOption === 2 && (
+              <S.Reply>
+                AU는 {}
+                <b>
+                  캐릭터의 미공개 영상, GIF, 미공개 만화/일러스트를 빠른 시일
+                  내에 런칭
+                </b>
+                할 예정입니다. <br /> <br />
+                나아가 캐릭터의 페르소나를 강화하고 컨텐츠를 확대하기 위해 {}
+                <b>지속적으로 노력</b>하고 있으니, AU를 조금만 더 이용해
+                보시는건 어떨까요?
+              </S.Reply>
+            )}
+            {selectedOption === 3 && (
+              <S.Reply>
+                캐릭터와의 대화 내역을 비롯한 이용자님의 정보는 {}
+                <b>절대로 타인에게 노출되지 않아요.</b> <br /> <br />
+                AU는 이용자님의 {}
+                <b>개인정보 보호를 위해 최선</b>을 다하고 있으니, AU를 조금만 더
+                이용해 보시는건 어떨까요?
+              </S.Reply>
+            )}{" "}
+            {selectedOption === 4 && (
+              <S.Reply>
+                사용하면서 <b>불편하셨던 내용</b>을 알려주시면 더 나은 서비스를
+                제공할 수 있도록 노력하겠습니다.
+              </S.Reply>
+            )}
+          </S.ReplyContainer>
+          {complain && (
+            <S.OptionContainer>
+              <S.Complain>{complain}</S.Complain>
+            </S.OptionContainer>
+          )}
+          {complain && selectedOption === 4 && (
+            <S.ComplainReplyContainer>
+              <S.ComplainReply>
+                이용자님의 불편 사항을 이해했습니다. 해당 불편 사항을 빠르게
+                해결 할 예정이니, AU를 조금만 더 이용해 보시는건 어떨까요?
+              </S.ComplainReply>
+            </S.ComplainReplyContainer>
+          )}
+        </S.SubContainer>
+      </div>
       {(selectedOption === 1 ||
         selectedOption === 2 ||
         selectedOption === 3 ||
