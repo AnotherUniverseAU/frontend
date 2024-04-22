@@ -21,7 +21,9 @@ export const MainContainer = styled.div`
 
 export const SubContainer = styled.div`
   margin: 5rem 0;
-  height: calc(100% - 10rem);
+  height: calc(
+    100% - 10rem - var(--safe-area-inset-top) - var(--safe-area-inset-bottom)
+  );
   display: flex;
   flex-direction: column;
   justify-content: flex;

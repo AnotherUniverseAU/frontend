@@ -8,7 +8,11 @@ export const Container = styled.div<{
 }>`
   width: 100vw;
   height: ${(props) =>
-    props.currentRow < 3 ? "5rem" : props.currentRow + 2 + "rem"};
+    props.currentRow < 3
+      ? "calc(5rem + var(--safe-area-inset-bottom))"
+      : `calc(${
+          props.currentRow + 2 + "rem"
+        } + var(--safe-area-inset-bottom))`};
   padding: 0 2vw;
   display: flex;
   flex-direction: row;
@@ -18,6 +22,7 @@ export const Container = styled.div<{
   position: fixed;
   bottom: 0;
   z-index: 5;
+  padding-bottom: var(--safe-area-inset-bottom);
 `;
 
 export const AttachIcon = styled(AttachIconSvg)`
