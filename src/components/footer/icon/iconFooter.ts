@@ -15,6 +15,7 @@ export const Container = styled.div`
 
   padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 이전 */
   padding-bottom: env(safe-area-inset-bottom);
+  padding-botto: 3rem;
 
   background-color: rgba(255, 255, 255, 0.9);
   position: fixed;
