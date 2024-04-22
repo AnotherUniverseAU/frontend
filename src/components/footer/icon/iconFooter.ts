@@ -11,7 +11,7 @@ interface IconFooterProps {
 
 export const Container = styled.div`
   width: 100%;
-  height: 5rem;
+  height: calc(5rem + var(--safe-area-inset-bottom));
   background-color: rgba(255, 255, 255, 0.9);
   position: fixed;
   bottom: 0;
@@ -24,15 +24,16 @@ export const Container = styled.div`
   box-shadow: -0.1rem -0.1rem 0.2rem rgba(0, 0, 0, 0.05),
     0.1rem -0.1rem 0.2rem rgba(0, 0, 0, 0.05);
   z-index: 5;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: var(--safe-area-inset-bottom);
 `;
 
 export const IconContainer = styled(Link)`
   width: 33.3%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: starrt;
+  align-items: center;
 `;
 
 export const StyledHomeIcon = styled(HomeIcon)<IconFooterProps>`

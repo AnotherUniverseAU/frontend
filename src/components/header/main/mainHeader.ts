@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.div`
   width: 100vw;
-  height: 5rem;
+  height: calc(5rem + var(--safe-area-inset-top));
   position: fixed;
   top: 0;
   left: 0;
@@ -16,7 +16,7 @@ export const HeaderContainer = styled.div`
 
   background-color: white;
 
-  padding-top: env(safe-area-inset-top);
+  padding-top: var(--safe-area-inset-top);
 `;
 
 export const StyledLink = styled(Link)`

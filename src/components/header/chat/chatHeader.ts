@@ -5,7 +5,8 @@ import { Switch } from "@mui/material";
 
 export const HeaderContainer = styled.div`
   width: 100%;
-  height: 5rem;
+  height: calc(5rem + env(safe-area-inset-top));
+
   border-bottom: 0.1rem solid #e5e5e5;
   position: fixed;
   top: 0;
@@ -17,6 +18,7 @@ export const HeaderContainer = styled.div`
   justify-content: center;
 
   background-color: white;
+  padding-top: env(safe-area-inset-top);
 `;
 
 export const StyledLink = styled(Link)`
