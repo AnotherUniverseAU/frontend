@@ -135,11 +135,11 @@ export const Nickname = () => {
               alert(
                 `FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`
               );
+              window.location.reload();
             }
           } catch (error) {
             console.error("FCM 토큰 전송 중 오류 발생:", error);
             alert("FCM 토큰 전송 중 오류가 발생했습니다.");
-            window.location.reload();
           }
         } else {
           // 서버 응답이 올바르지 않을 때
