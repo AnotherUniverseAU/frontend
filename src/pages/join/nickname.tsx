@@ -84,7 +84,7 @@ export const Nickname = () => {
             (event) => {
                 try {
                     const data = JSON.parse(event.data);
-                    alert('FCM 토큰 받음' + data);
+                    alert('FCM 토큰 받음 data.type' + data.type);
                     if (data.type === 'FCM_TOKEN') {
                         console.log('Received FCM Token:', data.token);
                         setFcmToken(data.token);
