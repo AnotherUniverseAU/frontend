@@ -122,7 +122,7 @@ export const SubContainer = styled.div`
   flex-direction: column;
   justify-content: flex;
 
-  height: calc(100vh - 10rem);
+  height: calc(100% - 10rem);
 `;
 
 export const TItleContainer = styled.div`
