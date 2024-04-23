@@ -189,7 +189,7 @@ export const WithdrawButton = styled.div`
   font-size: 0.9em;
   font-weight: 500;
   border-radius: 0.5rem;
-  margin-bottom: 6rem;
+  margin-bottom: 1rem;
 `;
 
 export const ComplainReplyContainer = styled.div`

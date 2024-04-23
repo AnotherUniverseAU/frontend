@@ -153,18 +153,18 @@ export const Withdraw = () => {
             </S.ComplainReplyContainer>
           )}
         </S.SubContainer>
+        {(selectedOption === 1 ||
+          selectedOption === 2 ||
+          selectedOption === 3 ||
+          (complain && selectedOption === 4)) && (
+          <S.FooterContainer>
+            <S.WithdrawButton onClick={openModal}>
+              그래도 탈퇴할래요
+            </S.WithdrawButton>
+            <TextFooter route="/profile" text={"더 사용해볼래요"} />
+          </S.FooterContainer>
+        )}
       </div>
-      {(selectedOption === 1 ||
-        selectedOption === 2 ||
-        selectedOption === 3 ||
-        (complain && selectedOption === 4)) && (
-        <S.FooterContainer>
-          <S.WithdrawButton onClick={openModal}>
-            그래도 탈퇴할래요
-          </S.WithdrawButton>
-          <TextFooter route="/profile" text={"더 사용해볼래요"} />
-        </S.FooterContainer>
-      )}
       {!complain && selectedOption === 4 && (
         <S.FooterContainer>
           <ComplainFooter setChatMessage={setComplain} />
