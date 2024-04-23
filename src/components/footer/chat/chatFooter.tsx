@@ -3,6 +3,9 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import * as S from "./chatFooter.ts";
 import { apiRequestPost } from "src/apis/apiRequestPost.ts";
 import axios from "axios";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const ChatFooter: React.FC<{
   setChatMessage: (message: {
     type: "text" | "image";
@@ -43,8 +46,8 @@ export const ChatFooter: React.FC<{
 
       const formData = new FormData();
       formData.append("image", file);
-      const response = axios.post(`/chatroom/image-reply/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = axios.post(`${BASE_URL}/chatroom/image-reply/${id}`, {
+        image: formData,
       });
       // apiRequestPost(`/chatroom/image-reply/${id}`, { image: formData });
     }
