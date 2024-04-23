@@ -53,6 +53,10 @@ export const Nickname = () => {
     return window.removeEventListener("message", onMessage);
   }, []);
   useEffect(() => {
+    alert(`fcmToken: ${fcmToken}`);
+  }, [fcmToken]);
+
+  useEffect(() => {
     if (accToken) {
       const getNickname = async () => {
         // try {
