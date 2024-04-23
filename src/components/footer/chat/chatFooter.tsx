@@ -27,6 +27,7 @@ export const ChatFooter: React.FC<{
   const [initialScrollH, setInitialScrollH] = useState(Number);
 
   useEffect(() => {
+    console.log(isTuto);
     const remSize = parseFloat(
       getComputedStyle(document.documentElement).fontSize
     );
@@ -106,15 +107,23 @@ export const ChatFooter: React.FC<{
   };
   return (
     <S.Container className="footer" currentRow={currentRow}>
-      <S.AttachIcon onClick={handleIconClick} />
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileUpload}
-        accept="image/*"
-        style={{ display: "none" }}
-        disabled={isTuto}
-      />
+      <S.LeftDiv>
+        {isTuto === false ? (
+          <>
+            <S.AttachIcon onClick={handleIconClick} />
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileUpload}
+              accept="image/*"
+              style={{ display: "none" }}
+              disabled={isTuto}
+            />
+          </>
+        ) : (
+          <></>
+        )}
+      </S.LeftDiv>
 
       <S.TextAreaDiv>
         <S.ChatCalcTextArea ref={chatValidRef} readOnly></S.ChatCalcTextArea>

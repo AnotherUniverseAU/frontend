@@ -28,15 +28,20 @@ export const Container = styled.div<{
   left: 0;
   z-index: 5;
 `;
+export const LeftDiv = styled.div`
+  width: 10vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
 
 export const AttachIcon = styled(AttachIconSvg)`
   width: 10vw;
-  display: flex;
-  align-items: center;
 `;
 export const TextAreaDiv = styled.div`
   display: flex;
   flex-direction: column;
+  padding: auto;
 `;
 export const ChatCalcTextArea = styled.textarea`
   width: 65vw;

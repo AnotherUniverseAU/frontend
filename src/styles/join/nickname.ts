@@ -6,12 +6,10 @@ export const Container = styled.div`
 `;
 
 export const InfoContainer = styled.div`
-  margin: 5rem 0;
   padding-top: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 10rem);
 `;
 
 export const Info = styled.div`

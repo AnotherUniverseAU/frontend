@@ -14,7 +14,6 @@ import { apiRequestPost } from "src/apis/apiRequestPost";
 
 import { getNewToken } from "../../apis/getNewToken";
 import { Loading } from "../setting/loading";
-import { getCookie, setCookie } from "src/hooks/cookie";
 import { BackgroundFull } from "src/components/background/background";
 
 interface CharacterChat {
@@ -195,8 +194,8 @@ export const ChatRoom = (): JSX.Element => {
     };
     getFirstChat();
 
-    const chatTutorialShown = getCookie(`chatTutorialShown`);
-    const replyTutorialShown = getCookie(`replyTutorialShown`);
+    const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
+    const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
     if (chatTutorialShown && replyTutorialShown) {
       setIsTuto(false);
     } else {
@@ -265,12 +264,12 @@ export const ChatRoom = (): JSX.Element => {
   useEffect(() => {
     if (helloMessages.length > 0) {
       if (isTuto) {
-        const chatTutorialShown = getCookie(`chatTutorialShown`);
-        const replyTutorialShown = getCookie(`replyTutorialShown`);
-        if (chatTutorialShown !== true) {
+        const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
+        const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
+        if (!chatTutorialShown) {
           setShowChatTutorial(true);
           setChatMessages([helloMessages[0]]);
-        } else if (replyTutorialShown !== true) {
+        } else if (!replyTutorialShown) {
           setChatMessages([...helloMessages, ...firstChat]);
           setIsHelloShown(true);
         }
@@ -627,7 +626,7 @@ export const ChatRoom = (): JSX.Element => {
   // 챗 튜토리얼 끌 때
   const handleChatTutorialClose = () => {
     setShowChatTutorial(false);
-    setCookie("chatTutorialShown", "true", "tuto");
+    localStorage.setItem("chatTutorialShown", "true");
     setChatMessages([...helloMessages, ...firstChat]);
     setIsHelloShown(true);
     const current = subContainerRef.current;
@@ -647,7 +646,7 @@ export const ChatRoom = (): JSX.Element => {
   // 답장 튜토리얼 끌 때
   const handleReplyTutorialClose = () => {
     setShowReplyTutorial(false);
-    setCookie(`replyTutorialShown`, "true", "tuto");
+    localStorage.setItem(`replyTutorialShown`, "true");
     const current = subContainerRef.current;
     const element = document.querySelector(".empty-div");
     // div 조정하면서 넣었던 empty-div 삭제해주기
@@ -687,12 +686,14 @@ export const ChatRoom = (): JSX.Element => {
     }
 
     // api로 새 메시지 전송
-    const data = { characterId: id, userReply: escapeHtml(message.content) };
-    apiRequestPost(`chatroom/user-reply/${id}`, data);
+    if (message.content !== "") {
+      const data = { characterId: id, userReply: escapeHtml(message.content) };
+      apiRequestPost(`chatroom/user-reply/${id}`, data);
+    }
 
     //replyTutorial가 보여진 적 없으면 답장 튜토리얼 보여줌
     if (isTuto) {
-      const replyTutorialShown = getCookie(`replyTutorialShown`);
+      const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
       if (!replyTutorialShown) {
         setShowReplyTutorial(true);
       }
