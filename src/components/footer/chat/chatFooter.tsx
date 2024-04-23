@@ -65,8 +65,8 @@ export const ChatFooter: React.FC<{
   };
 
   const handleIconClick = () => {
-    requestPermissions();
     fileInputRef.current?.click();
+    requestPermissions();
   };
 
   function requestPermissions() {
@@ -83,7 +83,6 @@ export const ChatFooter: React.FC<{
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log("왜 안돼");
     setInputValue(e.target.value);
 
     const checkRow = chatValidRef.current;
