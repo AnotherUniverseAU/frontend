@@ -44,8 +44,8 @@ export const Detail = () => {
     <>
       <BackHeader route="/" title="상세 보기" />
       {!loading ? (
-        <>
-          <S.MainContainer className="container">
+        <div className="container">
+          <S.MainContainer>
             <S.MainImg src={detail.coverImageUrl} alt={detail.name} />
             <S.MainInfo>
               <S.MainName>{detail.name}</S.MainName>
@@ -53,7 +53,7 @@ export const Detail = () => {
             </S.MainInfo>
           </S.MainContainer>
           <S.ContentContainer>
-            <S.ContentTitle style={{ marginBottom: "1rem" }}>
+            <S.ContentTitle style={{ paddingBottom: "1rem" }}>
               Creator
             </S.ContentTitle>
             <S.CreatorContainer>
@@ -63,7 +63,7 @@ export const Detail = () => {
                 <S.CreatorWords>"{detail.creatorWords}"</S.CreatorWords>
               </S.CreatorTextContainer>
             </S.CreatorContainer>
-            <S.ContentTitle style={{ marginBottom: "0.5rem" }}>
+            <S.ContentTitle style={{ paddingBottom: "0.5rem" }}>
               Contributor
             </S.ContentTitle>
             <S.ContributorContainer>
@@ -72,7 +72,7 @@ export const Detail = () => {
               ))}
             </S.ContributorContainer>
           </S.ContentContainer>
-        </>
+        </div>
       ) : (
         <Loading />
       )}

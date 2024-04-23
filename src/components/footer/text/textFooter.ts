@@ -14,7 +14,7 @@ export const StyledLink = styled.div`
 export const StyledLinkText = styled.div`
   width: 100vw;
   color: white;
-  margin: 1.5rem 0;
+  padding-top: 1.5rem;
   font-size: 1rem;
   display: flex;
   justify-content: center;

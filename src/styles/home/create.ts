@@ -56,7 +56,7 @@ export const Container = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  margin: 5rem 0 6rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
