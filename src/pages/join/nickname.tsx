@@ -12,6 +12,8 @@ import { apiRequestPost } from "src/apis/apiRequestPost";
 import { Loading } from "../setting/loading";
 import { getNewToken } from "src/apis/getNewToken";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const Nickname = () => {
   const [nickname, setNickname] = useState("");
   const [isEmpty, setIsEmpty] = useState(false);
@@ -21,55 +23,9 @@ export const Nickname = () => {
   const [fcmToken, setFcmToken] = useState(String);
 
   const navigate = useNavigate();
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-
-  const handleMessage = (event: any) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    try {
-      // JSON 데이터 파싱
-      const messageData = JSON.parse(event.data);
-      alert("메시지 받음" + event.data);
-      alert("메시지 받음" + messageData);
-      console.log("Received message from WebView:", messageData);
-
-      const { type, data } = messageData;
-      if (type === "FCM_TOKEN") {
-        console.log("Received FCM Token:", data);
-        alert(`Received FCM token: ${data}`);
-      }
-    } catch (error) {
-      console.error("Error handling message from WebView:", error);
-      alert(`Error receiving FCM Token. Please try again, ${error}`);
-    }
-  };
-
-  // const handleMessage = async (event: any) => {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-
-  //     // 이 예제에서는 테스트를 위해 임의의 데이터를 사용합니다.
-  //     // 실제 사용 시에는 event.data가 실제로 존재하는지 확인하고 사용해야 합니다.
-  //     const testData = event.data || { type: 'FCM_TOKEN', data: 'test-token-from-event' };
-
-  //     console.log('Received message from WebView:', testData);
-  //     try {
-  //         const { type, data } = testData;
-  //         if (type === 'FCM_TOKEN') {
-  //             console.log('Received FCM Token:', data);
-  //             localStorage.setItem);
-  //             alert(`전달 받은 FCM 토큰: ${type}이고 ${data}`);
-  //         }
-  //     } catch (error) {
-  //         console.error('Error handling message from WebView:', error);
-  //         alert(`FCM 토큰 수신 중 오류가 발생했습니다. 다시 시도해 주세요. ${error}`);
-  //     }
-  // };
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    alert(accessToken);
     if (accessToken === null) {
       getNewToken().then((res) => {
         localStorage.setItem("accessToken", res);
@@ -130,8 +86,6 @@ export const Nickname = () => {
             nickname: nickname,
           })
           .then((res: any) => {
-            alert(res);
-            alert(res.data.nickname);
             if (res && res.data.nickname) {
               // 닉네임 업데이트 성공 시, FCM 토큰 전송을 시도합니다.
               if (fcmToken) {
@@ -197,9 +151,9 @@ export const Nickname = () => {
       {isLoading ? (
         <Loading></Loading>
       ) : (
-        <S.Container className="container">
+        <S.Container>
           <BackHeader type="first" title="프로필 설정" />
-          <S.InfoContainer>
+          <S.InfoContainer className="container">
             <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
             <S.Info>기본 호칭을 입력해주세요</S.Info>
             <StyledInput
