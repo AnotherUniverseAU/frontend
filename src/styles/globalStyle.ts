@@ -122,4 +122,8 @@ ${fonts}
     font-family: "Noto Sans KR", sans-serif;
 	font-weight: 500;
   }
+
+cont_login{
+	padding: 0;
+}
 `;
