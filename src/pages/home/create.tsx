@@ -122,6 +122,18 @@ export const Create = () => {
   const handleAgreeModalClose = () => {
     setIsAgreeModalOpen(false);
   };
+  function requestPermissions() {
+    // React Native의 WebView로 권한 요청 메시지 전송
+    if ((window as any).ReactNativeWebView) {
+      console.log("권한 요청 시도");
+      (window as any).ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: "REQUEST_PERMISSIONS", // 요청 유형을 변경
+        })
+      );
+      console.log("권한 요청 완료");
+    }
+  }
 
   return (
     <S.Container>
@@ -303,7 +315,9 @@ export const Create = () => {
             </S.PurpleText>
             /5MB
           </S.FileSize>
-          <S.ImageLabel htmlFor="image-upload">+ 이미지 업로드</S.ImageLabel>
+          <S.ImageLabel htmlFor="image-upload" onClick={requestPermissions}>
+            + 이미지 업로드
+          </S.ImageLabel>
           <S.ImageInput
             id="image-upload"
             type="file"
