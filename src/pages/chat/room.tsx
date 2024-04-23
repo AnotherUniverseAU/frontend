@@ -705,7 +705,7 @@ export const ChatRoom = (): JSX.Element => {
     setIsModalOpen(false);
     setIsLoading(true);
 
-    const res: any = apiRequestPost("/subscription/unsubscribe", {
+    apiRequestPost("/subscription/unsubscribe", {
       characterId: id,
     }).then((response) => {
       if (response) {
