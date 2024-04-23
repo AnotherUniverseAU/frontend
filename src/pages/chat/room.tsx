@@ -262,7 +262,10 @@ export const ChatRoom = (): JSX.Element => {
 
   // helloMessage 받아올 때 튜토리얼인지 확인, 튜토리얼이라면 받아온 데이터로 chatMessage 수정
   useEffect(() => {
+    console.log(helloMessages);
+    console.log(firstChat);
     if (helloMessages.length > 0 && isFirstChat === true) {
+      console.log("로드 완료");
       if (isTuto) {
         const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
         const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
@@ -318,7 +321,7 @@ export const ChatRoom = (): JSX.Element => {
   useEffect(() => {
     // 챗메시지 변경될 때마다
     // 처음이라면
-    if (isFirst === true) {
+    if (isFirst === true && !isTuto) {
       console.log("처음");
       if (helloMessages.length > 0 && isFirstChat === true) {
         if (firstChat.length > 0) {
@@ -396,23 +399,28 @@ export const ChatRoom = (): JSX.Element => {
           chatList.push(newMessage);
         }
       }
-      // 답장이 있다면 : 5분 추가해 다 넣어주자
+      // 답장이 있다면
       if ("reply" in i && i.reply) {
-        i.reply.forEach((text) => {
-          const afterFiveM = new Date(
-            Date.parse(i.timeToSend) + 5 * 60 * 1000 + koreaTimeOffset
-          )
-            .toISOString()
-            .replace("T", " ")
-            .substring(0, 16);
-          const newMessage: ChatMessage = {
-            time: afterFiveM,
-            content: text,
-            sentby: "character",
-            type: "text",
-          };
-          chatList.push(newMessage);
-        });
+        const fiveMinPlus = Date.parse(i.timeToSend) + 5 * 60 * 1000;
+        // 현재 시간이 답장 시간보다 뒤라면 5분 추가해 다 넣어주자
+        if (fiveMinPlus <= new Date().getTime()) {
+          i.reply.forEach((text) => {
+            const afterFiveM = new Date(
+              Date.parse(i.timeToSend) + 5 * 60 * 1000 + koreaTimeOffset
+            )
+              .toISOString()
+              .replace("T", " ")
+              .substring(0, 16);
+
+            const newMessage: ChatMessage = {
+              time: afterFiveM,
+              content: text,
+              sentby: "character",
+              type: "text",
+            };
+            chatList.push(newMessage);
+          });
+        }
       }
     }
     // 유저 답장마다 형식 바꿔서 넣어주기

@@ -43,22 +43,14 @@ export const MainName = styled.div`
   margin-left: 5vw;
   font-size: 1.5rem;
   font-weight: 700;
-  height: 4rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
 `;
 
 export const MainTitle = styled.div`
   margin-left: 3vw;
   font-size: 0.9rem;
-  height: 4rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: end;
-  padding-bottom: 1.3rem;
+  height: 100%;
+
   box-shadow: 0 10rem 10rem 0 rgba(0, 0, 0, 0.5);
 `;
 

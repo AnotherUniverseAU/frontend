@@ -48,8 +48,27 @@ export const Detail = () => {
           <S.MainContainer>
             <S.MainImg src={detail.profilePicUrl} alt={detail.name} />
             <S.MainInfo>
-              <S.MainName>{detail.name}</S.MainName>
-              <S.MainTitle>{detail.title}</S.MainTitle>
+              <S.MainName>
+                <div style={{ width: "100%", height: "30%" }}></div>
+                <div style={{ width: "100%", height: "40%" }}>
+                  {detail.name}
+                </div>
+                <div style={{ width: "100%", height: "30%" }}></div>
+              </S.MainName>
+              <S.MainTitle>
+                <div style={{ width: "100%", height: "30%" }}></div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "40%",
+                    display: "flex",
+                    alignItems: "end",
+                  }}
+                >
+                  {detail.title}
+                </div>
+                <div style={{ width: "100%", height: "30%" }}></div>
+              </S.MainTitle>
             </S.MainInfo>
           </S.MainContainer>
           <S.ContentContainer>
