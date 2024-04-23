@@ -848,7 +848,7 @@ export const ChatRoom = (): JSX.Element => {
             )}
             {renderMessages({ showChatTutorial })}
           </S.SubContainer>
-          <ChatFooter isTuto={isTuto} setChatMessage={addChatMessage} />
+          <ChatFooter isTuto={isTuto} id={id} setChatMessage={addChatMessage} />
           <BackgroundFull color="#f2f3f6" />
         </S.Container>
       )}

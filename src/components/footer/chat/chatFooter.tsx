@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 
 import * as S from "./chatFooter.ts";
+import { apiRequestPost } from "src/apis/apiRequestPost.ts";
+import axios from "axios";
 export const ChatFooter: React.FC<{
   setChatMessage: (message: {
     type: "text" | "image";
@@ -9,7 +11,8 @@ export const ChatFooter: React.FC<{
     isSent: boolean;
   }) => void;
   isTuto: boolean;
-}> = ({ setChatMessage, isTuto }) => {
+  id: string | undefined;
+}> = ({ setChatMessage, isTuto, id }) => {
   const [inputValue, setInputValue] = useState("");
 
   const [currentRow, setCurrentRow] = useState(1);
@@ -37,6 +40,13 @@ export const ChatFooter: React.FC<{
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setChatMessage({ type: "image", content: "", imageUrl, isSent: false });
+
+      const formData = new FormData();
+      formData.append("image", file);
+      const response = axios.post(`/chatroom/image-reply/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      // apiRequestPost(`/chatroom/image-reply/${id}`, { image: formData });
     }
   };
 
@@ -55,12 +65,11 @@ export const ChatFooter: React.FC<{
   };
 
   const handleIconClick = () => {
-    requestPermissions().then(() => {
-      fileInputRef.current?.click();
-    });
+    requestPermissions();
+    fileInputRef.current?.click();
   };
 
-  async function requestPermissions() {
+  function requestPermissions() {
     // React Native의 WebView로 권한 요청 메시지 전송
     if ((window as any).ReactNativeWebView) {
       console.log("권한 요청 시도");
