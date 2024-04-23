@@ -68,8 +68,8 @@ export const ChatFooter: React.FC<{
   };
 
   const handleIconClick = () => {
-    fileInputRef.current?.click();
     requestPermissions();
+    fileInputRef.current?.click();
   };
 
   function requestPermissions() {
@@ -111,9 +111,6 @@ export const ChatFooter: React.FC<{
         type="file"
         ref={fileInputRef}
         onChange={handleFileUpload}
-        onClick={(e) => {
-          console.log(e);
-        }}
         accept="image/*"
         style={{ display: "none" }}
         disabled={isTuto}
