@@ -69,8 +69,8 @@ export const ChatFooter: React.FC<{
   };
 
   const handleIconClick = () => {
-    requestPermissions();
     fileInputRef.current?.click();
+    requestPermissions();
   };
 
   function requestPermissions() {
