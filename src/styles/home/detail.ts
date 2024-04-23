@@ -48,7 +48,6 @@ export const MainName = styled.div`
 
 export const MainTitle = styled.div`
   margin-left: 3vw;
-  font-size: 0.9rem;
   height: 100%;
 
   box-shadow: 0 10rem 10rem 0 rgba(0, 0, 0, 0.5);

@@ -45,7 +45,6 @@ export const ButtonNav = styled.div`
 `;
 
 export const StyledButton = styled.span<{ active: boolean }>`
-  width: 2rem;
   font-size: 1rem;
   text-align: center;
   margin: 0 0.3rem;

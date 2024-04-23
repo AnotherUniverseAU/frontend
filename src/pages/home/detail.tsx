@@ -56,11 +56,11 @@ export const Detail = () => {
                 <div style={{ width: "100%", height: "30%" }}></div>
               </S.MainName>
               <S.MainTitle>
-                <div style={{ width: "100%", height: "30%" }}></div>
+                <div style={{ width: "100%", height: "45%" }}></div>
                 <div
                   style={{
                     width: "100%",
-                    height: "40%",
+                    height: "25%",
                     display: "flex",
                     alignItems: "end",
                   }}
