@@ -108,6 +108,9 @@ export const ChatFooter: React.FC<{
         type="file"
         ref={fileInputRef}
         onChange={handleFileUpload}
+        onClick={(e) => {
+          console.log(e);
+        }}
         accept="image/*"
         style={{ display: "none" }}
         disabled={isTuto}
