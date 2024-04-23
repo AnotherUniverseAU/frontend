@@ -123,11 +123,11 @@ export const MessageImage = styled.img<{
   max-width: 70%;
   max-height: 20rem;
   border-radius: 10px;
-  padding: ${(props) =>
+  margin: ${(props) =>
     props.showMessageTime === false
       ? "0 0.3rem 0.4rem 0.3rem"
       : "0 0.3rem 0.75rem 0.3rem"};
-  padding-top: ${(props) => (props.showProfile === false ? "0.5rem" : "0")};
+  margin-top: ${(props) => (props.showProfile === false ? "0.5rem" : "0")};
   align-self: flex-end;
 `;
 

@@ -46,7 +46,7 @@ export const Detail = () => {
       {!loading ? (
         <div className="container">
           <S.MainContainer>
-            <S.MainImg src={detail.coverImageUrl} alt={detail.name} />
+            <S.MainImg src={detail.profilePicUrl} alt={detail.name} />
             <S.MainInfo>
               <S.MainName>{detail.name}</S.MainName>
               <S.MainTitle>{detail.title}</S.MainTitle>

@@ -57,9 +57,11 @@ const ChatListComponent = ({ chatRoomDatas }: ChatListProps) => {
                   .replace("T", " ")
                   .substring(11, 16)}
               </S.ChatTime>
-              <S.ChatNum>
-                {chat.exceedCount ? chat.exceedCount : chat.unreadCount}
-              </S.ChatNum>
+              {chat.unreadCount !== 0 && (
+                <S.ChatNum>
+                  {chat.exceedCount ? chat.exceedCount : chat.unreadCount}
+                </S.ChatNum>
+              )}
             </S.ChatSubContent>
           </S.ChatContainer>
         </StyledLink>
