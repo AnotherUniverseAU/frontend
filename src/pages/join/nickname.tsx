@@ -71,7 +71,6 @@ export const Nickname = () => {
 
   const updateNickname = async () => {
     if (nickname !== "") {
-      console.log("닉네임은 입력됨");
       try {
         const customHttp = axios.create({
           baseURL: `${BASE_URL}`,
@@ -89,6 +88,7 @@ export const Nickname = () => {
             if (res && res.data.nickname) {
               // 닉네임 업데이트 성공 시, FCM 토큰 전송을 시도합니다.
               if (fcmToken) {
+                alert(fcmToken);
                 try {
                   customHttp
                     .post("/user/fcm-token", {

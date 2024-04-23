@@ -262,7 +262,7 @@ export const ChatRoom = (): JSX.Element => {
 
   // helloMessage 받아올 때 튜토리얼인지 확인, 튜토리얼이라면 받아온 데이터로 chatMessage 수정
   useEffect(() => {
-    if (helloMessages.length > 0) {
+    if (helloMessages.length > 0 && isFirstChat === true) {
       if (isTuto) {
         const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
         const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
@@ -274,18 +274,16 @@ export const ChatRoom = (): JSX.Element => {
           setIsHelloShown(true);
         }
       } else {
-        if (isFirstChat === true) {
-          // 첫 대화 없다면
-          if (firstChat.length === 0) {
-            setChatMessages([...helloMessages]);
-            setIsHelloShown(true);
-            setIsLastChat(true);
-            setIsScrollTrigger(false);
-            // 맨 아래로 옮겨주기 위함
-            setIsFirst(false);
-          } else {
-            setChatMessages([...firstChat]);
-          }
+        // 첫 대화 없다면
+        if (firstChat.length === 0) {
+          setChatMessages([...helloMessages]);
+          setIsHelloShown(true);
+          setIsLastChat(true);
+          setIsScrollTrigger(false);
+          // 맨 아래로 옮겨주기 위함
+          setIsFirst(false);
+        } else {
+          setChatMessages([...firstChat]);
         }
       }
     }
