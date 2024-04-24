@@ -52,9 +52,9 @@ export const Nickname = () => {
             }
         };
 
-        window.addEventListener('message', onMessage);
+        window.addEventListener('message', onMessage, true);
 
-        return window.removeEventListener('message', onMessage);
+        // return window.removeEventListener('message', onMessage);
     }, []);
     useEffect(() => {
         alert(`fcmToken: ${fcmToken}`);
