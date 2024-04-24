@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import * as S from 'src/styles/join/nickname.ts';
@@ -8,24 +8,21 @@ import { BackHeader } from 'src/components/header/back/backHeader.tsx';
 import { TextFooter } from 'src/components/footer/text/textFooter.tsx';
 import { StyledInput } from 'src/components/styledInput/styledInput.tsx';
 import { apiRequestGet } from 'src/apis/apiRequestGet';
-import { apiRequestPost } from 'src/apis/apiRequestPost';
-import { Loading } from '../setting/loading';
 import { getNewToken } from 'src/apis/getNewToken';
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const Nickname = () => {
     const [nickname, setNickname] = useState('');
     const [isEmpty, setIsEmpty] = useState(false);
     const [load, setLoad] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     const [accToken, setAccToken] = useState<any>();
     const [fcmToken, setFcmToken] = useState(String);
 
     const navigate = useNavigate();
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
 
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
+        alert(accessToken);
         if (accessToken === null) {
             getNewToken().then((res) => {
                 localStorage.setItem('accessToken', res);
@@ -35,43 +32,31 @@ export const Nickname = () => {
             setAccToken(accessToken);
         }
 
-        const onMessage = (event: any) => {
-            try {
-                const data = JSON.parse(event.data);
-                alert('data:' + data);
-                alert('data.type:' + data.type);
-                alert('data.token:' + data.token);
-                alert('data.message:' + data.message);
-                if (data.type === 'FCM_TOKEN') {
-                    console.log('Received FCM Token:', data.token);
-                    setFcmToken(data.token);
-                    localStorage.setItem('fcmToken', data.token);
+        window.addEventListener(
+            'message',
+            (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    alert('FCM 토큰 받음 data.type' + data.type);
+                    if (data.type === 'FCM_TOKEN') {
+                        console.log('Received FCM Token:', data.token);
+                        setFcmToken(data.token);
+                        localStorage.setItem('fcmToken', data.token);
+                    }
+                } catch (error) {
+                    console.error('Error handling message from WebView:', error);
                 }
-            } catch (error) {
-                console.error('Error handling message from WebView:', error);
-            }
-        };
-
-        window.addEventListener('message', onMessage, true);
-
-        // return window.removeEventListener('message', onMessage);
+            },
+            true
+        );
     }, []);
-    useEffect(() => {
-        alert(`fcmToken: ${fcmToken}`);
-    }, [fcmToken]);
-
     useEffect(() => {
         if (accToken) {
             const getNickname = async () => {
-                // try {
                 const res = await apiRequestGet('user/nickname');
                 if (res.nickname !== '') {
                     setNickname(res.nickname);
                 }
-                // }
-                // } catch (e) {
-                //     window.location.reload();
-                // }
             };
             getNickname();
         }
@@ -79,6 +64,7 @@ export const Nickname = () => {
 
     const updateNickname = async () => {
         if (nickname !== '') {
+            console.log('닉네임은 입력됨');
             try {
                 const customHttp = axios.create({
                     baseURL: `${BASE_URL}`,
@@ -93,10 +79,10 @@ export const Nickname = () => {
                         nickname: nickname,
                     })
                     .then((res: any) => {
+                        alert(res);
+                        alert(res.data.nickname);
                         if (res && res.data.nickname) {
-                            // 닉네임 업데이트 성공 시, FCM 토큰 전송을 시도합니다.
                             if (fcmToken) {
-                                alert(fcmToken);
                                 try {
                                     customHttp
                                         .post('/user/fcm-token', {
@@ -104,10 +90,8 @@ export const Nickname = () => {
                                         })
                                         .then((tokenRes) => {
                                             if (tokenRes) {
-                                                // FCM 토큰 업데이트가 성공하면 홈으로 네비게이트합니다.
                                                 navigate('/', { state: { from: '/nickname' } });
                                             } else {
-                                                // FCM 토큰 업데이트 실패
                                                 console.error('FCM 토큰 업데이트 실패:', tokenRes);
                                                 alert(
                                                     `FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`
@@ -122,7 +106,6 @@ export const Nickname = () => {
                                 alert(`FCM 토큰이 없습니다. => ${fcmToken}`);
                             }
                         } else {
-                            // 서버 응답이 올바르지 않을 때
                             console.error('닉네임 업데이트 실패:', res);
                             alert('닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.');
                         }
@@ -156,27 +139,23 @@ export const Nickname = () => {
 
     return (
         <>
-            {isLoading ? (
-                <Loading></Loading>
-            ) : (
-                <S.Container>
-                    <BackHeader type="first" title="프로필 설정" />
-                    <S.InfoContainer className="container">
-                        <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
-                        <S.Info>기본 호칭을 입력해주세요</S.Info>
-                        <StyledInput
-                            placeholder={isEmpty ? '호칭은 한 글자 이상이어야 합니다.' : '호칭을 입력해주세요'}
-                            content={nickname}
-                            setContent={setNickname}
-                            limit={20}
-                            height="3.8rem"
-                            marginTop="2rem"
-                            isEmpty={isEmpty}
-                        />
-                    </S.InfoContainer>
-                    <TextFooter route="/" text="시작하기" onClick={() => updateNickname()} />
-                </S.Container>
-            )}
+            <S.Container>
+                <BackHeader type="first" title="프로필 설정" />
+                <S.InfoContainer>
+                    <S.Info>캐릭터가 나를 부를 때 사용할</S.Info>
+                    <S.Info>기본 호칭을 입력해주세요</S.Info>
+                    <StyledInput
+                        placeholder={isEmpty ? '호칭은 한 글자 이상이어야 합니다.' : '호칭을 입력해주세요'}
+                        content={nickname}
+                        setContent={setNickname}
+                        limit={20}
+                        height="3.8rem"
+                        marginTop="2rem"
+                        isEmpty={isEmpty}
+                    />
+                </S.InfoContainer>
+                <TextFooter route="/" text="시작하기" onClick={() => updateNickname()} />
+            </S.Container>
         </>
     );
 };
