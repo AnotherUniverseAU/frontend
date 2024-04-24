@@ -22,7 +22,6 @@ export const Nickname = () => {
 
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
-        alert(accessToken);
         if (accessToken === null) {
             getNewToken().then((res) => {
                 localStorage.setItem('accessToken', res);
@@ -79,8 +78,6 @@ export const Nickname = () => {
                         nickname: nickname,
                     })
                     .then((res: any) => {
-                        alert(res);
-                        alert(res.data.nickname);
                         if (res && res.data.nickname) {
                             if (fcmToken) {
                                 try {
