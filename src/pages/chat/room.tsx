@@ -265,13 +265,9 @@ export const ChatRoom = (): JSX.Element => {
     if (helloMessages.length > 0 && isFirstChat === true) {
       const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
       const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
-      if (isTuto) {
-        if (!chatTutorialShown) {
-          setShowChatTutorial(true);
-          setChatMessages([helloMessages[0]]);
-        } else if (!replyTutorialShown) {
-          setChatMessages([...firstChat]);
-        }
+      if (!chatTutorialShown) {
+        setShowChatTutorial(true);
+        setChatMessages([helloMessages[0]]);
       } else {
         // 첫 대화 없다면
         if (firstChat.length === 0) {
