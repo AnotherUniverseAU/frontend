@@ -38,8 +38,8 @@ export const Create = () => {
     const [isTextModalOpen, setIsTextModalOpen] = useState(false);
     const [isAgreeModalOpen, setIsAgreeModalOpen] = useState(false);
 
-    const [cameraPermission, setCameraPermission] = useState(false);
-    const [libraryPermission, setLibraryPermission] = useState(false);
+    const [cameraPermission, setCameraPermission] = useState(true);
+    const [libraryPermission, setLibraryPermission] = useState(true);
 
     const navigate = useNavigate();
 
@@ -52,8 +52,8 @@ export const Create = () => {
                 if (data.cameraPermission !== undefined && data.libraryPermission !== undefined) {
                     setCameraPermission(data.cameraPermission);
                     setLibraryPermission(data.libraryPermission);
-                    console.log('카메라 권한:', data.cameraPermission, '라이브러리 권한:', data.libraryPermission);
                 }
+                alert('카메라 권한:' + data.cameraPermission + '라이브러리 권한:' + data.libraryPermission);
             } catch (error) {
                 console.error('Error handling message from WebView:', error);
             }
@@ -61,8 +61,7 @@ export const Create = () => {
 
         window.addEventListener('message', handlePermissionMessage, true);
 
-        // 권한 상태 요청 함수
-        async function requestPermissionState() {
+        async function requestPermissionCheck() {
             if ((window as any).ReactNativeWebView) {
                 console.log('권한 요청 시도');
                 await (window as any).ReactNativeWebView.postMessage(
@@ -73,9 +72,7 @@ export const Create = () => {
                 console.log('권한 요청 완료');
             }
         }
-
-        // 컴포넌트 마운트 시 권한 요청
-        requestPermissionState();
+        requestPermissionCheck();
     }, []);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,16 +153,28 @@ export const Create = () => {
     const handleAgreeModalClose = () => {
         setIsAgreeModalOpen(false);
     };
-    function requestPermissions() {
-        // React Native의 WebView로 권한 요청 메시지 전송
-        if ((window as any).ReactNativeWebView) {
-            console.log('권한 요청 시도');
-            (window as any).ReactNativeWebView.postMessage(
-                JSON.stringify({
-                    type: 'REQUEST_PERMISSIONS', // 요청 유형을 변경
-                })
-            );
-            console.log('권한 요청 완료');
+
+    function requestPermissionsOrUpload(event: any) {
+        if (cameraPermission && libraryPermission) {
+            console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+            const uploadInput = document.getElementById('image-upload');
+            if (uploadInput) {
+                uploadInput.click(); // 파일 선택 창을 열어줍니다.
+            } else {
+                console.error('업로드 요소를 찾을 수 없습니다.');
+            }
+        } else {
+            // 필요한 권한이 없으면 업로드를 차단하고 권한 요청을 합니다.
+            console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
+            event?.preventDefault();
+            if ((window as any).ReactNativeWebView) {
+                (window as any).ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
+                    })
+                );
+                console.log('권한 요청 메시지가 전송되었습니다.');
+            }
         }
     }
 
@@ -341,7 +350,7 @@ export const Create = () => {
                         <S.PurpleText>{(totalSize / (1024 * 1024)).toFixed(2)}MB</S.PurpleText>
                         /5MB
                     </S.FileSize>
-                    <S.ImageLabel htmlFor="image-upload" onClick={requestPermissions}>
+                    <S.ImageLabel htmlFor="image-upload" onClick={(event) => requestPermissionsOrUpload(event)}>
                         + 이미지 업로드
                     </S.ImageLabel>
                     <S.ImageInput
