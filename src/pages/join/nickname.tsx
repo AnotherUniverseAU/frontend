@@ -37,7 +37,7 @@ export const Nickname = () => {
                 try {
                     const data = JSON.parse(event.data);
                     alert('FCM 토큰 받음 data.type' + data.type);
-                    if (data.type === 'FCM_TOKEN') {
+                    if (data.type === 'FCM_TOKEN_REQUESTS') {
                         console.log('Received FCM Token:', data.token);
                         setFcmToken(data.token);
                         localStorage.setItem('fcmToken', data.token);
@@ -48,7 +48,22 @@ export const Nickname = () => {
             },
             true
         );
+
+        async function requestFCMToken() {
+            // React Native의 WebView로 권한 요청 메시지 전송
+            if ((window as any).ReactNativeWebView) {
+                console.log('권한 요청 시도');
+                await (window as any).ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        type: 'REQUEST_PERMISSIONS', // 요청 유형을 변경
+                    })
+                );
+                console.log('권한 요청 완료');
+            }
+        }
+        requestFCMToken();
     }, []);
+
     useEffect(() => {
         if (accToken) {
             const getNickname = async () => {
