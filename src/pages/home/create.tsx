@@ -232,26 +232,8 @@ export const Create = () => {
 
         await updatePermissions();
 
-        useEffect(() => {
-            if (permissionsReady && cameraPermission && libraryPermission) {
-                alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
-                console.log('All permissions granted. Proceeding with file upload.');
-                const uploadInput = document.getElementById('image-upload');
-                if (uploadInput) {
-                    uploadInput.click(); // Trigger the file input
-                } else {
-                    console.error('Upload input not found.');
-                }
-                setPermissionsReady(false); // Reset permissions check
-            } else if (permissionsReady) {
-                alert('필요한 권한이 허용되지 않았습니다. 권한을 요청합니다.');
-                console.log('Required permissions not granted.');
-                setPermissionsReady(false); // Reset permissions check
-            }
-        }, [permissionsReady, cameraPermission, libraryPermission]);
-
         // alert('cameraPermission: ' + cameraPermission + ' libraryPermission: ' + libraryPermission);
-        //
+
         // if (cameraPermission && libraryPermission) {
         //     console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
         //     const uploadInput = document.getElementById('image-upload');
@@ -271,6 +253,24 @@ export const Create = () => {
         //     }
         // }
     }
+
+    useEffect(() => {
+        if (permissionsReady && cameraPermission && libraryPermission) {
+            alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+            console.log('All permissions granted. Proceeding with file upload.');
+            const uploadInput = document.getElementById('image-upload');
+            if (uploadInput) {
+                uploadInput.click(); // Trigger the file input
+            } else {
+                console.error('Upload input not found.');
+            }
+            setPermissionsReady(false); // Reset permissions check
+        } else if (permissionsReady) {
+            alert('필요한 권한이 허용되지 않았습니다. 권한을 요청합니다.');
+            console.log('Required permissions not granted.');
+            setPermissionsReady(false); // Reset permissions check
+        }
+    }, [permissionsReady, cameraPermission, libraryPermission]);
 
     return (
         <S.Container>
