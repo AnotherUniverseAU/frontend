@@ -40,6 +40,7 @@ export const Create = () => {
 
     const [cameraPermission, setCameraPermission] = useState(false);
     const [libraryPermission, setLibraryPermission] = useState(false);
+    const [permissionsReady, setPermissionsReady] = useState(false);
 
     const navigate = useNavigate();
 
@@ -210,6 +211,7 @@ export const Create = () => {
                             if (data.cameraPermission !== undefined && data.libraryPermission !== undefined) {
                                 setCameraPermission(data.cameraPermission);
                                 setLibraryPermission(data.libraryPermission);
+                                setPermissionsReady(true);
                             }
                             console.log('권한 상태가 업데이트 되었습니다.');
                             resolve(); // 응답을 받은 후에 resolve 호출
@@ -229,30 +231,46 @@ export const Create = () => {
         }
 
         await updatePermissions();
+
+        useEffect(() => {
+            if (permissionsReady && cameraPermission && libraryPermission) {
+                alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+                console.log('All permissions granted. Proceeding with file upload.');
+                const uploadInput = document.getElementById('image-upload');
+                if (uploadInput) {
+                    uploadInput.click(); // Trigger the file input
+                } else {
+                    console.error('Upload input not found.');
+                }
+                setPermissionsReady(false); // Reset permissions check
+            } else if (permissionsReady) {
+                alert('필요한 권한이 허용되지 않았습니다. 권한을 요청합니다.');
+                console.log('Required permissions not granted.');
+                setPermissionsReady(false); // Reset permissions check
+            }
+        }, [permissionsReady, cameraPermission, libraryPermission]);
+
+        // alert('cameraPermission: ' + cameraPermission + ' libraryPermission: ' + libraryPermission);
+
+        // if (cameraPermission && libraryPermission) {
+        //     console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+        //     const uploadInput = document.getElementById('image-upload');
+        //     if (uploadInput) {
+        //         uploadInput.click(); // 파일 선택 창을 열어줍니다.
+        //     } else {
+        //         console.error('업로드 요소를 찾을 수 없습니다.');
+        //     }
+        // } else {
+        //     console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
+        //     if ((window as any).ReactNativeWebView) {
+        //         (window as any).ReactNativeWebView.postMessage(
+        //             JSON.stringify({
+        //                 type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
+        //             })
+        //         );
+        //     }
+        // }
     }
-
-    useEffect(() => {
-        alert('cameraPermission: ' + cameraPermission + ' libraryPermission: ' + libraryPermission);
-
-        if (cameraPermission && libraryPermission) {
-            console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
-            const uploadInput = document.getElementById('image-upload');
-            if (uploadInput) {
-                uploadInput.click(); // 파일 선택 창을 열어줍니다.
-            } else {
-                console.error('업로드 요소를 찾을 수 없습니다.');
-            }
-        } else {
-            console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
-            if ((window as any).ReactNativeWebView) {
-                (window as any).ReactNativeWebView.postMessage(
-                    JSON.stringify({
-                        type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
-                    })
-                );
-            }
-        }
-    }, [cameraPermission, libraryPermission]);
 
     return (
         <S.Container>
