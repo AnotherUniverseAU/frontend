@@ -61,6 +61,7 @@ export const Create = () => {
 
         window.addEventListener('message', handlePermissionMessage, true);
     }
+
     async function requestPermissionCheck() {
         if ((window as any).ReactNativeWebView) {
             console.log('권한 요청 시도');
@@ -158,7 +159,7 @@ export const Create = () => {
 
     async function requestPermissionsOrUpload(event: any) {
         event?.preventDefault();
-        function requestOrUpload() {
+        async function requestOrUpload() {
             if (cameraPermission && libraryPermission) {
                 console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
                 const uploadInput = document.getElementById('image-upload');
@@ -183,7 +184,7 @@ export const Create = () => {
         await requestPermissionCheck();
         await requestPermissionCheckReceive();
         await removeEventListener();
-        requestOrUpload();
+        await requestOrUpload();
     }
 
     return (
