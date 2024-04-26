@@ -159,7 +159,9 @@ export const Create = () => {
     async function requestPermissionsOrUpload(event: any) {
         event?.preventDefault();
         async function requestOrUpload() {
+            alert('이미지 업로드를 시도합니다.');
             if (cameraPermission && libraryPermission) {
+                alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
                 console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
                 const uploadInput = document.getElementById('image-upload');
                 if (uploadInput) {
