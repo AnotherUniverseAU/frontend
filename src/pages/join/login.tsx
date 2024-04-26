@@ -12,20 +12,6 @@ export const Login = () => {
         if (refToken) {
             navigate('/');
         }
-
-        async function requestFCMToken() {
-            // React Native의 WebView로 권한 요청 메시지 전송
-            if ((window as any).ReactNativeWebView) {
-                console.log('권한 요청 시도');
-                await (window as any).ReactNativeWebView.postMessage(
-                    JSON.stringify({
-                        type: 'REQUEST_PERMISSIONS', // 요청 유형을 변경
-                    })
-                );
-                console.log('권한 요청 완료');
-            }
-        }
-        requestFCMToken();
     }, []);
 
     const handleLogin = () => {
