@@ -74,6 +74,7 @@ export const Nickname = () => {
     }, [accToken]);
 
     const updateNickname = async () => {
+        navigate('/', { state: { from: '/nickname' } });
         if (nickname !== '') {
             console.log('닉네임은 입력됨');
             try {
