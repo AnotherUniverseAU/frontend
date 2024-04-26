@@ -10,6 +10,7 @@ import { TextFooter } from 'src/components/footer/text/textFooter.tsx';
 import { apiRequestPost } from 'src/apis/apiRequestPost';
 import permissionCheck from 'src/assets/img/permissionCheck.png';
 import { escapeHtml } from '../chat/alterHtml';
+import { set } from 'lodash';
 
 export const Create = () => {
     const [name, setName] = useState('');
@@ -232,37 +233,18 @@ export const Create = () => {
 
         await updatePermissions();
 
-        // alert('cameraPermission: ' + cameraPermission + ' libraryPermission: ' + libraryPermission);
-
-        // if (cameraPermission && libraryPermission) {
-        //     console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
-        //     const uploadInput = document.getElementById('image-upload');
-        //     if (uploadInput) {
-        //         uploadInput.click(); // 파일 선택 창을 열어줍니다.
-        //     } else {
-        //         console.error('업로드 요소를 찾을 수 없습니다.');
-        //     }
-        // } else {
-        //     console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
-        //     if ((window as any).ReactNativeWebView) {
-        //         (window as any).ReactNativeWebView.postMessage(
-        //             JSON.stringify({
-        //                 type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
-        //             })
-        //         );
-        //     }
-        // }
-    }
-
-    useEffect(() => {
-        if (permissionsReady === true && cameraPermission && libraryPermission) {
-            alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+        setTimeout(() => {}, 1000); // 권한 상태 업데이트를 기다립니다.
+        alert('cameraPermission: ' + cameraPermission + ' libraryPermission: ' + libraryPermission);
+        if (cameraPermission && libraryPermission) {
+            console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
             const uploadInput = document.getElementById('image-upload');
-            (uploadInput as any).click(); // Trigger the file input
-            alert(uploadInput);
-            setPermissionsReady(false); // Reset permissions check
-        } else if (permissionsReady === true) {
-            alert('필요한 권한이 허용되지 않았습니다. 권한을 요청합니다.');
+            if (uploadInput) {
+                uploadInput.click(); // 파일 선택 창을 열어줍니다.
+            } else {
+                console.error('업로드 요소를 찾을 수 없습니다.');
+            }
+        } else {
+            console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
             if ((window as any).ReactNativeWebView) {
                 (window as any).ReactNativeWebView.postMessage(
                     JSON.stringify({
@@ -270,9 +252,8 @@ export const Create = () => {
                     })
                 );
             }
-            setPermissionsReady(false); // Reset permissions check
         }
-    }, [permissionsReady, cameraPermission, libraryPermission]);
+    }
 
     return (
         <S.Container>
