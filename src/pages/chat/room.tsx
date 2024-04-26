@@ -212,6 +212,41 @@ export const ChatRoom = (): JSX.Element => {
     };
     getHelloTime().then((firstTime) => getHello(firstTime));
 
+    const getHello = async (firstTime: string) => {
+      const helloRes = await apiRequestGet(`/character/hello/${id}`).then(
+        (res) => {
+          const contentList = [...res.helloMessage];
+          const helloList: React.SetStateAction<ChatMessage[]> = [];
+          const koreaTimeOffset = 9 * 60 * 60 * 1000;
+          const newTime = new Date(Date.parse(firstTime) + koreaTimeOffset)
+            .toISOString()
+            .replace("T", " ")
+            .substring(0, 16);
+
+          contentList.forEach((message) => {
+            if (message.startsWith("https:")) {
+              helloList.push({
+                // 시간은 챗룸 생성 시간
+                time: newTime,
+                content: "",
+                sentby: "character",
+                type: "image",
+                imageUrl: message,
+              });
+            } else {
+              helloList.push({
+                // 시간은 챗룸 생성 시간
+                time: newTime,
+                content: message,
+                sentby: "character",
+                type: "text",
+              });
+            }
+          });
+          setHelloMessages(helloList);
+        }
+      );
+    };
     // 일단 후순위
     // const apiCallingTimer = setInterval(() => {
     //   const timeStamp = new Date(new Date().getTime()).toISOString();
@@ -224,57 +259,18 @@ export const ChatRoom = (): JSX.Element => {
   }, []);
 
   // hello 가져오기
-  const getHello = async (firstTime: string) => {
-    const helloRes = await apiRequestGet(`/character/hello/${id}`).then(
-      (res) => {
-        const contentList = [...res.helloMessage];
-        const helloList: React.SetStateAction<ChatMessage[]> = [];
-        const koreaTimeOffset = 9 * 60 * 60 * 1000;
-        const newTime = new Date(Date.parse(firstTime) + koreaTimeOffset)
-          .toISOString()
-          .replace("T", " ")
-          .substring(0, 16);
-
-        contentList.forEach((message) => {
-          if (message.startsWith("https:")) {
-            helloList.push({
-              // 시간은 챗룸 생성 시간
-              time: newTime,
-              content: "",
-              sentby: "character",
-              type: "image",
-              imageUrl: message,
-            });
-          } else {
-            helloList.push({
-              // 시간은 챗룸 생성 시간
-              time: newTime,
-              content: message,
-              sentby: "character",
-              type: "text",
-            });
-          }
-        });
-        setHelloMessages(helloList);
-      }
-    );
-  };
 
   // helloMessage 받아올 때 튜토리얼인지 확인, 튜토리얼이라면 받아온 데이터로 chatMessage 수정
   useEffect(() => {
-    console.log(helloMessages);
-    console.log(firstChat);
     if (helloMessages.length > 0 && isFirstChat === true) {
-      console.log("로드 완료");
+      const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
+      const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
       if (isTuto) {
-        const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
-        const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
         if (!chatTutorialShown) {
           setShowChatTutorial(true);
           setChatMessages([helloMessages[0]]);
         } else if (!replyTutorialShown) {
-          setChatMessages([...helloMessages, ...firstChat]);
-          setIsHelloShown(true);
+          setChatMessages([...firstChat]);
         }
       } else {
         // 첫 대화 없다면
@@ -299,7 +295,6 @@ export const ChatRoom = (): JSX.Element => {
       setApiOffset((cur) => cur + 1);
       setNextHistory(res);
       // 그 전 히스토리 비어있음(마지막 채팅)
-      console.log(res);
       if (res.characterChats.length === 0 && res.userReplies.length === 0) {
         // 마지막 채팅
         setIsLastChat(true);
@@ -321,18 +316,17 @@ export const ChatRoom = (): JSX.Element => {
   useEffect(() => {
     // 챗메시지 변경될 때마다
     // 처음이라면
-    if (isFirst === true && !isTuto) {
-      console.log("처음");
+    const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
+    if (isFirst === true && chatTutorialShown) {
       if (helloMessages.length > 0 && isFirstChat === true) {
         if (firstChat.length > 0) {
           const chatWrapper = subContainerRef.current;
           const chatContainer = middleRef.current;
-          console.log(chatWrapper, chatContainer);
+
           if (chatContainer && chatWrapper) {
             const containerH = chatContainer.clientHeight;
             const scrollH = chatWrapper.scrollHeight;
             if (scrollH < containerH) {
-              console.log("스크롤 없잖아");
               // 스크롤이 생성될만큼이 안나온다면 다음 채팅 가져오는데, 비어있으면 hello랑 합쳐주고 helloshown true
               const getChat = async () => {
                 await getNextChat();
