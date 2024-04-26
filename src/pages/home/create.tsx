@@ -258,11 +258,8 @@ export const Create = () => {
         if (permissionsReady === true && cameraPermission && libraryPermission) {
             alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
             const uploadInput = document.getElementById('image-upload');
-            if (uploadInput) {
-                uploadInput.click(); // Trigger the file input
-            } else {
-                console.error('Upload input not found.');
-            }
+            (uploadInput as any).click(); // Trigger the file input
+            alert(uploadInput);
             setPermissionsReady(false); // Reset permissions check
         } else if (permissionsReady === true) {
             alert('필요한 권한이 허용되지 않았습니다. 권한을 요청합니다.');
@@ -274,8 +271,6 @@ export const Create = () => {
                 );
             }
             setPermissionsReady(false); // Reset permissions check
-        } else if (permissionsReady === false) {
-            alert('Permissions not ready');
         }
     }, [permissionsReady, cameraPermission, libraryPermission]);
 
