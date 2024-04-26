@@ -31,22 +31,20 @@ export const Nickname = () => {
             setAccToken(accessToken);
         }
 
-        window.addEventListener(
-            'message',
-            (event) => {
-                try {
-                    const data = JSON.parse(event.data);
-                    alert('FCM 토큰 받음:' + data.token);
-                    if (data.type === 'FCM_TOKEN_RECEIVE') {
-                        setFcmToken(data.token);
-                        localStorage.setItem('fcmToken', data.token);
-                    }
-                } catch (error) {
-                    console.error('Error handling message from WebView:', error);
+        const handleFCMMessage = (event: any) => {
+            try {
+                const data = JSON.parse(event.data);
+                alert('FCM 토큰 받음:' + data.token);
+                if (data.type === 'FCM_TOKEN_RECEIVE') {
+                    setFcmToken(data.token);
+                    localStorage.setItem('fcmToken', data.token);
                 }
-            },
-            true
-        );
+            } catch (error) {
+                console.error('Error handling message from WebView:', error);
+            }
+        };
+
+        window.addEventListener('message', handleFCMMessage, true);
 
         async function requestFCMToken() {
             // React Native의 WebView로 권한 요청 메시지 전송
