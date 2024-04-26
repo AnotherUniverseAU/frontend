@@ -238,7 +238,7 @@ export const Create = () => {
                 alert('cameraPermission: ' + cameraPermission + ' libraryPermission: ' + libraryPermission);
 
                 if (cameraPermission && libraryPermission) {
-                    console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+                    alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
                     const uploadInput = document.getElementById('image-upload');
                     if (uploadInput) {
                         uploadInput.click(); // 파일 선택 창 열기
@@ -246,7 +246,7 @@ export const Create = () => {
                         console.error('업로드 요소를 찾을 수 없습니다.');
                     }
                 } else {
-                    console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
+                    alert('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
                     if ((window as any).ReactNativeWebView) {
                         (window as any).ReactNativeWebView.postMessage(
                             JSON.stringify({
