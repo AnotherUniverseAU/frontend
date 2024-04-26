@@ -38,8 +38,8 @@ export const Create = () => {
     const [isTextModalOpen, setIsTextModalOpen] = useState(false);
     const [isAgreeModalOpen, setIsAgreeModalOpen] = useState(false);
 
-    const [cameraPermission, setCameraPermission] = useState(true);
-    const [libraryPermission, setLibraryPermission] = useState(true);
+    const [cameraPermission, setCameraPermission] = useState(false);
+    const [libraryPermission, setLibraryPermission] = useState(false);
 
     const navigate = useNavigate();
 
@@ -53,13 +53,12 @@ export const Create = () => {
                     setCameraPermission(data.cameraPermission);
                     setLibraryPermission(data.libraryPermission);
                 }
-                alert('카메라 권한:' + data.cameraPermission + '라이브러리 권한:' + data.libraryPermission);
             } catch (error) {
                 console.error('Error handling message from WebView:', error);
             }
         };
 
-        window.addEventListener('message', handlePermissionMessage, true);
+        await window.addEventListener('message', handlePermissionMessage, true);
     }
 
     async function requestPermissionCheck() {
@@ -75,7 +74,7 @@ export const Create = () => {
     }
 
     async function removeEventListener() {
-        window.removeEventListener('message', requestPermissionCheckReceive);
+        await window.removeEventListener('message', requestPermissionCheckReceive);
     }
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
