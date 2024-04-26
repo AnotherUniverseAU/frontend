@@ -223,6 +223,7 @@ export const Create = () => {
         }
 
         await updatePermissions();
+        alert('cameraPermission: ' + cameraPermission + ' libraryPermission: ' + libraryPermission);
 
         if (cameraPermission && libraryPermission) {
             console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
