@@ -55,7 +55,7 @@ export const Nickname = () => {
                 console.log('권한 요청 시도');
                 await (window as any).ReactNativeWebView.postMessage(
                     JSON.stringify({
-                        type: 'REQUEST_PERMISSIONS', // 요청 유형을 변경
+                        type: 'FCM_TOKEN_REQUESTS', // 요청 유형을 변경
                     })
                 );
                 console.log('권한 요청 완료');
