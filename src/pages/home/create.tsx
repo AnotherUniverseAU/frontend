@@ -43,40 +43,6 @@ export const Create = () => {
 
     const navigate = useNavigate();
 
-    async function requestPermissionCheckReceive() {
-        const handlePermissionMessage = (event: any) => {
-            try {
-                const data = JSON.parse(event.data);
-
-                // 메시지 유형 확인 및 상태 업데이트
-                if (data.cameraPermission !== undefined && data.libraryPermission !== undefined) {
-                    setCameraPermission(data.cameraPermission);
-                    setLibraryPermission(data.libraryPermission);
-                }
-            } catch (error) {
-                console.error('Error handling message from WebView:', error);
-            }
-        };
-
-        await window.addEventListener('message', handlePermissionMessage, true);
-    }
-
-    async function requestPermissionCheck() {
-        if ((window as any).ReactNativeWebView) {
-            console.log('권한 요청 시도');
-            await (window as any).ReactNativeWebView.postMessage(
-                JSON.stringify({
-                    type: 'REQUEST_PERMISSIONS_CHECK',
-                })
-            );
-            console.log('권한 요청 완료');
-        }
-    }
-
-    async function removeEventListener() {
-        await window.removeEventListener('message', requestPermissionCheckReceive);
-    }
-
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const newFiles = Array.from(e.target.files);
@@ -156,36 +122,126 @@ export const Create = () => {
         setIsAgreeModalOpen(false);
     };
 
-    async function requestPermissionsOrUpload(event: any) {
-        event?.preventDefault();
-        async function requestOrUpload() {
-            alert('이미지 업로드를 시도합니다.');
-            if (cameraPermission && libraryPermission) {
-                alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
-                console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
-                const uploadInput = document.getElementById('image-upload');
-                if (uploadInput) {
-                    uploadInput.click(); // 파일 선택 창을 열어줍니다.
-                } else {
-                    console.error('업로드 요소를 찾을 수 없습니다.');
+    async function requestPermissionCheck() {
+        if ((window as any).ReactNativeWebView) {
+            console.log('권한 요청 시도');
+            await (window as any).ReactNativeWebView.postMessage(
+                JSON.stringify({
+                    type: 'REQUEST_PERMISSIONS_CHECK',
+                })
+            );
+            console.log('권한 요청 완료');
+        }
+    }
+
+    async function requestPermissionCheckReceive() {
+        const handlePermissionMessage = (event: any) => {
+            try {
+                const data = JSON.parse(event.data);
+
+                // 메시지 유형 확인 및 상태 업데이트
+                if (data.cameraPermission !== undefined && data.libraryPermission !== undefined) {
+                    setCameraPermission(data.cameraPermission);
+                    setLibraryPermission(data.libraryPermission);
                 }
+            } catch (error) {
+                console.error('Error handling message from WebView:', error);
+            }
+        };
+
+        await window.addEventListener('message', handlePermissionMessage, true);
+    }
+
+    async function removeEventListener() {
+        await window.removeEventListener('message', requestPermissionCheckReceive);
+    }
+
+    async function requestOrUpload() {
+        alert('이미지 업로드를 시도합니다.');
+        if (cameraPermission && libraryPermission) {
+            alert('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+            console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+            const uploadInput = document.getElementById('image-upload');
+            if (uploadInput) {
+                uploadInput.click(); // 파일 선택 창을 열어줍니다.
             } else {
-                // 필요한 권한이 없으면 업로드를 차단하고 권한 요청을 합니다.
-                console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
-                if ((window as any).ReactNativeWebView) {
-                    (window as any).ReactNativeWebView.postMessage(
-                        JSON.stringify({
-                            type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
-                        })
-                    );
-                    console.log('권한 요청 메시지가 전송되었습니다.');
-                }
+                console.error('업로드 요소를 찾을 수 없습니다.');
+            }
+        } else {
+            // 필요한 권한이 없으면 업로드를 차단하고 권한 요청을 합니다.
+            console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
+            if ((window as any).ReactNativeWebView) {
+                (window as any).ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
+                    })
+                );
+                console.log('권한 요청 메시지가 전송되었습니다.');
             }
         }
-        await requestPermissionCheck();
-        await requestPermissionCheckReceive();
-        await removeEventListener();
-        await requestOrUpload();
+    }
+
+    // async function requestPermissionsOrUpload(event: any) {
+    //     event?.preventDefault();
+
+    //     await requestPermissionCheck();
+    //     await requestPermissionCheckReceive();
+    //     await removeEventListener();
+    //     await requestOrUpload();
+    // }
+
+    async function requestPermissionsOrUpload(event: any) {
+        event.preventDefault(); // 브라우저의 기본 동작을 방지합니다.
+
+        // 권한 상태를 확인하고 업데이트하는 함수입니다.
+        async function updatePermissions() {
+            if ((window as any).ReactNativeWebView) {
+                console.log('권한 상태를 확인합니다.');
+                await (window as any).ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        type: 'REQUEST_PERMISSIONS_CHECK',
+                    })
+                );
+                return new Promise<void>((resolve) => {
+                    const handlePermissionMessage = (event: any) => {
+                        try {
+                            const data = JSON.parse(event.data);
+                            if (data.cameraPermission !== undefined && data.libraryPermission !== undefined) {
+                                setCameraPermission(data.cameraPermission);
+                                setLibraryPermission(data.libraryPermission);
+                            }
+                            console.log('권한 상태가 업데이트 되었습니다.');
+                            resolve();
+                        } catch (error) {
+                            console.error('Error handling message from WebView:', error);
+                            resolve(); // 에러가 발생해도 다음 단계로 진행합니다.
+                        }
+                    };
+                    window.addEventListener('message', handlePermissionMessage, { once: true });
+                });
+            }
+        }
+
+        await updatePermissions();
+
+        if (cameraPermission && libraryPermission) {
+            console.log('모든 권한이 허용되어 이미지 업로드를 진행합니다.');
+            const uploadInput = document.getElementById('image-upload');
+            if (uploadInput) {
+                uploadInput.click(); // 파일 선택 창을 열어줍니다.
+            } else {
+                console.error('업로드 요소를 찾을 수 없습니다.');
+            }
+        } else {
+            console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
+            if ((window as any).ReactNativeWebView) {
+                (window as any).ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
+                    })
+                );
+            }
+        }
     }
 
     return (
