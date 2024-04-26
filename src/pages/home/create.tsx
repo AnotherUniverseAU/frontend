@@ -166,7 +166,6 @@ export const Create = () => {
         } else {
             // 필요한 권한이 없으면 업로드를 차단하고 권한 요청을 합니다.
             console.log('필요한 권한이 부여되지 않았습니다. 권한을 요청합니다.');
-            event?.preventDefault();
             if ((window as any).ReactNativeWebView) {
                 (window as any).ReactNativeWebView.postMessage(
                     JSON.stringify({
@@ -175,6 +174,7 @@ export const Create = () => {
                 );
                 console.log('권한 요청 메시지가 전송되었습니다.');
             }
+            event?.preventDefault();
         }
     }
 
