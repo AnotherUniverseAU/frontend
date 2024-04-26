@@ -229,6 +229,9 @@ export const Create = () => {
         }
 
         await updatePermissions();
+    }
+
+    useEffect(() => {
         alert('cameraPermission: ' + cameraPermission + ' libraryPermission: ' + libraryPermission);
 
         if (cameraPermission && libraryPermission) {
@@ -249,7 +252,7 @@ export const Create = () => {
                 );
             }
         }
-    }
+    }, [cameraPermission, libraryPermission]);
 
     return (
         <S.Container>
