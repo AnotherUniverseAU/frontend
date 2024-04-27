@@ -56,7 +56,7 @@ export const Main: React.FC = () => {
     return (
         <S.Container style={{ overflow: isTutorial ? 'hidden' : 'scroll' }}>
             {isTutorial && (
-                <S.TutorialContainer className="header">
+                <S.TutorialContainer>
                     <S.TutorialTextContainer>
                         <S.TutorialText>원하는 AI 캐릭터를</S.TutorialText>
                         <S.TutorialText>직접 만들 수 있어요!</S.TutorialText>
