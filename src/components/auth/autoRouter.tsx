@@ -88,14 +88,14 @@ const RouterInfo: RouterItem[] = [
     { path: '/login', element: <Login />, withAuthorization: false },
     { path: '/redirection', element: <Redirection />, withAuthorization: false },
     // { path: "/permission", element: <Permission />, withAuthorization: true },
-    { path: '/nickname', element: <Nickname />, withAuthorization: false },
+    { path: '/nickname', element: <Nickname />, withAuthorization: true },
     { path: '/createInfo', element: <CreateInfo />, withAuthorization: true },
     {
         path: '/contributeInfo',
         element: <ContributeInfo />,
         withAuthorization: true,
     },
-    { path: '/create', element: <Create />, withAuthorization: false },
+    { path: '/create', element: <Create />, withAuthorization: true },
     { path: '/detail/:id', element: <Detail />, withAuthorization: true },
     { path: '/profile', element: <Profile />, withAuthorization: true },
     { path: '/nicknameEdit', element: <NicknameEdit />, withAuthorization: true },
@@ -111,13 +111,13 @@ const RouterInfo: RouterItem[] = [
         withAuthorization: true,
     },
     { path: '/au_admin_2023', element: <Admin />, withAuthorization: true },
-    { path: '/', element: <Main />, withAuthorization: false },
+    { path: '/', element: <Main />, withAuthorization: true },
     {
         path: '/noticeDetail',
         element: <NoticeDetail />,
         withAuthorization: true,
     },
-    { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: false },
+    { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: true },
     // { path: "/error", element: <Error />, withAuthorization: false },
 ];
 

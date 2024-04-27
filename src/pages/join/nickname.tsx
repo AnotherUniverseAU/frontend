@@ -20,9 +20,9 @@ export const Nickname = () => {
     const navigate = useNavigate();
     const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-    useEffect(() => {
-        navigate('/', { state: { from: '/nickname' } });
-    }, []);
+    // useEffect(() => {
+    //     navigate('/', { state: { from: '/nickname' } });
+    // }, []);
 
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
