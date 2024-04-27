@@ -58,9 +58,7 @@ a {
   text-decoration: none;
   color: black;
 }
-a:hover{
-	display: none;
-}
+
 a:active {
 	color: black;
 }
