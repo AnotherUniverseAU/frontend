@@ -48,7 +48,7 @@ export const Nickname = () => {
             }
         };
 
-        window.addEventListener('message', handleFCMMessage, { once: true });
+        window.addEventListener('message', handleFCMMessage, true);
 
         async function requestFCMToken() {
             // React Native의 WebView로 권한 요청 메시지 전송
