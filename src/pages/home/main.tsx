@@ -12,6 +12,7 @@ import { apiRequestGet } from 'src/apis/apiRequestGet';
 import axios from 'axios';
 import { apiRequestPost } from 'src/apis/apiRequestPost';
 import { BackgroundLower, BackgroundUpper } from 'src/components/background/background';
+import { filter } from 'lodash';
 
 const circleWhiteImg = require('src/components/header/main/circleWhiteImg.png') as string;
 const createWhiteImg = require('src/components/header/main/createWhiteImg.png') as string;
@@ -23,7 +24,7 @@ export const Main: React.FC = () => {
     const [isTutorial, setIsTutorial] = useState<boolean>(location.state?.from === '/nickname');
 
     const [characters, setCharacters] = useState<any[]>([]);
-    const [mainCharacter, setMainCharacter] = useState<any>({});
+    const [mainCharacter, setMainCharacter] = useState<any>([]);
 
     const [filteredCharacters, setFilteredCharacters] = useState<any[]>([]);
     const [selectedGenre, setSelectedGenre] = useState<string>('all');
@@ -45,17 +46,17 @@ export const Main: React.FC = () => {
 
     useEffect(() => {
         if (characters.length !== 0) {
-            const filteredCharacters =
+            const filtered =
                 selectedGenre === 'all'
                     ? characters
                     : characters.filter((character: any) => character.genre === selectedGenre);
-            setFilteredCharacters(filteredCharacters);
+            setFilteredCharacters(filtered);
         }
     }, [characters, selectedGenre]);
 
     return (
         <S.Container style={{ overflow: isTutorial ? 'hidden' : 'scroll' }}>
-            {isTutorial && (
+            {/* {isTutorial && (
                 <S.TutorialContainer>
                     <S.TutorialTextContainer>
                         <S.TutorialText>원하는 AI 캐릭터를</S.TutorialText>
@@ -65,14 +66,14 @@ export const Main: React.FC = () => {
                 </S.TutorialContainer>
             )}
             {isTutorial && (
-                <S.VirtualHeader className="header">
+                <S.VirtualHeader>
                     <S.VirtualLeft />
                     <S.VirtualRight>
                         <S.CreateImg src={createWhiteImg} alt="createImg" />
                         <S.CircleImg src={circleWhiteImg} alt="circle White Img" />
                     </S.VirtualRight>
                 </S.VirtualHeader>
-            )}
+            )} */}
             <MainHeader toCreate={true} isTutorial={isTutorial} />
             <S.SubContainer className="container">
                 <S.MainContainer>
@@ -97,7 +98,7 @@ export const Main: React.FC = () => {
                         </S.StyledButton>
                     </S.ButtonNav>
                     <S.ImageContainer>
-                        {filteredCharacters.map((character: any) => (
+                        {filteredCharacters.map((character: any, index) => (
                             <S.StyledImageMargin key={character.characterId}>
                                 <StyledImage
                                     route={`/detail/${character.characterId}`}
