@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import { fonts } from "./fonts";
+import { createGlobalStyle } from 'styled-components';
+import { fonts } from './fonts';
 
 export const GlobalStyle = createGlobalStyle`
 * {
@@ -59,7 +59,7 @@ a {
   color: black;
 }
 a:hover{
-	none;
+	display: none;
 }
 a:active {
 	color: black;

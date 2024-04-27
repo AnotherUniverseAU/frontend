@@ -117,7 +117,7 @@ const RouterInfo: RouterItem[] = [
         element: <NoticeDetail />,
         withAuthorization: true,
     },
-    { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: false },
+    { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: true },
     // { path: "/error", element: <Error />, withAuthorization: false },
 ];
 

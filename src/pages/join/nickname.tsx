@@ -20,6 +20,10 @@ export const Nickname = () => {
     const navigate = useNavigate();
     const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+    // useEffect(() => {
+    //     navigate('/', { state: { from: '/nickname' } });
+    // }, []);
+
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken === null) {
@@ -74,7 +78,6 @@ export const Nickname = () => {
     }, [accToken]);
 
     const updateNickname = async () => {
-        navigate('/', { state: { from: '/nickname' } });
         if (nickname !== '') {
             console.log('닉네임은 입력됨');
             try {
