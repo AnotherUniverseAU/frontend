@@ -57,7 +57,7 @@ const RouterInfoWithRefToken: RouterItem[] = [
         element: <ContributeInfo />,
         withAuthorization: true,
     },
-    { path: '/create', element: <Create />, withAuthorization: false },
+    { path: '/create', element: <Create />, withAuthorization: true },
     { path: '/detail/:id', element: <Detail />, withAuthorization: true },
     { path: '/profile', element: <Profile />, withAuthorization: true },
     { path: '/nicknameEdit', element: <NicknameEdit />, withAuthorization: true },
@@ -73,7 +73,7 @@ const RouterInfoWithRefToken: RouterItem[] = [
         withAuthorization: true,
     },
     { path: '/au_admin_2023', element: <Admin />, withAuthorization: true },
-    { path: '/', element: <Main />, withAuthorization: false },
+    { path: '/', element: <Main />, withAuthorization: true },
     {
         path: '/noticeDetail',
         element: <NoticeDetail />,
