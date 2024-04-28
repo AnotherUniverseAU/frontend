@@ -159,7 +159,7 @@ export const Create = () => {
                         }
                     };
 
-                    window.addEventListener('message', handlePermissionMessage, true);
+                    window.addEventListener('message', handlePermissionMessage, { once: true });
                 });
             } else {
                 return { cameraPermission: false, libraryPermission: false };
@@ -176,14 +176,14 @@ export const Create = () => {
             } else {
                 console.error('업로드 요소를 찾을 수 없습니다.');
             }
-        } else {
-            if ((window as any).ReactNativeWebView) {
-                (window as any).ReactNativeWebView.postMessage(
-                    JSON.stringify({
-                        type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
-                    })
-                );
-            }
+            // } else {
+            //     if ((window as any).ReactNativeWebView) {
+            //         (window as any).ReactNativeWebView.postMessage(
+            //             JSON.stringify({
+            //                 type: 'REQUEST_PERMISSIONS', // 권한 요청 메시지 전송
+            //             })
+            //         );
+            //     }
         }
     }
 
