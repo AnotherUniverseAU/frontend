@@ -10,7 +10,7 @@ export const Login = () => {
     useEffect(() => {
         const refToken = localStorage.getItem('refreshToken');
         if (refToken) {
-            navigate('/');
+            navigate('/nickname');
         }
     }, []);
 
