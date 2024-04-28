@@ -138,6 +138,12 @@ export const Create = () => {
                     const handlePermissionMessage = (event: any) => {
                         try {
                             const data = JSON.parse(event.data);
+                            alert(
+                                'data.cameraPermission' +
+                                    data.cameraPermission +
+                                    'data.libraryPermission' +
+                                    data.libraryPermission
+                            );
                             if (data.cameraPermission !== undefined && data.libraryPermission !== undefined) {
                                 console.log('권한 상태가 업데이트 되었습니다.');
                                 resolve({
