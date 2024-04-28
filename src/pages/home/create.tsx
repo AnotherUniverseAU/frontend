@@ -153,7 +153,7 @@ export const Create = () => {
                         }
                     };
 
-                    window.addEventListener('message', handlePermissionMessage, { once: true });
+                    window.addEventListener('message', handlePermissionMessage, true);
                 });
             } else {
                 return { cameraPermission: false, libraryPermission: false };
