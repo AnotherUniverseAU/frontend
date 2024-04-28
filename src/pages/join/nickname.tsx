@@ -62,10 +62,6 @@ export const Nickname = () => {
   }, []);
 
   useEffect(() => {
-    alert(`fcmToken : ${fcmToken}`);
-  }, [fcmToken]);
-
-  useEffect(() => {
     if (accToken) {
       const getNickname = async () => {
         const res = await apiRequestGet("user/nickname");
