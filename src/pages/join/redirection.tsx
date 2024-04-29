@@ -27,9 +27,11 @@ export const Redirection = () => {
       .then((res) => {
         localStorage.setItem("accessToken", res.access_token);
         localStorage.setItem("refreshToken", res.refresh_token);
+        console.log(1);
         return res.refresh_token;
       })
       .then((res) => {
+        console.log(2);
         if ((window as any).ReactNativeWebView) {
           (window as any).ReactNativeWebView.postMessage(
             JSON.stringify({
@@ -40,12 +42,14 @@ export const Redirection = () => {
         }
       })
       .then(() => {
+        console.log(3);
         setIsLogin(true);
       });
   }, []);
 
   useEffect(() => {
     if (isLogin === true) {
+      console.log(4);
       navigate("/nickname");
     }
   }, [isLogin]);
