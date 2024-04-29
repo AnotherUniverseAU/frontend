@@ -31,34 +31,34 @@ export const Nickname = () => {
       setAccToken(accessToken);
     }
 
-    const handleFCMMessage = (event: any) => {
-      try {
-        const data = JSON.parse(event.data);
-        alert("FCM 토큰 받음:" + data.token);
-        if (data.type === "FCM_TOKEN_RECEIVE") {
-          setFcmToken(data.token);
-          localStorage.setItem("fcmToken", data.token);
-        }
-      } catch (error) {
-        console.error("Error handling message from WebView:", error);
-      }
-    };
+    // const handleFCMMessage = (event: any) => {
+    //     try {
+    //         const data = JSON.parse(event.data);
+    //         alert('FCM 토큰 받음:' + data.token);
+    //         if (data.type === 'FCM_TOKEN_RECEIVE') {
+    //             setFcmToken(data.token);
+    //             localStorage.setItem('fcmToken', data.token);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error handling message from WebView:', error);
+    //     }
+    // };
 
-    window.addEventListener("message", handleFCMMessage, true);
+    // window.addEventListener('message', handleFCMMessage, true);
 
-    async function requestFCMToken() {
-      // React Native의 WebView로 권한 요청 메시지 전송
-      if ((window as any).ReactNativeWebView) {
-        console.log("권한 요청 시도");
-        await (window as any).ReactNativeWebView.postMessage(
-          JSON.stringify({
-            type: "FCM_TOKEN_REQUESTS", // 요청 유형을 변경
-          })
-        );
-        console.log("권한 요청 완료");
-      }
-    }
-    requestFCMToken();
+    // async function requestFCMToken() {
+    //     // React Native의 WebView로 권한 요청 메시지 전송
+    //     if ((window as any).ReactNativeWebView) {
+    //         console.log('권한 요청 시도');
+    //         await (window as any).ReactNativeWebView.postMessage(
+    //             JSON.stringify({
+    //                 type: 'FCM_TOKEN_REQUESTS', // 요청 유형을 변경
+    //             })
+    //         );
+    //         console.log('권한 요청 완료');
+    //     }
+    // }
+    // requestFCMToken();
   }, []);
 
   useEffect(() => {
@@ -75,7 +75,6 @@ export const Nickname = () => {
 
   const updateNickname = async () => {
     if (nickname !== "") {
-      console.log("닉네임은 입력됨");
       try {
         const customHttp = axios.create({
           baseURL: `${BASE_URL}`,
@@ -91,29 +90,30 @@ export const Nickname = () => {
           })
           .then((res: any) => {
             if (res && res.data.nickname) {
-              if (fcmToken) {
-                try {
-                  customHttp
-                    .post("/user/fcm-token", {
-                      fcmToken: fcmToken,
-                    })
-                    .then((tokenRes) => {
-                      if (tokenRes) {
-                        navigate("/", { state: { from: "/nickname" } });
-                      } else {
-                        console.error("FCM 토큰 업데이트 실패:", tokenRes);
-                        alert(
-                          `FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`
-                        );
-                      }
-                    });
-                } catch (error) {
-                  console.error("FCM 토큰 전송 중 오류 발생:", error);
-                  alert("FCM 토큰 전송 중 오류가 발생했습니다.");
-                }
-              } else {
-                alert(`FCM 토큰이 없습니다. => ${fcmToken}`);
-              }
+              navigate("/", { state: { from: "/nickname" } });
+              //   if (fcmToken) {
+              //     try {
+              //       customHttp
+              //         .post("/user/fcm-token", {
+              //           fcmToken: fcmToken,
+              //         })
+              //         .then((tokenRes) => {
+              //           if (tokenRes) {
+              //             navigate("/", { state: { from: "/nickname" } });
+              //           } else {
+              //             console.error("FCM 토큰 업데이트 실패:", tokenRes);
+              //             alert(
+              //               `FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`
+              //             );
+              //           }
+              //         });
+              //     } catch (error) {
+              //       console.error("FCM 토큰 전송 중 오류 발생:", error);
+              //       alert("FCM 토큰 전송 중 오류가 발생했습니다.");
+              //     }
+              //   } else {
+              //     alert(`FCM 토큰이 없습니다. => ${fcmToken}`);
+              //   }
             } else {
               console.error("닉네임 업데이트 실패:", res);
               alert("닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.");
@@ -134,10 +134,8 @@ export const Nickname = () => {
     if (load === true) {
       if (nickname === "") {
         setIsEmpty(true);
-        console.log("true");
       } else {
         setIsEmpty(false);
-        console.log("false");
       }
     } else {
       if (nickname !== "") {

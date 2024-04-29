@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Loading } from "../setting/loading";
+import sendAccessTokenToApp from "src/apis/sendAccessTokenToApp";
 
 export const Redirection = () => {
   const params = new URLSearchParams(window.location.search);
@@ -20,6 +21,7 @@ export const Redirection = () => {
         }
       );
       const { access_token, refresh_token } = res.data;
+      sendAccessTokenToApp(access_token);
       return { access_token, refresh_token };
     };
 
@@ -27,29 +29,14 @@ export const Redirection = () => {
       .then((res) => {
         localStorage.setItem("accessToken", res.access_token);
         localStorage.setItem("refreshToken", res.refresh_token);
-        console.log(1);
-        return res.refresh_token;
-      })
-      .then((res) => {
-        console.log(2);
-        if ((window as any).ReactNativeWebView) {
-          (window as any).ReactNativeWebView.postMessage(
-            JSON.stringify({
-              type: "STORE_REFRESH_TOKEN",
-              token: res,
-            })
-          );
-        }
       })
       .then(() => {
-        console.log(3);
         setIsLogin(true);
       });
   }, []);
 
   useEffect(() => {
     if (isLogin === true) {
-      console.log(4);
       navigate("/nickname");
     }
   }, [isLogin]);
