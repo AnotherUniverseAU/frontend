@@ -32,17 +32,6 @@ export const ProfileImage = styled.img`
   margin-right: 0.3rem;
 `;
 
-const userMessageStyles = css`
-  background-color: #6d2fef;
-  color: white;
-  align-self: flex-end;
-`;
-
-const characterMessageStyles = css`
-  background-color: #fcfcfc;
-  align-self: flex-start;
-`;
-
 export const CharacterMessageWrapper = styled.div<{
   sentby: "user" | "character";
   showProfile?: boolean;
@@ -76,9 +65,15 @@ export const UserMessageWrapper = styled.div<{
 export const CharacterName = styled.span`
   font-weight: bold;
   width: fit-content;
-  font-size: 1rem;
-  margin-left: 0.5rem;
-  margin-bottom: 0.3rem;
+  font-size: 0.8rem;
+`;
+
+export const ReplyTitle = styled.span`
+  font-weight: bold;
+  width: fit-content;
+  color: #6d2fef;
+  font-size: 0.8rem;
+  margin-left: 0.75rem;
 `;
 
 export const MessageContent = styled.div`
@@ -101,19 +96,37 @@ export const Message = styled.div<{
   sentby: "user" | "character";
   showProfile?: boolean;
   showMessageTime: boolean;
+  isReply?: boolean;
 }>`
   padding: 1rem;
   border-radius: 10px;
   max-width: ${(props) =>
-    props.sentby === "user" ? "70%" : "calc(100% - 3rem)"};
+    props.sentby === "user" ? "70%" : "calc(100% - 4rem)"};
   overflow-wrap: break-word;
-  margin: ${(props) =>
-    props.showMessageTime === false
-      ? "0 0.3rem 0.4rem 0.3rem"
-      : "0 0.3rem 0.75rem 0.3rem"};
+  margin-bottom: ${(props) =>
+    props.showMessageTime === false ? "0.4rem" : "0.75rem"};
   margin-top: ${(props) => (props.showProfile === true ? "0.5rem" : "0")};
   ${(props) =>
     props.sentby === "user" ? userMessageStyles : characterMessageStyles};
+  background-color: ${(props) =>
+    props.sentby === "user"
+      ? "#6d2fef"
+      : props.isReply
+      ? "#e5ddf5"
+      : "#fcfcfc"};
+`;
+
+const userMessageStyles = css`
+  color: white;
+  align-self: flex-end;
+  margin-left: 0.5rem;
+  margin-right: 0.3rem;
+`;
+
+const characterMessageStyles = css`
+  align-self: flex-start;
+  margin-left: 0.75rem;
+  margin-right: 0.5rem;
 `;
 
 export const MessageImage = styled.img<{
@@ -125,8 +138,8 @@ export const MessageImage = styled.img<{
   border-radius: 10px;
   margin: ${(props) =>
     props.showMessageTime === false
-      ? "0 0.3rem 0.4rem 0.3rem"
-      : "0 0.3rem 0.75rem 0.3rem"};
+      ? "0 0.3rem 0.4rem 0.75rem"
+      : "0 0.3rem 0.75rem 0.75rem"};
   margin-top: ${(props) => (props.showProfile === false ? "0.5rem" : "0")};
   align-self: flex-end;
 `;
