@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getCookie, setCookie } from "src/hooks/cookie";
 
 export const getNewToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
