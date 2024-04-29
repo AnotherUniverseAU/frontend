@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 import * as S from "./chatFooter.ts";
 import axios from "axios";
-import { apiRequestPost } from "src/apis/apiRequestPost.ts";
+import { apiRequestPostFormData } from "src/apis/apiRequestPost.ts";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -46,10 +46,10 @@ export const ChatFooter: React.FC<{
 
       const formData = new FormData();
       formData.append("image", file);
-      // const response = axios.post(`${BASE_URL}/chatroom/image-reply/${id}`, {
-      //     image: formData,
-      // });
-      apiRequestPost(`/chatroom/image-reply/${id}`, { image: formData });
+      apiRequestPostFormData(
+        `${BASE_URL}/chatroom/image-reply/${id}`,
+        formData
+      );
     }
   };
 
@@ -89,6 +89,10 @@ export const ChatFooter: React.FC<{
 
   async function requestPermissionsOrUpload(event: any) {
     event.preventDefault();
+    const uploadInput = document.getElementById("image-upload");
+    if (uploadInput) {
+      uploadInput.click(); // 파일 선택 창 열기
+    }
 
     async function updatePermissions() {
       if ((window as any).ReactNativeWebView) {
