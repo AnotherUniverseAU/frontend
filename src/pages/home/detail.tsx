@@ -20,22 +20,22 @@ export const Detail = () => {
 
     useEffect(() => {
         const fetchDetail = async () => {
-            // setLoading(true);
+            setLoading(true); // 데이터를 가져오기 전에 로딩 상태를 true로 설정
             const result: any = await apiRequestGet(`character/info/${params.id}`);
             setDetail(result.character);
-            // setLoading(false);
+            setLoading(false); // 데이터를 가져온 후에 로딩 상태를 false로 설정
         };
         fetchDetail();
     }, [params.id]);
 
     const handleStartChat = async () => {
-        // setLoading(true);
+        setLoading(true);
 
         const res: any = await apiRequestPost('/subscription/subscribe', {
             characterId: String(params.id),
         });
         setTimeout(() => {
-            // setLoading(false);
+            setLoading(false);
             navigate(`/chatroom/${params.id}`);
         }, 500);
     };
@@ -43,49 +43,52 @@ export const Detail = () => {
     return (
         <>
             <BackHeader route="/" title="상세 보기" />
-            <div className="container">
-                <S.MainContainer>
-                    <S.MainImg src={detail.profilePicUrl} alt={detail.name} />
-                    <S.MainInfo>
-                        <S.MainName>
-                            <div style={{ width: '100%', height: '30%' }}></div>
-                            <div style={{ width: '100%', height: '40%' }}>{detail.name}</div>
-                            <div style={{ width: '100%', height: '30%' }}></div>
-                        </S.MainName>
-                        <S.MainTitle>
-                            <div style={{ width: '100%', height: '45%' }}></div>
-                            <div
-                                style={{
-                                    width: '100%',
-                                    height: '25%',
-                                    display: 'flex',
-                                    alignItems: 'end',
-                                }}
-                            >
-                                {detail.title}
-                            </div>
-                            <div style={{ width: '100%', height: '30%' }}></div>
-                        </S.MainTitle>
-                    </S.MainInfo>
-                </S.MainContainer>
-                <S.ContentContainer>
-                    <S.ContentTitle style={{ paddingBottom: '1rem' }}>Creator</S.ContentTitle>
-                    <S.CreatorContainer>
-                        <S.CreatorImg />
-                        <S.CreatorTextContainer>
-                            <S.CreatorNickname>@{detail.creatorNickname}</S.CreatorNickname>
-                            <S.CreatorWords>"{detail.creatorWords}"</S.CreatorWords>
-                        </S.CreatorTextContainer>
-                    </S.CreatorContainer>
-                    <S.ContentTitle style={{ paddingBottom: '0.5rem' }}>Contributor</S.ContentTitle>
-                    <S.ContributorContainer>
-                        {detail.hashtags.map((name: string, index: number) => (
-                            <S.ContributorButton key={index}>@{name}</S.ContributorButton>
-                        ))}
-                    </S.ContributorContainer>
-                </S.ContentContainer>
-            </div>
-
+            {!loading ? (
+                <div className="container">
+                    <S.MainContainer>
+                        <S.MainImg src={detail.profilePicUrl} alt={detail.name} />
+                        <S.MainInfo>
+                            <S.MainName>
+                                <div style={{ width: '100%', height: '30%' }}></div>
+                                <div style={{ width: '100%', height: '40%' }}>{detail.name}</div>
+                                <div style={{ width: '100%', height: '30%' }}></div>
+                            </S.MainName>
+                            <S.MainTitle>
+                                <div style={{ width: '100%', height: '45%' }}></div>
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        height: '25%',
+                                        display: 'flex',
+                                        alignItems: 'end',
+                                    }}
+                                >
+                                    {detail.title}
+                                </div>
+                                <div style={{ width: '100%', height: '30%' }}></div>
+                            </S.MainTitle>
+                        </S.MainInfo>
+                    </S.MainContainer>
+                    <S.ContentContainer>
+                        <S.ContentTitle style={{ paddingBottom: '1rem' }}>Creator</S.ContentTitle>
+                        <S.CreatorContainer>
+                            <S.CreatorImg />
+                            <S.CreatorTextContainer>
+                                <S.CreatorNickname>@{detail.creatorNickname}</S.CreatorNickname>
+                                <S.CreatorWords>"{detail.creatorWords}"</S.CreatorWords>
+                            </S.CreatorTextContainer>
+                        </S.CreatorContainer>
+                        <S.ContentTitle style={{ paddingBottom: '0.5rem' }}>Contributor</S.ContentTitle>
+                        <S.ContributorContainer>
+                            {detail.hashtags.map((name: string, index: number) => (
+                                <S.ContributorButton key={index}>@{name}</S.ContributorButton>
+                            ))}
+                        </S.ContributorContainer>
+                    </S.ContentContainer>
+                </div>
+            ) : (
+                <Loading />
+            )}
             <TextFooter route="." text="채팅 시작하기" onClick={handleStartChat} />
         </>
     );

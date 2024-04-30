@@ -15,19 +15,19 @@ export const Login = () => {
     }, []);
 
     const handleLogin = async () => {
-        async function requestSafetyArea() {
-            // React Native의 WebView로 권한 요청 메시지 전송
-            if ((window as any).ReactNativeWebView) {
-                console.log('권한 요청 시도');
-                await (window as any).ReactNativeWebView.postMessage(
-                    JSON.stringify({
-                        type: 'ADD_SAFETY_AREA', // 요청 유형을 변경
-                    })
-                );
-                console.log('권한 요청 완료');
-            }
-        }
-        await requestSafetyArea();
+        // async function requestSafetyArea() {
+        //     // React Native의 WebView로 권한 요청 메시지 전송
+        //     if ((window as any).ReactNativeWebView) {
+        //         console.log('권한 요청 시도');
+        //         await (window as any).ReactNativeWebView.postMessage(
+        //             JSON.stringify({
+        //                 type: 'ADD_SAFETY_AREA', // 요청 유형을 변경
+        //             })
+        //         );
+        //         console.log('권한 요청 완료');
+        //     }
+        // }
+        // await requestSafetyArea();
 
         const kakaoOauthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
         window.location.href = kakaoOauthUrl;
