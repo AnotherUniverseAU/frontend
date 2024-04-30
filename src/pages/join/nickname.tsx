@@ -45,20 +45,6 @@ export const Nickname = () => {
         // };
 
         // window.addEventListener('message', handleFCMMessage, true);
-
-        async function requestSafetyArea() {
-            // React Native의 WebView로 권한 요청 메시지 전송
-            if ((window as any).ReactNativeWebView) {
-                console.log('권한 요청 시도');
-                await (window as any).ReactNativeWebView.postMessage(
-                    JSON.stringify({
-                        type: 'REMOVE_SAFETY_AREA', // 요청 유형을 변경
-                    })
-                );
-                console.log('권한 요청 완료');
-            }
-        }
-        requestSafetyArea();
     }, []);
 
     useEffect(() => {
@@ -116,12 +102,12 @@ export const Nickname = () => {
                             //   }
                         } else {
                             console.error('닉네임 업데이트 실패:', res);
-                            alert('닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.');
+                            // alert('닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.');
                         }
                     });
             } catch (error) {
                 console.error('닉네임 업데이트 중 오류 발생:', error);
-                alert('닉네임 업데이트 중 오류가 발생했습니다.');
+                // alert('닉네임 업데이트 중 오류가 발생했습니다.');
             }
         } else {
             if (!load) {
