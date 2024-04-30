@@ -115,7 +115,7 @@ export const Admin = () => {
                     chatList.push(newMessage);
                 }
             }
-            // 답장이 있다면 : 5분 추가해 다 넣어주자
+            // 답장이 있다면 : 30분 추가해 다 넣어주자
             if ('reply' in i && i.reply) {
                 i.reply.forEach((text: any) => {
                     const afterFiveM = new Date(Date.parse(i.timeToSend) + 30 * 60 * 1000 + koreaTimeOffset)
