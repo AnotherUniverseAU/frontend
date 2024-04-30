@@ -19,7 +19,10 @@ export const apiRequestGet = async (path: string) => {
 
   const onFulfilled = async (config: InternalAxiosRequestConfig) => {
     const token_validate = AuthVerify();
-    if (token_validate === "Access Token Expired" || "None Access Token") {
+    if (
+      token_validate === "Access Token Expired" ||
+      token_validate === "None Access Token"
+    ) {
       const newAccessToken = await getNewToken();
       sendAccessTokenToApp(newAccessToken);
       if (config.headers) {
