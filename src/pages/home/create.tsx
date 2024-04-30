@@ -38,10 +38,11 @@ export const Create = () => {
     const [isTextModalOpen, setIsTextModalOpen] = useState(false);
     const [isAgreeModalOpen, setIsAgreeModalOpen] = useState(false);
 
-    const [cameraPermission, setCameraPermission] = useState(false);
-    const [libraryPermission, setLibraryPermission] = useState(false);
-
     const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     alert('images' + images);
+    // }, [images]);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -138,6 +139,7 @@ export const Create = () => {
                     const handlePermissionMessage = (event: any) => {
                         try {
                             const data = JSON.parse(event.data);
+                            alert('data: ' + data.cameraPermission + data.libraryPermission);
                             if (data.cameraPermission !== undefined && data.libraryPermission !== undefined) {
                                 console.log('권한 상태가 업데이트 되었습니다.');
                                 resolve({
@@ -180,6 +182,8 @@ export const Create = () => {
             //     }
         }
     }
+
+    ///////////////////////////////////////
 
     return (
         <S.Container>

@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as S from './chatFooter.ts';
 import axios from 'axios';
 import { apiRequestPostFormData } from 'src/apis/apiRequestPost.ts';
+import { Alert } from '@mui/material';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -93,6 +94,7 @@ export const ChatFooter: React.FC<{
                     const handlePermissionMessage = (event: any) => {
                         try {
                             const data = JSON.parse(event.data);
+                            alert('data: ' + data.cameraPermission + data.libraryPermission);
                             if (data.cameraPermission !== undefined && data.libraryPermission !== undefined) {
                                 console.log('권한 상태가 업데이트 되었습니다.');
                                 resolve({
