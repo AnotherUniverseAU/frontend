@@ -52,7 +52,7 @@ export const Profile = () => {
     const openAppSettings = async () => {
         if ((window as any).ReactNativeWebView) {
             console.log('설정 이동 요청');
-            await (window as any).WebView.postMessage(
+            await (window as any).ReactNativeWebView.postMessage(
                 JSON.stringify({
                     type: 'OPEN_APP_SETTINGS',
                 })
@@ -76,7 +76,7 @@ export const Profile = () => {
                 </S.ProfileContainer>
                 <S.NavWrapper>
                     <div>
-                        <NavItem text={'알림설정'} onClick={openAppSettings} style={{ marginBottom: '1rem' }} />
+                        <NavItem text={'알림설정'} onClick={() => openAppSettings()} style={{ marginBottom: '1rem' }} />
                         <NavItem
                             text={'공지사항'}
                             onClick={() => handleNavigate({ to: '/notice' })}
