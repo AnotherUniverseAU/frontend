@@ -95,7 +95,7 @@ const RouterInfo: RouterItem[] = [
         element: <ContributeInfo />,
         withAuthorization: true,
     },
-    { path: '/create', element: <Create />, withAuthorization: true },
+    { path: '/create', element: <Create />, withAuthorization: false },
     { path: '/detail/:id', element: <Detail />, withAuthorization: true },
     { path: '/profile', element: <Profile />, withAuthorization: false },
     { path: '/nicknameEdit', element: <NicknameEdit />, withAuthorization: true },
