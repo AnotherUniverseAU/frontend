@@ -89,10 +89,6 @@ export const ChatFooter: React.FC<{
 
   async function requestPermissionsOrUpload(event: any) {
     event.preventDefault();
-    const uploadInput = document.getElementById("image-upload");
-    if (uploadInput) {
-      uploadInput.click(); // 파일 선택 창 열기
-    }
 
     async function updatePermissions() {
       if ((window as any).ReactNativeWebView) {
