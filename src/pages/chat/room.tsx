@@ -377,7 +377,7 @@ export const ChatRoom = (): JSX.Element => {
             // 답장이 있다면
             if ('reply' in i && i.reply) {
                 const thirtyMinPlus = Date.parse(i.timeToSend) + 30 * 60 * 1000;
-                // 현재 시간이 답장 시간보다 뒤라면 5분 추가해 다 넣어주자
+                // 현재 시간이 답장 시간보다 뒤라면 30분 추가해 다 넣어주자
                 if (thirtyMinPlus <= new Date().getTime()) {
                     i.reply.forEach((text) => {
                         const afterThirtyM = new Date(thirtyMinPlus + koreaTimeOffset)
