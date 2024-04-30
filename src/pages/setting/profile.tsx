@@ -8,6 +8,7 @@ import { IconFooter } from 'src/components/footer/icon/iconFooter.tsx';
 import { apiRequestGet } from 'src/apis/apiRequestGet';
 import { BackgroundFull } from 'src/components/background/background';
 import { BackHeader } from 'src/components/header/back/backHeader.tsx';
+import { OpenInBrowser } from '@mui/icons-material';
 
 interface NavItemProps {
     text: string;
@@ -48,6 +49,18 @@ export const Profile = () => {
         window.open('https://pf.kakao.com/_tmxfFG/chat');
     };
 
+    const openAppSettings = async () => {
+        if ((window as any).ReactNativeWebView) {
+            console.log('설정 이동 요청');
+            await (window as any).ReactNativeWebView.postMessage(
+                JSON.stringify({
+                    type: 'OPEN_APP_SETTINGS',
+                })
+            );
+            console.log('설정 이동 완료');
+        }
+    };
+
     return (
         <S.Container>
             <MainHeader toCreate={false} isTutorial={false} />
@@ -63,21 +76,7 @@ export const Profile = () => {
                 </S.ProfileContainer>
                 <S.NavWrapper>
                     <div>
-                        <NavItem
-                            text={'알림설정'}
-                            onClick={function openAppSettings() {
-                                if ((window as any).ReactNativeWebView) {
-                                    console.log('설정 이동 요청');
-                                    (window as any).WebView.postMessage(
-                                        JSON.stringify({
-                                            type: 'OPEN_APP_SETTINGS',
-                                        })
-                                    );
-                                    console.log('설정 이동 완료');
-                                }
-                            }}
-                            style={{ marginBottom: '1rem' }}
-                        />
+                        <NavItem text={'알림설정'} onClick={() => openAppSettings()} style={{ marginBottom: '1rem' }} />
                         <NavItem
                             text={'공지사항'}
                             onClick={() => handleNavigate({ to: '/notice' })}
