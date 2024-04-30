@@ -109,15 +109,17 @@ export const PurpleText = styled.span`
 `;
 
 export const ImageLabel = styled.label`
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 500;
     width: 82vw;
-    height: auto;
+    height: 1.5rem;
     border: 0.1rem solid #a0a0a0;
     color: #a0a0a0;
     border-radius: 1rem;
     padding: 1rem 4vw;
     margin: 0.1rem 0 0.8rem;
+    display: flex;
+    align-items: center;
 `;
 
 export const ImageInput = styled.input`

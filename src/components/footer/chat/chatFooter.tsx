@@ -121,9 +121,7 @@ export const ChatFooter: React.FC<{
             }
           };
 
-          window.addEventListener("message", handlePermissionMessage, {
-            once: true,
-          });
+          window.addEventListener("message", handlePermissionMessage, true);
         });
       } else {
         return { cameraPermission: false, libraryPermission: false };
