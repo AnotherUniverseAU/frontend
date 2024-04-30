@@ -8,7 +8,11 @@ const accessToken = localStorage.getItem("accessToken") as string;
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const onFulfilled = async (config: InternalAxiosRequestConfig) => {
-  if (AuthVerify() === "Access Token Expired") {
+  const token_validate = AuthVerify();
+  if (
+    token_validate === "Access Token Expired" ||
+    token_validate === "None Access Token"
+  ) {
     const newAccessToken = await getNewToken();
     sendAccessTokenToApp(newAccessToken);
     if (config.headers) {
