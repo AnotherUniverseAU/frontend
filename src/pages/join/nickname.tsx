@@ -59,10 +59,10 @@ export const Nickname = () => {
   const updateNickname = async () => {
     if (nickname !== "") {
       try {
-        await apiRequestPost(`/user/nickname`, {
+        apiRequestPost(`/user/nickname`, {
           nickname: nickname,
         }).then((res: any) => {
-          if (res && res.data.nickname) {
+          if (res && res.nickname) {
             navigate("/");
             //   if (fcmToken) {
             //     try {
