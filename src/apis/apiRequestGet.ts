@@ -4,11 +4,11 @@ import type { InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import sendAccessTokenToApp from './sendAccessTokenToApp';
 
-const accessToken = (await localStorage.getItem('accessToken')) as string;
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 // const refresh = localStorage.getItem("refreshToken");
 
 export const apiRequestGet = async (path: string) => {
+    const accessToken = (await localStorage.getItem('accessToken')) as string;
     alert('accessToken: ' + accessToken);
     const customHttp = axios.create({
         baseURL: `${BASE_URL}`,
