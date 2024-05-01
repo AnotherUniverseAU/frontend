@@ -11,14 +11,14 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const apiRequestGet = async (path: string) => {
     const customHttp = axios.create({
         baseURL: `${BASE_URL}`,
-        // timeout: 8000,
+        timeout: 8000,
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
     });
 
     const onFulfilled = async (config: InternalAxiosRequestConfig) => {
-        const token_validate = AuthVerify();
+        const token_validate = await AuthVerify();
         if (token_validate === 'Access Token Expired' || token_validate === 'None Access Token') {
             const newAccessToken = await getNewToken();
             sendAccessTokenToApp(newAccessToken);
