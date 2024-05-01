@@ -64,8 +64,6 @@ export const Create = () => {
   };
 
   const handleSubmit = () => {
-    setIsSubmit(true);
-
     if (
       images.length !== 0 &&
       name &&
@@ -215,32 +213,38 @@ export const Create = () => {
           </S.ModalContainer>
         </S.StyledModal>
       )}
-      {/* {isTextModalOpen && (
-                <S.StyledModal open={isTextModalOpen}>
-                    <S.ModalContainer>
-                        <S.PermissionCheck src={permissionCheck} alt="permissionCheck" />
-                        <S.ModalText type="unfulfilled">전체 내용을 입력해 주세요.</S.ModalText>
-                        <S.ModalSubTextContainer>
-                            <S.ModalSubText>누락된 정보가 있어 제출이</S.ModalSubText>
-                            <S.ModalSubText>불가합니다.</S.ModalSubText>
-                        </S.ModalSubTextContainer>
-                        <S.ModalButton onClick={handleTextModalClose}>확인</S.ModalButton>
-                    </S.ModalContainer>
-                </S.StyledModal>
-            )}
-            {isAgreeModalOpen && (
-                <S.StyledModal open={isAgreeModalOpen}>
-                    <S.ModalContainer>
-                        <S.PermissionCheck src={permissionCheck} alt="permissionCheck" />
-                        <S.ModalText type="unfulfilled">개인정보 수집/이용 동의</S.ModalText>
-                        <S.ModalSubTextContainer>
-                            <S.ModalSubText>하단의 개인정보 수집/이용 동의란에</S.ModalSubText>
-                            <S.ModalSubText>체크하셔야 제출이 가능합니다.</S.ModalSubText>
-                        </S.ModalSubTextContainer>
-                        <S.ModalButton onClick={handleAgreeModalClose}>확인</S.ModalButton>
-                    </S.ModalContainer>
-                </S.StyledModal>
-            )} */}
+      {isTextModalOpen && (
+        <S.StyledModal open={isTextModalOpen}>
+          <S.ModalContainer>
+            <S.PermissionCheck src={permissionCheck} alt="permissionCheck" />
+            <S.ModalText type="unfulfilled">
+              전체 내용을 입력해 주세요.
+            </S.ModalText>
+            <S.ModalSubTextContainer>
+              <S.ModalSubText>누락된 정보가 있어 제출이</S.ModalSubText>
+              <S.ModalSubText>불가합니다.</S.ModalSubText>
+            </S.ModalSubTextContainer>
+            <S.ModalButton onClick={handleTextModalClose}>확인</S.ModalButton>
+          </S.ModalContainer>
+        </S.StyledModal>
+      )}
+      {isAgreeModalOpen && (
+        <S.StyledModal open={isAgreeModalOpen}>
+          <S.ModalContainer>
+            <S.PermissionCheck src={permissionCheck} alt="permissionCheck" />
+            <S.ModalText type="unfulfilled">
+              개인정보 수집/이용 동의
+            </S.ModalText>
+            <S.ModalSubTextContainer>
+              <S.ModalSubText>
+                하단의 개인정보 수집/이용 동의란에
+              </S.ModalSubText>
+              <S.ModalSubText>체크하셔야 제출이 가능합니다.</S.ModalSubText>
+            </S.ModalSubTextContainer>
+            <S.ModalButton onClick={handleAgreeModalClose}>확인</S.ModalButton>
+          </S.ModalContainer>
+        </S.StyledModal>
+      )}
 
       <BackHeader route="/contributeInfo" title="AI 캐릭터 만들기" />
       <S.SubContainer className="container">
