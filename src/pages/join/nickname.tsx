@@ -9,6 +9,7 @@ import { TextFooter } from "src/components/footer/text/textFooter.tsx";
 import { StyledInput } from "src/components/styledInput/styledInput.tsx";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { getNewToken } from "src/apis/getNewToken";
+import { apiRequestPost } from "src/apis/apiRequestPost";
 
 export const Nickname = () => {
   const [nickname, setNickname] = useState("");
@@ -21,15 +22,11 @@ export const Nickname = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken === null) {
-      getNewToken().then((res) => {
-        localStorage.setItem("accessToken", res);
-        setAccToken(res);
-      });
-    } else {
+    const getAccessToken = async () => {
+      const accessToken = await localStorage.getItem("accessToken");
       setAccToken(accessToken);
-    }
+    };
+    getAccessToken();
 
     // const handleFCMMessage = (event: any) => {
     //     try {
@@ -62,49 +59,39 @@ export const Nickname = () => {
   const updateNickname = async () => {
     if (nickname !== "") {
       try {
-        const customHttp = axios.create({
-          baseURL: `${BASE_URL}`,
-          timeout: 8000,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accToken}`,
-          },
+        await apiRequestPost(`/user/nickname`, {
+          nickname: nickname,
+        }).then((res: any) => {
+          if (res && res.data.nickname) {
+            navigate("/");
+            //   if (fcmToken) {
+            //     try {
+            //       customHttp
+            //         .post("/user/fcm-token", {
+            //           fcmToken: fcmToken,
+            //         })
+            //         .then((tokenRes) => {
+            //           if (tokenRes) {
+            //             navigate("/", { state: { from: "/nickname" } });
+            //           } else {
+            //             console.error("FCM 토큰 업데이트 실패:", tokenRes);
+            //             alert(
+            //               `FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`
+            //             );
+            //           }
+            //         });
+            //     } catch (error) {
+            //       console.error("FCM 토큰 전송 중 오류 발생:", error);
+            //       alert("FCM 토큰 전송 중 오류가 발생했습니다.");
+            //     }
+            //   } else {
+            //     alert(`FCM 토큰이 없습니다. => ${fcmToken}`);
+            //   }
+          } else {
+            console.error("닉네임 업데이트 실패:", res);
+            // alert('닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.');
+          }
         });
-        customHttp
-          .post("/user/nickname", {
-            nickname: nickname,
-          })
-          .then((res: any) => {
-            if (res && res.data.nickname) {
-              navigate("/");
-              //   if (fcmToken) {
-              //     try {
-              //       customHttp
-              //         .post("/user/fcm-token", {
-              //           fcmToken: fcmToken,
-              //         })
-              //         .then((tokenRes) => {
-              //           if (tokenRes) {
-              //             navigate("/", { state: { from: "/nickname" } });
-              //           } else {
-              //             console.error("FCM 토큰 업데이트 실패:", tokenRes);
-              //             alert(
-              //               `FCM 토큰 업데이트에 실패했습니다. 다시 시도해 주세요. => ${tokenRes}`
-              //             );
-              //           }
-              //         });
-              //     } catch (error) {
-              //       console.error("FCM 토큰 전송 중 오류 발생:", error);
-              //       alert("FCM 토큰 전송 중 오류가 발생했습니다.");
-              //     }
-              //   } else {
-              //     alert(`FCM 토큰이 없습니다. => ${fcmToken}`);
-              //   }
-            } else {
-              console.error("닉네임 업데이트 실패:", res);
-              // alert('닉네임 업데이트에 실패했습니다. 다시 시도해 주세요.');
-            }
-          });
       } catch (error) {
         console.error("닉네임 업데이트 중 오류 발생:", error);
         // alert('닉네임 업데이트 중 오류가 발생했습니다.');
