@@ -206,7 +206,12 @@ export const Create = () => {
         <S.StyledModal open={isSubmit}>
           <S.ModalContainer>
             <S.ModalText>제출이 완료 되었습니다</S.ModalText>
-            <S.ModalButton onClick={handleModalClose}>확인</S.ModalButton>
+            <S.ModalButton
+              id="submit_complete_button"
+              onClick={handleModalClose}
+            >
+              확인
+            </S.ModalButton>
           </S.ModalContainer>
         </S.StyledModal>
       )}
