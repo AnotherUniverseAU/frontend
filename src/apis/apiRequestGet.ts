@@ -9,6 +9,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 // const refresh = localStorage.getItem("refreshToken");
 
 export const apiRequestGet = async (path: string) => {
+    alert('accessToken: ' + accessToken);
     const customHttp = axios.create({
         baseURL: `${BASE_URL}`,
         timeout: 8000,
@@ -20,8 +21,10 @@ export const apiRequestGet = async (path: string) => {
     const onFulfilled = async (config: InternalAxiosRequestConfig) => {
         const token_validate = await AuthVerify();
         if (token_validate === 'Access Token Expired' || token_validate === 'None Access Token') {
+            alert('Access Token Expired');
             const newAccessToken = await getNewToken();
-            sendAccessTokenToApp(newAccessToken);
+            alert('newAccessToken: ' + newAccessToken);
+            await sendAccessTokenToApp(newAccessToken);
             if (config.headers) {
                 config.headers.Authorization = `Bearer ${newAccessToken}`;
             }
