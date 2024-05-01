@@ -33,7 +33,7 @@ export const Main: React.FC = () => {
 
     useEffect(() => {
         async function requestSafetyArea() {
-            // React Native의 WebView로 권한 요청 메시지 전송
+            // React Native의 WebView로 권한 요청 메시지 전송//
             if ((window as any).ReactNativeWebView) {
                 console.log('권한 요청 시도');
                 await (window as any).ReactNativeWebView.postMessage(
