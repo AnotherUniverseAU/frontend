@@ -4,7 +4,7 @@ const parseJwt = (token: string | null) => {
 
 export const AuthVerify = async () => {
     const accessToken = (await localStorage.getItem('accessToken')) as string;
-    alert('AccessTokn in AuthVerify' + accessToken);
+
     if (!accessToken) {
         return 'None Access Token';
     } else {
