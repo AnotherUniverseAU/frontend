@@ -76,7 +76,7 @@ const CharacterMessage: React.FC<CharacterMessageProps> = ({
       <S.MessageDiv showProfile={showProfile}>
         {showProfile ? (
           message.isReply ? (
-            <S.ReplyTitle>랜덤 답장 💌</S.ReplyTitle>
+            <S.ReplyTitle>↳ 랜덤 답장 💌</S.ReplyTitle>
           ) : (
             <S.CharacterName>{characterName}</S.CharacterName>
           )
