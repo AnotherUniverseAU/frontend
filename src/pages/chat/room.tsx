@@ -855,7 +855,7 @@ export const ChatRoom = (): JSX.Element => {
                     text={
                       showChatTutorial
                         ? "캐릭터는 일과 중 짬날 때,\n하루 약 7번 찾아와요"
-                        : "이용자 분들의 답변 중,\n캐릭터가 선택한 답변에\n답장을 보내줘요"
+                        : "랜덤으로 선택된 이용자분께\n캐릭터가 답장을 보내줘요"
                     }
                   ></TutorialContainer>
                   <S.ChatTutorialButton
