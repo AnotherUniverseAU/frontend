@@ -33,7 +33,7 @@ export const Withdraw = () => {
 
   const onWithDraw = () => {
     apiRequestPost("/user/withdraw", { nickname }).then((res) => {
-      if (res) {
+      if (res && res.result === "success") {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         setRealWithdraw(true);
