@@ -277,7 +277,7 @@ export const ChatRoom = (): JSX.Element => {
   useEffect(() => {
     if (helloMessages.length > 0 && isFirstChat === true) {
       const chatTutorialShown = localStorage.getItem(`chatTutorialShown`);
-      const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
+      // const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
       if (!chatTutorialShown) {
         setShowChatTutorial(true);
         setChatMessages([helloMessages[0]]);

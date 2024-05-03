@@ -6,7 +6,7 @@ interface ToggleProps {
 
 export const Container = styled.div`
   width: 90vw;
-  margin-top: 1.5rem;
+  padding-top: 1.5rem;
 `;
 
 export const CheckContainer = styled.div`
@@ -27,7 +27,7 @@ export const Arrow = styled.div<ToggleProps>`
   margin-left: 0.5rem;
   cursor: pointer;
   transform: ${(props) => (props.open ? "rotate(180deg)" : "rotate(0)")};
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.15s ease-in-out;
 `;
 
 export const Text = styled.div`
@@ -36,12 +36,9 @@ export const Text = styled.div`
   margin-left: 10px;
 `;
 
-export const Policy = styled.div<ToggleProps>`
+export const Policy = styled.div`
   font-size: 0.7rem;
   margin-top: 0.5rem;
-  max-height: ${(props) => (props.open ? "105rem" : "0")};
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
   color: #a0a0a0;
 `;
 

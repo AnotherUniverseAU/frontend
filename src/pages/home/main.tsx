@@ -1,6 +1,6 @@
 import * as S from "src/styles/home/main.ts";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MainHeader } from "src/components/header/main/mainHeader.tsx";
 import { MainImage } from "src/components/mainImage/mainImage.tsx";
@@ -34,7 +34,12 @@ export const Main: React.FC = () => {
   const [filteredCharacters, setFilteredCharacters] = useState<any[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<string>("all");
 
+  const [tutorialPosition, setTutorialPosition] = useState([0, 0]);
+
   const [loading, setLoading] = useState<boolean>(true);
+
+  const tutoImgRef = useRef<HTMLImageElement>(null);
+  const tutoTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // async function requestSafetyArea() {
@@ -85,13 +90,29 @@ export const Main: React.FC = () => {
     }
   }, [characters, selectedGenre]);
 
+  useEffect(() => {
+    if (isTutorial === true) {
+      const currentImg = tutoImgRef.current;
+      const currentText = tutoTextRef.current;
+      if (currentImg && currentText) {
+        const { width } = currentText.getBoundingClientRect();
+        const { top, left } = currentImg.getBoundingClientRect();
+        setTutorialPosition([top, left - width]);
+      }
+    }
+  }, [isTutorial]);
+
   return (
     <>
       {!loading ? (
         <S.Container style={{ overflow: isTutorial ? "hidden" : "scroll" }}>
           {isTutorial && (
-            <S.TutorialContainer className="header">
-              <S.TutorialTextContainer>
+            <S.TutorialContainer>
+              <S.TutorialTextContainer
+                ref={tutoTextRef}
+                $top={tutorialPosition[0]}
+                $left={tutorialPosition[1]}
+              >
                 <S.TutorialText>원하는 AI 캐릭터를</S.TutorialText>
                 <S.TutorialText>직접 만들 수 있어요!</S.TutorialText>
                 <S.TutorialButton
@@ -110,7 +131,11 @@ export const Main: React.FC = () => {
               <S.VirtualLeft />
               <S.VirtualRight>
                 <S.CreateImg src={createWhiteImg} alt="createImg" />
-                <S.CircleImg src={circleWhiteImg} alt="circle White Img" />
+                <S.CircleImg
+                  ref={tutoImgRef}
+                  src={circleWhiteImg}
+                  alt="circle White Img"
+                />
               </S.VirtualRight>
             </S.VirtualHeader>
           )}

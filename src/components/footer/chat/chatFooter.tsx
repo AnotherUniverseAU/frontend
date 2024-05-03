@@ -58,15 +58,25 @@ export const ChatFooter: React.FC<{
       // 아이콘 색깔도 바꾸기?
       return;
     } else {
+      console.log(isTuto);
       if (!isTuto) {
         chatInputRef.current?.focus();
-      } else {
-        chatInputRef.current?.blur();
-      }
-      setChatMessage({ type: "text", content: inputValue, isSent: false });
-      setInputValue("");
 
-      setCurrentRow(1);
+        setChatMessage({ type: "text", content: inputValue, isSent: false });
+        setInputValue("");
+
+        setCurrentRow(1);
+      } else {
+        console.log("튜토리얼일 때 실행");
+        chatInputRef.current?.blur();
+
+        setTimeout(() => {
+          setChatMessage({ type: "text", content: inputValue, isSent: false });
+          setInputValue("");
+
+          setCurrentRow(1);
+        }, 200);
+      }
     }
   };
 
