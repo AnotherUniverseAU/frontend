@@ -61,7 +61,7 @@ export const ChatFooter: React.FC<{
       if (!isTuto) {
         chatInputRef.current?.focus();
       } else {
-        chatValidRef.current?.focus();
+        chatInputRef.current?.blur();
       }
       setChatMessage({ type: "text", content: inputValue, isSent: false });
       setInputValue("");

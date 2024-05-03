@@ -3,18 +3,22 @@ import { TextFooter } from "src/components/footer/text/textFooter.tsx";
 import { ComplainFooter } from "src/components/footer/complain/complainFooter.tsx";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import * as S from "src/styles/setting/withdraw";
 import { BackgroundFull } from "src/components/background/background";
+import { apiRequestPost } from "src/apis/apiRequestPost";
 
 export const Withdraw = () => {
-  const [nickname, setNickname] = useState("");
+  const location = useLocation();
+  const { nickname } = location.state;
+
   const [selectedOption, setSelectedOption] = useState(0);
   const [complain, setComplain] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [realWithdraw, setRealWithdraw] = useState(false);
+  const [failWithdraw, setFailWithdraw] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,20 +27,25 @@ export const Withdraw = () => {
   };
   const closeModal = () => {
     setIsModalOpen(false);
+    setRealWithdraw(false);
+    setFailWithdraw(false);
   };
 
-  const realWithdrawTrue = () => {
-    setRealWithdraw(true);
+  const onWithDraw = () => {
+    apiRequestPost("/user/withdraw", { nickname }).then((res) => {
+      if (res) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setRealWithdraw(true);
+      } else {
+        setFailWithdraw(true);
+      }
+    });
   };
 
   const withdrawEnd = () => {
     navigate("/login");
   };
-
-  useEffect(() => {
-    const nicknameGot = localStorage.getItem("nickname") as string;
-    setNickname(nicknameGot);
-  });
 
   return (
     <S.Container>
@@ -45,9 +54,7 @@ export const Withdraw = () => {
           <S.ModalContainer>
             <S.ModalText>정말 탈퇴하시겠습니까?</S.ModalText>
             <S.ModalButtonContainer>
-              <S.ModalLeftButton onClick={realWithdrawTrue}>
-                탈퇴
-              </S.ModalLeftButton>
+              <S.ModalLeftButton onClick={onWithDraw}>탈퇴</S.ModalLeftButton>
               <S.ModalRightButton onClick={closeModal}>취소</S.ModalRightButton>
             </S.ModalButtonContainer>
           </S.ModalContainer>
@@ -59,6 +66,16 @@ export const Withdraw = () => {
             <S.ModalText>탈퇴가 완료되었습니다</S.ModalText>
             <S.ModalButtonContainer>
               <S.ModalFullButton onClick={withdrawEnd}>확인</S.ModalFullButton>
+            </S.ModalButtonContainer>
+          </S.ModalContainer>
+        </S.StyledModal>
+      )}
+      {isModalOpen && failWithdraw && (
+        <S.StyledModal open={isModalOpen}>
+          <S.ModalContainer>
+            <S.ModalText>탈퇴에 실패했습니다</S.ModalText>
+            <S.ModalButtonContainer>
+              <S.ModalFullButton onClick={closeModal}>확인</S.ModalFullButton>
             </S.ModalButtonContainer>
           </S.ModalContainer>
         </S.StyledModal>

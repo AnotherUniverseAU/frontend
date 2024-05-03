@@ -716,6 +716,7 @@ export const ChatRoom = (): JSX.Element => {
 
     //replyTutorial가 보여진 적 없으면 답장 튜토리얼 보여줌
     if (isTuto) {
+      sizeRef.current?.focus();
       const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
       if (!replyTutorialShown) {
         setShowReplyTutorial(true);
