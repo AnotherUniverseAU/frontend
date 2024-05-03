@@ -82,6 +82,7 @@ export const ImageContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 `;
 
 export const ImageInfo = styled.div`
@@ -117,9 +118,25 @@ export const ImageLabel = styled.label`
     color: #a0a0a0;
     border-radius: 1rem;
     padding: 1rem 4vw;
-    margin: 0.1rem 0 0.8rem;
+    margin: 1rem 0 0.8rem;
     display: flex;
     align-items: center;
+`;
+
+export const DeleteButton = styled.div`
+    width: 4rem;
+    height: 1.8rem;
+    background-color: #6d2fef;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+
+    color: white;
+    position: absolute;
+    top: 0.5rem;
+    right: 9rem;
 `;
 
 export const ImageInput = styled.input`
