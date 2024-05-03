@@ -32,8 +32,12 @@ export const Withdraw = () => {
   };
 
   const onWithDraw = () => {
-    apiRequestPost("/user/withdraw", { nickname }).then((res) => {
-      if (res && res.result === "success") {
+    apiRequestPost("/user/withdraw", {
+      cancelType: selectedOption,
+      reason: complain,
+      nickname,
+    }).then((res) => {
+      if (res && res.msg === "deleted") {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         setRealWithdraw(true);
