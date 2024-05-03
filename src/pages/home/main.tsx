@@ -92,13 +92,15 @@ export const Main: React.FC = () => {
 
   useEffect(() => {
     if (isTutorial === true) {
-      const currentImg = tutoImgRef.current;
-      const currentText = tutoTextRef.current;
-      if (currentImg && currentText) {
-        const { width } = currentText.getBoundingClientRect();
-        const { top, left } = currentImg.getBoundingClientRect();
-        setTutorialPosition([top, left - width]);
-      }
+      setTimeout(() => {
+        const currentImg = tutoImgRef.current;
+        const currentText = tutoTextRef.current;
+        if (currentImg && currentText) {
+          const { width } = currentText.getBoundingClientRect();
+          const { top, left } = currentImg.getBoundingClientRect();
+          setTutorialPosition([top, left - width]);
+        }
+      }, 100);
     }
   }, [isTutorial]);
 
