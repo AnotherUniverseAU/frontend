@@ -1,4 +1,4 @@
-import * as S from 'src/styles/home/complaint';
+import * as S from 'src/styles/home/complain.ts';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BackHeader } from 'src/components/header/back/backHeader.tsx';
@@ -8,16 +8,15 @@ import { StyledInput } from 'src/components/styledInput/styledInput.tsx';
 
 import { apiRequestPost } from 'src/apis/apiRequestPost';
 
-export const Complaint = () => {
+export const Complain = () => {
     const params = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    // const nickname = location.state.nickname;
 
-    const [complaint, setComplaint] = useState('');
+    const [complain, setcomplain] = useState('');
 
     const nicknameEditRequest = async () => {
-        // await apiRequestPost(`/complaint/${params.id}`, { complaint: complaint });
+        // await apiRequestPost(`/complain/${params.id}`, { complain: complain });
         navigate(`/detail/${params.id}`);
     };
 
@@ -28,8 +27,8 @@ export const Complaint = () => {
                 <S.Info>캐릭터의 신고 사유를 입력해주세요.</S.Info>
                 <StyledInput
                     placeholder="신고 사유를 입력해주세요"
-                    content={complaint}
-                    setContent={setComplaint}
+                    content={complain}
+                    setContent={setcomplain}
                     limit={200}
                     height="10rem"
                     marginTop="2rem"

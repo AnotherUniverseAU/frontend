@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { ReactComponent as CreatorImgComponent } from 'src/assets/img/CreatorImg.svg';
-import { ReactComponent as ComlaintButton } from 'src/assets/img/complaintButton.svg';
+import { ReactComponent as ComlaintButton } from 'src/assets/img/complainButton.svg';
 
 export const Container = styled.div`
     width: 100vw;
@@ -126,7 +126,7 @@ export const ContributorButton = styled.span`
     margin: 0.3rem 0.2rem;
 `;
 
-export const ComplaintButton = styled(ComlaintButton)`
+export const complainButton = styled(ComlaintButton)`
     width: 1.3rem;
     height: 1.3rem;
     position: absolute;

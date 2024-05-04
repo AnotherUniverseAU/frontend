@@ -67,7 +67,7 @@ export const Detail = () => {
                                 </div>
                                 <div style={{ width: '100%', height: '30%' }}></div>
                             </S.MainTitle>
-                            <S.ComplaintButton onClick={() => navigate(`/complaint/${params.id}`)} />
+                            <S.complainButton onClick={() => navigate(`/complain/${params.id}`)} />
                         </S.MainInfo>
                     </S.MainContainer>
                     <S.ContentContainer>

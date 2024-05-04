@@ -21,7 +21,7 @@ import { TokenTest } from 'src/pages/tokentest.tsx';
 import { Loading } from 'src/pages/setting/loading.tsx';
 import { EachNicknameEdit } from 'src/pages/chat/eachNicknameEdit.tsx';
 import { Admin } from 'src/pages/home/admin.tsx';
-import { Complaint } from 'src/pages/home/complaint.tsx';
+import { Complain } from 'src/pages/home/complain.tsx';
 // import { Error } from "src/pages/join/error.tsx";
 
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -119,7 +119,7 @@ const RouterInfo: RouterItem[] = [
         withAuthorization: true,
     },
     { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: true },
-    { path: '/complaint/:id', element: <Complaint />, withAuthorization: false },
+    { path: '/complain/:id', element: <Complain />, withAuthorization: false },
     // { path: "/error", element: <Error />, withAuthorization: false },
 ];
 
