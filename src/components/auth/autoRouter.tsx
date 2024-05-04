@@ -21,6 +21,7 @@ import { TokenTest } from 'src/pages/tokentest.tsx';
 import { Loading } from 'src/pages/setting/loading.tsx';
 import { EachNicknameEdit } from 'src/pages/chat/eachNicknameEdit.tsx';
 import { Admin } from 'src/pages/home/admin.tsx';
+import { Complaint } from 'src/pages/home/complaint.tsx';
 // import { Error } from "src/pages/join/error.tsx";
 
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -96,8 +97,8 @@ const RouterInfo: RouterItem[] = [
         withAuthorization: true,
     },
     { path: '/create', element: <Create />, withAuthorization: true },
-    { path: '/detail/:id', element: <Detail />, withAuthorization: true },
-    { path: '/profile', element: <Profile />, withAuthorization: true },
+    { path: '/detail/:id', element: <Detail />, withAuthorization: false },
+    { path: '/profile', element: <Profile />, withAuthorization: false },
     { path: '/nicknameEdit', element: <NicknameEdit />, withAuthorization: true },
     { path: '/notification', element: <Notification />, withAuthorization: true },
     { path: '/notice', element: <Notice />, withAuthorization: true },
@@ -111,13 +112,14 @@ const RouterInfo: RouterItem[] = [
         withAuthorization: true,
     },
     { path: '/au_admin_2023', element: <Admin />, withAuthorization: true },
-    { path: '/', element: <Main />, withAuthorization: true },
+    { path: '/', element: <Main />, withAuthorization: false },
     {
         path: '/noticeDetail',
         element: <NoticeDetail />,
         withAuthorization: true,
     },
     { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: true },
+    { path: '/complaint/:id', element: <Complaint />, withAuthorization: false },
     // { path: "/error", element: <Error />, withAuthorization: false },
 ];
 
