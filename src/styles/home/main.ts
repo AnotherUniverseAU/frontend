@@ -77,19 +77,13 @@ export const TutorialContainer = styled.div`
   z-index: 50;
 `;
 
-export const TutorialTextContainer = styled.div<{
-  $top?: number;
-  $left?: number;
-}>`
+export const TutorialTextContainer = styled.div`
   width: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-
-  position: absolute;
-  top: ${(props) => (props.$top ? String(props.$top) + "px" : "0")};
-  left: ${(props) => (props.$left ? String(props.$left) + "px" : "0")};
+  margin-top: 1.5rem;
+  margin-right: 0.75rem;
 `;
 
 export const TutorialText = styled.div`
@@ -116,31 +110,40 @@ export const TutorialButton = styled.div`
 
 export const VirtualHeader = styled.div`
   width: 100vw;
-  height: 5rem;
   z-index: 99;
-  position: absolute;
   display: flex;
 `;
 export const VirtualLeft = styled.div`
-  width: 80%;
+  width: 20%;
   height: 100%;
+`;
+export const VirtualMiddle = styled.div`
+  width: 60%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: start;
 `;
 export const VirtualRight = styled.div`
   width: 20%;
   height: 100%;
-  padding: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const CircleImg = styled.img`
-  width: 6rem;
-  height: 3rem;
-  position: relative;
-  right: 3rem;
+  width: 120%;
+  height: 60%;
+  position: absolute;
+  right: 20%;
+  // top: 50%; /* 버튼의 높이에 따라 조정 가능 */
+  // right: 50%; /* 버튼의 너비에 따라 조정 가능 */
+  // transform: translate(-50%, -50%); /* 이미지를 정확히 중앙에 위치시키기 위해 */
 `;
 export const CreateImg = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
-  position: absolute;
-  margin-left: 0.75rem;
-  margin-top: 0.75rem;
+  width: 33%;
+  height: 33%;
 `;

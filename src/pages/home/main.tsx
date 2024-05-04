@@ -9,13 +9,10 @@ import { IconFooter } from "src/components/footer//icon/iconFooter.tsx";
 import { Loading } from "src/pages/setting/loading.tsx";
 
 import { apiRequestGet } from "src/apis/apiRequestGet";
-import axios from "axios";
-import { apiRequestPost } from "src/apis/apiRequestPost";
 import {
   BackgroundLower,
   BackgroundUpper,
 } from "src/components/background/background";
-import { filter } from "lodash";
 
 const circleWhiteImg =
   require("src/components/header/main/circleWhiteImg.png") as string;
@@ -23,9 +20,6 @@ const createWhiteImg =
   require("src/components/header/main/createWhiteImg.png") as string;
 
 export const Main: React.FC = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const [isTutorial, setIsTutorial] = useState<boolean>(false);
 
   const [characters, setCharacters] = useState<any[]>([]);
@@ -37,9 +31,6 @@ export const Main: React.FC = () => {
   const [tutorialPosition, setTutorialPosition] = useState([0, 0]);
 
   const [loading, setLoading] = useState<boolean>(true);
-
-  const tutoImgRef = useRef<HTMLImageElement>(null);
-  const tutoTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // async function requestSafetyArea() {
@@ -90,56 +81,34 @@ export const Main: React.FC = () => {
     }
   }, [characters, selectedGenre]);
 
-  useEffect(() => {
-    if (isTutorial === true) {
-      setTimeout(() => {
-        const currentImg = tutoImgRef.current;
-        const currentText = tutoTextRef.current;
-        if (currentImg && currentText) {
-          const { width } = currentText.getBoundingClientRect();
-          const { top, left } = currentImg.getBoundingClientRect();
-          setTutorialPosition([top, left - width]);
-        }
-      }, 100);
-    }
-  }, [isTutorial]);
-
   return (
     <>
       {!loading ? (
         <S.Container style={{ overflow: isTutorial ? "hidden" : "scroll" }}>
           {isTutorial && (
             <S.TutorialContainer>
-              <S.TutorialTextContainer
-                ref={tutoTextRef}
-                $top={tutorialPosition[0]}
-                $left={tutorialPosition[1]}
-              >
-                <S.TutorialText>원하는 AI 캐릭터를</S.TutorialText>
-                <S.TutorialText>직접 만들 수 있어요!</S.TutorialText>
-                <S.TutorialButton
-                  onClick={() => {
-                    setIsTutorial(false);
-                    localStorage.setItem("isMainTutoShown", "true");
-                  }}
-                >
-                  OK
-                </S.TutorialButton>
-              </S.TutorialTextContainer>
+              <S.VirtualHeader className="header">
+                <S.VirtualLeft />
+                <S.VirtualMiddle>
+                  <S.TutorialTextContainer>
+                    <S.TutorialText>원하는 AI 캐릭터를</S.TutorialText>
+                    <S.TutorialText>직접 만들 수 있어요!</S.TutorialText>
+                    <S.TutorialButton
+                      onClick={() => {
+                        setIsTutorial(false);
+                        localStorage.setItem("isMainTutoShown", "true");
+                      }}
+                    >
+                      OK
+                    </S.TutorialButton>
+                  </S.TutorialTextContainer>
+                </S.VirtualMiddle>
+                <S.VirtualRight>
+                  <S.CreateImg src={createWhiteImg} alt="createImg" />
+                  <S.CircleImg src={circleWhiteImg} alt="circle White Img" />
+                </S.VirtualRight>
+              </S.VirtualHeader>
             </S.TutorialContainer>
-          )}
-          {isTutorial && (
-            <S.VirtualHeader className="header">
-              <S.VirtualLeft />
-              <S.VirtualRight>
-                <S.CreateImg src={createWhiteImg} alt="createImg" />
-                <S.CircleImg
-                  ref={tutoImgRef}
-                  src={circleWhiteImg}
-                  alt="circle White Img"
-                />
-              </S.VirtualRight>
-            </S.VirtualHeader>
           )}
           <MainHeader toCreate={true} isTutorial={isTutorial} />
           <S.SubContainer className="container">

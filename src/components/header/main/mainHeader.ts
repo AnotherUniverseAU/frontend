@@ -28,14 +28,14 @@ export const StyledLink = styled(Link)`
 
 export const CreateContainer = styled.div`
   position: relative;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 33.3%;
+  height: 33.3%;
   z-index: 99;
 `;
 
 export const ImgLogo = styled.img`
-  width: 1.965rem;
-  height: 1.5rem;
+  width: 43.623%;
+  height: 33.3%;
 `;
 
 export const TextLogo = styled.img`
