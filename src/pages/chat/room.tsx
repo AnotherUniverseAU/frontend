@@ -179,6 +179,8 @@ export const ChatRoom = (): JSX.Element => {
   // 유저 맨 위 스크롤할 때 로딩창 생기게 하기
   //처음 마운팅될 때 chatTutorial이 보여진 적 없으면 보여줌
   useEffect(() => {
+    const nowTime = new Date(new Date().getTime()).toISOString();
+    console.log(nowTime);
     // 캐릭터 정보 api콜 보내서 가져오기
     const getCharInfo = async function () {
       const res = await apiRequestGet(`character/info/${id}`);
@@ -186,7 +188,6 @@ export const ChatRoom = (): JSX.Element => {
       setProfileImageUrl(res.character.profilePicUrl);
     };
     getCharInfo();
-    const nowTime = new Date(new Date().getTime()).toISOString();
     setFirstTime(nowTime);
 
     const getFirstChat = async function () {
