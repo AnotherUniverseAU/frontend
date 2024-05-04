@@ -16,7 +16,7 @@ export const Complain = () => {
     const [complain, setcomplain] = useState('');
 
     const nicknameEditRequest = async () => {
-        // await apiRequestPost(`/complain/${params.id}`, { complain: complain });
+        await apiRequestPost(`/character/complain/${params.id}`, { complain: complain });
         navigate(`/detail/${params.id}`);
     };
 
