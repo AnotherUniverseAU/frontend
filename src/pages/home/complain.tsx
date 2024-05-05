@@ -13,10 +13,10 @@ export const Complain = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [complain, setcomplain] = useState('');
+    const [complaintment, setComplaintment] = useState('');
 
     const nicknameEditRequest = async () => {
-        await apiRequestPost(`/character/complain/${params.id}`, { complain: complain });
+        await apiRequestPost(`/character/complain/${params.id}`, { complaintment: complaintment });
         navigate(`/detail/${params.id}`);
     };
 
@@ -27,8 +27,8 @@ export const Complain = () => {
                 <S.Info>캐릭터의 신고 사유를 입력해주세요.</S.Info>
                 <StyledInput
                     placeholder="신고 사유를 입력해주세요"
-                    content={complain}
-                    setContent={setcomplain}
+                    content={complaintment}
+                    setContent={setComplaintment}
                     limit={200}
                     height="10rem"
                     marginTop="2rem"
