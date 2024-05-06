@@ -2,9 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled(Link)`
-  width: 22vw;
-  height: 7.5rem;
-  padding: 1.5vh 3vw;
+  width: 100%;
 
   position: relative;
 
@@ -19,9 +17,9 @@ export const Container = styled(Link)`
 
 export const BackgroundImage = styled.img`
   width: 28vw;
-  height: calc(7.5rem + 3vh);
+  // height: calc(7.5rem + 3vh);
 
-  position: absolute;
+  // position: absolute;
   top: 0;
   left: 0;
   border-radius: 1rem;
@@ -31,8 +29,7 @@ export const BackgroundImage = styled.img`
 
 export const ShadowImage = styled.div`
   width: 28vw;
-  height: calc(7.5rem + 3vh);
-
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -68,6 +65,9 @@ export const SubContainer = styled.div`
 export const NameDiv = styled.div`
   display: flex;
   width: 100%;
+  position: absolute;
+  padding-left: 10%;
+  padding-bottom: 10%;
 `;
 
 export const Name = styled.p`

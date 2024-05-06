@@ -58,7 +58,7 @@ export const ImageContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 90vw;
 `;

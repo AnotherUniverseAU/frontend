@@ -24,9 +24,9 @@ const StyledP = styled.p`
   padding: 0.5vw;
 `;
 
-export const Admin = () => {
+export const SendMessage = () => {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [characterList, setCharacterList] = useState([]);
+  const [userList, setUserList] = useState([]);
   const charIdRef = useRef<HTMLSelectElement>(null);
   const DateRef = useRef<HTMLInputElement>(null);
   const [characterChats, setCharacterChats] = useState<any>([]);
@@ -51,11 +51,7 @@ export const Admin = () => {
   }, []);
   useEffect(() => {
     if (isAdmin) {
-      const getCharList = async () => {
-        const res: any = await apiRequestGet("/character/list");
-        setCharacterList(res.characters);
-      };
-      getCharList();
+      return;
     }
   }, [isAdmin]);
 
@@ -148,15 +144,6 @@ export const Admin = () => {
       {isAdmin ? (
         <>
           <div>
-            <select ref={charIdRef}>
-              {characterList.map((char: any, idx: number) => {
-                return (
-                  <option key={idx} value={char.characterId}>
-                    {char.name}
-                  </option>
-                );
-              })}
-            </select>
             <input
               ref={DateRef}
               onChange={onChange}
@@ -166,6 +153,7 @@ export const Admin = () => {
               max="2024-06-30"
               value={timeValue}
             ></input>
+            <input type=""></input>
             {/* <input
             ref={timeRef}
             type="time"
