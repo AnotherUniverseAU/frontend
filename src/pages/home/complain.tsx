@@ -22,7 +22,7 @@ export const Complain = () => {
 
     return (
         <S.Container>
-            <BackHeader route="/profile" type="each" title="신고하기" />
+            <BackHeader type="each" title="신고하기" />
             <S.InfoContainer className="container">
                 <S.Info>캐릭터의 신고 사유를 입력해주세요.</S.Info>
                 <StyledInput

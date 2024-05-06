@@ -127,8 +127,8 @@ export const ContributorButton = styled.span`
 `;
 
 export const complainButton = styled(ComlaintButton)`
-    width: 1.3rem;
-    height: 1.3rem;
+    width: 1.1rem;
+    height: 1.1rem;
     position: absolute;
     right: 1.5rem;
 `;
