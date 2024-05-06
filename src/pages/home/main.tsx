@@ -10,8 +10,6 @@ import { Loading } from 'src/pages/setting/loading.tsx';
 
 import { apiRequestGet } from 'src/apis/apiRequestGet';
 import { BackgroundLower, BackgroundUpper } from 'src/components/background/background';
-import { ReactComponent as CircleWhiteImg } from 'src/components/header/main/circleWhiteImg.svg';
-import { ReactComponent as CreateWhiteImg } from 'src/components/header/main/createWhiteImg.svg';
 
 export const Main: React.FC = () => {
     const [isTutorial, setIsTutorial] = useState<boolean>(false);
@@ -96,8 +94,8 @@ export const Main: React.FC = () => {
                                     </S.TutorialTextContainer>
                                 </S.VirtualMiddle>
                                 <S.VirtualRight>
-                                    <CreateWhiteImg />
-                                    <CircleWhiteImg />
+                                    <S.CreateWhiteImg />
+                                    <S.CircleWhiteImg />
                                 </S.VirtualRight>
                             </S.VirtualHeader>
                         </S.TutorialContainer>

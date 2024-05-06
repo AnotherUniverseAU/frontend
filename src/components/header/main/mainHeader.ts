@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { ReactComponent as Img } from 'src/components/header/main/imgLogo.svg';
+import { ReactComponent as Text } from 'src/components/header/main/textLogo.svg';
+import { ReactComponent as CreatePurple } from 'src/components/header/main/createPurpleImg.svg';
+
 export const HeaderContainer = styled.div`
     width: 100%;
 
@@ -33,16 +37,16 @@ export const CreateContainer = styled.div`
     z-index: 99;
 `;
 
-export const ImgLogo = styled.img`
+export const ImgLogo = styled(Img)`
     width: 43.623%;
     height: 33.3%;
 `;
 
-export const TextLogo = styled.svg`
+export const TextLogo = styled(Text)`
     width: auto;
 `;
 
-export const CreateImg = styled.img`
+export const CreatePurpleImg = styled(CreatePurple)`
     width: 1.5rem;
     height: 1.5rem;
 `;
