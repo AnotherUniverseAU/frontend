@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled(Link)`
-  width: 100%;
+  width: 28vw;
 
   position: relative;
 
@@ -11,12 +11,15 @@ export const Container = styled(Link)`
   justify-content: flex-end;
   align-items: center;
   border-radius: 1rem;
+  margin-right: 2vw;
+  margin-bottom: 2vh;
 
   box-shadow: inset 0 -3rem 3rem rgba(0, 0, 0, 0.3);
 `;
 
 export const BackgroundImage = styled.img`
   width: 28vw;
+  margin
   // height: calc(7.5rem + 3vh);
 
   // position: absolute;

@@ -58,13 +58,13 @@ export const ImageContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   width: 90vw;
 `;
 
 export const StyledImageMargin = styled.div`
-  margin: 0.3rem 0.15rem;
+  // margin: 0.3rem 0.15rem;
 `;
 
 export const TutorialContainer = styled.div`
