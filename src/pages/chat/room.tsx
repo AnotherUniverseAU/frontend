@@ -309,11 +309,13 @@ export const ChatRoom = (): JSX.Element => {
       if (res.characterChats.length === 0 && res.userReplies.length === 0) {
         // 마지막 채팅
         setIsLastChat(true);
-        setChatMessages([...helloMessages, ...chatMessages]);
+        if (!isHelloShown) {
+          setChatMessages([...helloMessages, ...chatMessages]);
+          // 헬로우 더 안가져오기
+          setIsHelloShown(true);
+        }
         // 맨 아래로 옮겨주기 위함
         setIsFirst(false);
-        // 헬로우 더 안가져오기
-        setIsHelloShown(true);
         // 히스토리 더 없으므로 스크롤 막아줌
         setIsScrollTrigger(false);
       } else {
