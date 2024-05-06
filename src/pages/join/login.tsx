@@ -4,7 +4,7 @@ import kakaoIcon from 'src/assets/img/kakaoIcon.png';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { ReactComponent as PurpleLogo } from 'src/assets/img/PurpleLogo.svg';
+
 export const Login = () => {
     const navigate = useNavigate();
     useEffect(() => {
@@ -51,7 +51,7 @@ export const Login = () => {
     return (
         <S.Container>
             {/* <S.Logo src={purpleLogo} alt="au logo" /> */}
-            <PurpleLogo />
+            <S.Logo />
             <S.TopInfoWrapper>
                 <S.TopInfo>간편하게 로그인하고</S.TopInfo>
                 <S.TopInfo>다양한 서비스를 이용해보세요</S.TopInfo>

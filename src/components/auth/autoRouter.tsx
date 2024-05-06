@@ -112,14 +112,14 @@ const RouterInfo: RouterItem[] = [
         withAuthorization: true,
     },
     { path: '/au_admin_2023', element: <Admin />, withAuthorization: true },
-    { path: '/', element: <Main />, withAuthorization: true },
+    { path: '/', element: <Main />, withAuthorization: false },
     {
         path: '/noticeDetail',
         element: <NoticeDetail />,
         withAuthorization: true,
     },
     { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: true },
-    { path: '/complain/:id', element: <Complain />, withAuthorization: false },
+    { path: '/complain/:id', element: <Complain />, withAuthorization: true },
     // { path: "/error", element: <Error />, withAuthorization: false },
 ];
 
