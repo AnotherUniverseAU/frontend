@@ -57,12 +57,13 @@ export const StyledButton = styled.span<{ active: boolean }>`
     transition: all 0.3s ease-in-out;
 `;
 export const ImageContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    width: 90vw;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
 `;
 
 export const StyledImageMargin = styled.div`
