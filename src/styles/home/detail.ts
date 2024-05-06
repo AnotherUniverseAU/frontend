@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { ReactComponent as CreatorImgComponent } from 'src/assets/img/CreatorImg.svg';
-import { ReactComponent as ComlaintButton } from 'src/assets/img/complainButton.svg';
+import { ReactComponent as ComlaintButton } from 'src/assets/img/complaintButton.svg';
 
 export const Container = styled.div`
     width: 100vw;
