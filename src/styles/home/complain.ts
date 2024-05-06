@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     width: 100vw;
-    height: 40rem;
+    height: auto;
+    overflow-y: hidden;
 `;
 
 export const InfoContainer = styled.div`
