@@ -1,4 +1,4 @@
-import React, { ReactEventHandler } from "react";
+import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
