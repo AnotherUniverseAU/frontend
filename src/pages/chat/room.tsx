@@ -12,7 +12,6 @@ import { escapeHtml, decodeHtml } from "src/pages/chat/alterHtml";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import { apiRequestPost } from "src/apis/apiRequestPost";
 
-import { getNewToken } from "../../apis/getNewToken";
 import { Loading } from "../setting/loading";
 import { BackgroundFull } from "src/components/background/background";
 
