@@ -26,6 +26,10 @@ export const ContributeInfo = () => {
                     <ListTitle listNumber={2} listText="등록 반려 사유" textColor="black" />
                     <S.ListContent>캐릭터/작품/이미지 정보가 불충분 할 경우</S.ListContent>
                 </S.ListContainer>
+                <S.AdditionalInfo>부적절하거나 불쾌감을 줄 수 있는 컨텐츠는 제재를 받을 수 있습니다.</S.AdditionalInfo>
+                <S.AdditionalInfo>
+                    타당한 사유로 3회 이상 신고를 받은 유저는 캐릭터를 만들 수 없습니다.
+                </S.AdditionalInfo>
                 <S.ListContainer>
                     <ListTitle listNumber={3} listText="등록 심사 결과" textColor="black" />
                     <S.ListContent>등록 심사 통과 시 채팅 추가 화면에</S.ListContent>

@@ -26,7 +26,8 @@ export const Complain = () => {
             <S.InfoContainer className="container">
                 <S.Info>캐릭터의 신고 사유를 입력해주세요.</S.Info>
                 <StyledInput
-                    placeholder="신고 사유를 입력해주세요"
+                    placeholder="이용자의 신고 내용에 따라 위 캐릭터,
+                    혹은 캐릭터의 메시지가 삭제될 수 있습니다."
                     content={complainment}
                     setContent={setComplainment}
                     limit={200}

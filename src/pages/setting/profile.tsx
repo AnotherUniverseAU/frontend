@@ -83,7 +83,7 @@ export const Profile = () => {
                             style={{ borderRadius: '0.5rem 0.5rem 0 0' }}
                         />
                         <NavItem
-                            text={'문의하기'}
+                            text={'문의/신고'}
                             onClick={() => handleCSOpen()}
                             style={{
                                 marginBottom: '1rem',
