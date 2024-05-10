@@ -1,8 +1,6 @@
 import * as S from 'src/styles/join/login.ts';
-import purpleLogo from 'src/assets/img/purpleLogo.png';
-import kakaoIcon from 'src/assets/img/kakaoIcon.png';
-import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 export const Login = () => {
@@ -79,7 +77,7 @@ export const Login = () => {
             </S.TopInfoWrapper>
             <S.KakaoWrapper onClick={handleLogin}>
                 <S.KakaoImg />
-                <S.KakaoText>카카오로 시작하기</S.KakaoText>
+                <S.KakaoText>Kakao로 로그인</S.KakaoText>
             </S.KakaoWrapper>
 
             <S.AppleWrapper onClick={loginWithApple}>

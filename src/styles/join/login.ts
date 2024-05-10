@@ -82,8 +82,8 @@ export const KakaoText = styled.div`
 //     margin-left: 0.5rem;
 // `;
 export const AppleWrapper = styled.div`
-    background-color: white; // 흰색 배경 사용
-    border: 1px solid black; // 검은색 테두리 적용
+    background-color: white;
+    border: 1px solid black;
     width: 80%;
     display: flex;
     flex-direction: row;
@@ -95,9 +95,12 @@ export const AppleWrapper = styled.div`
 `;
 
 export const AppleImg = styled(AppleIconSvg)`
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const AppleText = styled.div`
