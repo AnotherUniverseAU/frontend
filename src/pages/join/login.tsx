@@ -31,6 +31,7 @@ export const Login = () => {
 
         const kakaoOauthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
         window.location.href = kakaoOauthUrl;
+        localStorage.setItem('loginType', 'kakao');
         // const getCode = async () => {
         //   const res = axios.get(kakaoOauthUrl);
         //   console.log(res);
@@ -48,6 +49,26 @@ export const Login = () => {
         // }, 3000);
     };
 
+    const loginWithApple = async (e: any) => {
+        e.preventDefault();
+        localStorage.setItem('loginType', 'apple');
+
+        console.log('sign in with apple');
+
+        (window as any).AppleID.auth.init({
+            clientId: 'net.azurestaticapps.kind-pebble-0020f5710.5',
+            redirectURI: 'https://kind-pebble-0020f5710.5.azurestaticapps.net/redirection',
+            usePopup: false,
+        });
+
+        try {
+            const res = await (window as any).AppleID.auth.signIn();
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <S.Container>
             {/* <S.Logo src={purpleLogo} alt="au logo" /> */}
@@ -57,9 +78,15 @@ export const Login = () => {
                 <S.TopInfo>다양한 서비스를 이용해보세요</S.TopInfo>
             </S.TopInfoWrapper>
             <S.KakaoWrapper onClick={handleLogin}>
-                <S.KakaoImg src={kakaoIcon} alt="kakao Icon" />
+                <S.KakaoImg />
                 <S.KakaoText>카카오로 시작하기</S.KakaoText>
             </S.KakaoWrapper>
+
+            <S.AppleWrapper onClick={loginWithApple}>
+                <S.AppleImg />
+                <S.AppleText>Apple로 로그인</S.AppleText>
+            </S.AppleWrapper>
+
             <S.BottomInfoWrapper>
                 <S.BottomInfo>계정 생성 시 개인정보 처리방침 및</S.BottomInfo>
                 <S.BottomInfo>이용약관에 동의하게 됩니다.</S.BottomInfo>
