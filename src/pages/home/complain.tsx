@@ -36,8 +36,8 @@ export const Complain = () => {
                 <ListTitle listNumber={1} listText="캐릭터를 차단하시겠습니까?" textColor="black" />
                 <S.BlockInfo>차단 시, 해당 캐릭터를 더 이상 앱에서 볼 수 없습니다.</S.BlockInfo>
                 <S.ButtonsContainer>
-                    <S.Button onClick={() => handleReject(true)}>예</S.Button>
                     <S.Button onClick={() => handleReject(false)}>아니오</S.Button>
+                    <S.Button onClick={() => handleReject(true)}>예</S.Button>
                 </S.ButtonsContainer>
                 <ListTitle listNumber={2} listText="캐릭터의 신고 사유를 입력해주세요" textColor="black" />
                 <StyledInput

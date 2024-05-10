@@ -40,7 +40,7 @@ export const KakaoWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 4rem 10% 0;
+    margin: 1rem 10% 0;
     padding: 1rem 0;
     border-radius: 1rem;
 `;
@@ -57,30 +57,6 @@ export const KakaoText = styled.div`
     margin-left: 0.5rem;
 `;
 
-// export const AppleWrapper = styled.div`
-//     background-color: white;
-//     border: 1px solid #bababa;
-//     width: 80%;
-//     display: flex;
-//     flex-direction: row;
-//     align-items: center;
-//     justify-content: center;
-//     margin: 4rem 10% 0;
-//     padding: 1rem 0;
-//     border-radius: 1rem;
-// `;
-
-// export const AppleImg = styled(AppleIconSvg)`
-//     width: 1.2rem;
-//     height: 1.2rem;
-// `;
-
-// export const AppleText = styled.div`
-//     font-size: 1rem;
-//     height: 1.2rem;
-//     color: #3c1e1e;
-//     margin-left: 0.5rem;
-// `;
 export const AppleWrapper = styled.div`
     background-color: white;
     border: 1px solid black;
@@ -89,7 +65,7 @@ export const AppleWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 1rem 10% 0;
+    margin: 4rem 10% 0;
     padding: 0.8rem 0;
     border-radius: 1rem;
 `;
