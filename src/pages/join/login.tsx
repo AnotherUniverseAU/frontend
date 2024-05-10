@@ -85,16 +85,14 @@ export const Login = () => {
                 <S.TopInfo>간편하게 로그인하고</S.TopInfo>
                 <S.TopInfo>다양한 서비스를 이용해보세요</S.TopInfo>
             </S.TopInfoWrapper>
-            <S.KakaoWrapper onClick={handleLogin}>
-                <S.KakaoImg />
-                <S.KakaoText>Kakao로 로그인</S.KakaoText>
-            </S.KakaoWrapper>
-
             <S.AppleWrapper onClick={loginWithApple}>
                 <S.AppleImg />
                 <S.AppleText>Apple로 로그인</S.AppleText>
             </S.AppleWrapper>
-
+            <S.KakaoWrapper onClick={handleLogin}>
+                <S.KakaoImg />
+                <S.KakaoText>Kakao로 로그인</S.KakaoText>
+            </S.KakaoWrapper>
             <S.BottomInfoWrapper>
                 <S.BottomInfo>계정 생성 시 개인정보 처리방침 및</S.BottomInfo>
                 <S.BottomInfo>이용약관에 동의하게 됩니다.</S.BottomInfo>
