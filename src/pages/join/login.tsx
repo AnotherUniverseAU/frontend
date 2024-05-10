@@ -72,7 +72,6 @@ export const Login = () => {
     const loginWithApple = async () => {
         localStorage.setItem('loginType', 'apple');
         const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
-        // const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&state=state&scope=name%20email`;
         window.location.href = appleOauthUrl;
     };
 
