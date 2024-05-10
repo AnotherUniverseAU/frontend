@@ -14,7 +14,6 @@ export const Redirection = () => {
         const getToken = async () => {
             const type = await localStorage.getItem('loginType');
             if (type === 'apple') {
-                alert('애플입니당당당당');
                 const code = params.get('code');
                 const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/oauth/apple`, {
                     code: code,
@@ -23,7 +22,6 @@ export const Redirection = () => {
                 await sendAccessTokenToApp(access_token);
                 return { access_token, refresh_token };
             } else {
-                alert('카카오입니당당당당');
                 const code = params.get('code');
 
                 const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/oauth/kakao`, {
