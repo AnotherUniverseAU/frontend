@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface ButtonProps {
+    isSelected: boolean | undefined;
+}
+
 export const Container = styled.div`
     width: 100vw;
     height: auto;
@@ -7,7 +11,7 @@ export const Container = styled.div`
 `;
 
 export const InfoContainer = styled.div`
-    padding-top: 4rem;
+    padding-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -33,21 +37,16 @@ export const ButtonsContainer = styled.div`
     margin: 1rem 0 1rem 8vw;
 `;
 
-export const Button = styled.div`
-    background-color: white;
-    border: 0.1rem solid #969696;
-    color: #969696;
+export const Button = styled.div<ButtonProps>`
+    background-color: ${(props) => (props.isSelected === true ? '#6d2fef' : 'white')};
+    border: 0.1rem solid ${(props) => (props.isSelected === true ? '#6d2fef' : '#969696')};
+    color: ${(props) => (props.isSelected === true ? 'white' : '#969696')};
     border-radius: 3rem;
     width: 5rem;
-    height: 2.2rem;
+    height: 2rem;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s;
-
-    &:hover {
-        background-color: #6d2fef;
-        color: white;
-        border: 0.1rem solid #6d2fef;
-    }
 `;

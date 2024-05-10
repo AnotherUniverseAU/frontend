@@ -15,7 +15,7 @@ export const Complain = () => {
     const navigate = useNavigate();
 
     const [complainment, setComplainment] = useState('');
-    const [isRejected, setIsRejected] = useState(false);
+    const [isRejected, setIsRejected] = useState<boolean | undefined>(undefined);
 
     const handleReject = (choice: boolean) => {
         setIsRejected(choice);
@@ -26,23 +26,29 @@ export const Complain = () => {
             idRejected: isRejected,
             complainment: complainment,
         });
-        navigate(`/detail/${params.id}`);
+        setTimeout(() => {
+            navigate(`/`);
+        }, 1500);
     };
 
     return (
         <S.Container>
-            <BackHeader type="each" title="신고하기" />
+            <BackHeader type="each" title="캐릭터 차단" />
             <S.InfoContainer className="container">
                 <ListTitle listNumber={1} listText="캐릭터를 차단하시겠습니까?" textColor="black" />
-                <S.BlockInfo>차단 시, 해당 캐릭터를 더 이상 앱에서 볼 수 없습니다.</S.BlockInfo>
+                <S.BlockInfo>차단 시, 해당 캐릭터를 앱에서 볼 수 없습니다.</S.BlockInfo>
                 <S.ButtonsContainer>
-                    <S.Button onClick={() => handleReject(false)}>아니오</S.Button>
-                    <S.Button onClick={() => handleReject(true)}>예</S.Button>
+                    <S.Button onClick={() => handleReject(false)} isSelected={!isRejected}>
+                        아니오
+                    </S.Button>
+                    <S.Button onClick={() => handleReject(true)} isSelected={isRejected}>
+                        예
+                    </S.Button>
                 </S.ButtonsContainer>
-                <ListTitle listNumber={2} listText="캐릭터의 신고 사유를 입력해주세요" textColor="black" />
+                <ListTitle listNumber={2} listText="차단 사유 (선택사항)" textColor="black" />
                 <StyledInput
-                    placeholder="이용자의 신고 내용에 따라 위 캐릭터,
-                    혹은 캐릭터의 메시지가 삭제될 수 있습니다."
+                    placeholder="신고 내용에 따라 해당 캐릭터가
+                    앱에서 영구 삭제될 수 있습니다."
                     content={complainment}
                     setContent={setComplainment}
                     limit={200}
@@ -50,7 +56,7 @@ export const Complain = () => {
                     marginTop="1rem"
                 />
             </S.InfoContainer>
-            <TextFooter route="/profile" text="신고하기" onClick={nicknameEditRequest} />
+            <TextFooter route="/" text="차단하기" onClick={nicknameEditRequest} />
         </S.Container>
     );
 };
