@@ -47,24 +47,33 @@ export const Login = () => {
         // }, 3000);
     };
 
-    const loginWithApple = async (e: any) => {
-        e.preventDefault();
+    // const loginWithApple = async (e: any) => {
+    //     e.preventDefault();
+    //     localStorage.setItem('loginType', 'apple');
+
+    //     console.log('sign in with apple');
+
+    //     (window as any).AppleID.auth.init({
+    //         responseType: 'code',
+    //         responseMode: 'query',
+    //         clientId: 'net.azurestaticapps.kind-pebble-0020f5710.5',
+    //         redirectURI: 'https://kind-pebble-0020f5710.5.azurestaticapps.net/redirection',
+    //         usePopup: false,
+    //     });
+
+    //     try {
+    //         const res = await (window as any).AppleID.auth.signIn();
+    //         console.log(res);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+
+    const loginWithApple = async () => {
         localStorage.setItem('loginType', 'apple');
-
-        console.log('sign in with apple');
-
-        (window as any).AppleID.auth.init({
-            clientId: 'net.azurestaticapps.kind-pebble-0020f5710.5',
-            redirectURI: 'https://kind-pebble-0020f5710.5.azurestaticapps.net/redirection',
-            usePopup: false,
-        });
-
-        try {
-            const res = await (window as any).AppleID.auth.signIn();
-            console.log(res);
-        } catch (error) {
-            console.log(error);
-        }
+        const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+        // const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&state=state&scope=name%20email`;
+        window.location.href = appleOauthUrl;
     };
 
     return (
