@@ -11,6 +11,9 @@ import { Loading } from 'src/pages/setting/loading.tsx';
 import { apiRequestGet } from 'src/apis/apiRequestGet';
 import { BackgroundLower, BackgroundUpper } from 'src/components/background/background';
 
+import { BlockedMainImage } from 'src/components/mainImage/blockedMainImage.tsx';
+import { BlockedStyledImage } from 'src/components/styledImage/blockedStyledImage.tsx';
+
 export const Main: React.FC = () => {
     const [isTutorial, setIsTutorial] = useState<boolean>(false);
 
@@ -19,8 +22,7 @@ export const Main: React.FC = () => {
 
     const [filteredCharacters, setFilteredCharacters] = useState<any[]>([]);
     const [selectedGenre, setSelectedGenre] = useState<string>('all');
-
-    const [tutorialPosition, setTutorialPosition] = useState([0, 0]);
+    const [blockedCharacter, setBlockedCharacter] = useState<any[]>([]);
 
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -57,8 +59,14 @@ export const Main: React.FC = () => {
             setMainCharacter(result.mainCharacter);
         };
 
+        const fetchBlockedCharacter = async () => {
+            const result = await apiRequestGet('user/reject-ids');
+            setBlockedCharacter(result.rejectedIds);
+        };
+
         fetchCharacters();
         fetchMainCharacter();
+        fetchBlockedCharacter();
     }, []);
 
     useEffect(() => {
@@ -103,13 +111,17 @@ export const Main: React.FC = () => {
                     <MainHeader toCreate={true} isTutorial={isTutorial} />
                     <S.SubContainer className="container">
                         <S.MainContainer>
-                            <MainImage
-                                route={`/detail/${mainCharacter?.characterId}`}
-                                imgurl={mainCharacter.mainImageUrl}
-                                name={mainCharacter.name}
-                                title={mainCharacter.title}
-                                creatorNickname={mainCharacter.creatorNickname}
-                            />
+                            {blockedCharacter.includes(mainCharacter.characterId) ? (
+                                <BlockedMainImage />
+                            ) : (
+                                <MainImage
+                                    route={`/detail/${mainCharacter.characterId}`}
+                                    imgurl={mainCharacter.mainImageUrl}
+                                    name={mainCharacter.name}
+                                    title={mainCharacter.title}
+                                    creatorNickname={mainCharacter.creatorNickname}
+                                />
+                            )}
                         </S.MainContainer>
                         <S.NavContainer>
                             <S.ButtonNav>
@@ -135,13 +147,17 @@ export const Main: React.FC = () => {
                             <S.ImageContainer>
                                 {filteredCharacters.map((character: any, index) => (
                                     <S.StyledImageMargin key={character.characterId}>
-                                        <StyledImage
-                                            route={`/detail/${character.characterId}`}
-                                            imgurl={character.coverImageUrl}
-                                            name={character.name}
-                                            title={character.title}
-                                            creatorNickname={character.creatorNickname}
-                                        />
+                                        {blockedCharacter.includes(character.characterId) ? (
+                                            <BlockedStyledImage />
+                                        ) : (
+                                            <StyledImage
+                                                route={`/detail/${character.characterId}`}
+                                                imgurl={character.coverImageUrl}
+                                                name={character.name}
+                                                title={character.title}
+                                                creatorNickname={character.creatorNickname}
+                                            />
+                                        )}
                                     </S.StyledImageMargin>
                                 ))}
                             </S.ImageContainer>

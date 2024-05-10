@@ -17,7 +17,7 @@ export const MainContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 0 1rem;
+    padding: 0.5rem 0 1rem;
     background-color: white;
 `;
 
@@ -57,21 +57,16 @@ export const StyledButton = styled.span<{ active: boolean }>`
     transition: all 0.3s ease-in-out;
 `;
 export const ImageContainer = styled.div`
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  // justify-content: space-between;
-  align-items: center;
-  width: 90vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // justify-content: space-between;
+    align-items: center;
+    width: 90vw;
 `;
 
 export const StyledImageMargin = styled.div`
-<<<<<<< HEAD
-  // margin: 0.3rem 0.15rem;
-=======
-    margin: 0.3rem 0.15rem;
->>>>>>> 366b21d30f6cd6fdc20a7500515cb282d1e817b2
+    // margin: 0.3rem 0.15rem;
 `;
 
 export const TutorialContainer = styled.div`
