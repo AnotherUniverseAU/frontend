@@ -98,7 +98,7 @@ const RouterInfo: RouterItem[] = [
         withAuthorization: true,
     },
     { path: '/create', element: <Create />, withAuthorization: true },
-    { path: '/detail/:id', element: <Detail />, withAuthorization: true },
+    { path: '/detail/:id', element: <Detail />, withAuthorization: false },
     { path: '/profile', element: <Profile />, withAuthorization: true },
     { path: '/nicknameEdit', element: <NicknameEdit />, withAuthorization: true },
     { path: '/notification', element: <Notification />, withAuthorization: true },
@@ -114,14 +114,14 @@ const RouterInfo: RouterItem[] = [
     },
     { path: '/au_admin_2023', element: <Admin />, withAuthorization: true },
     { path: '/au_admin_send', element: <SendMessage />, withAuthorization: true },
-    { path: '/', element: <Main />, withAuthorization: true },
+    { path: '/', element: <Main />, withAuthorization: false },
     {
         path: '/noticeDetail',
         element: <NoticeDetail />,
         withAuthorization: true,
     },
     { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: true },
-    { path: '/complain/:id', element: <Complain />, withAuthorization: true },
+    { path: '/complain/:id', element: <Complain />, withAuthorization: false },
 ];
 
 const AutoRouter = (refreshToken: any) => {
