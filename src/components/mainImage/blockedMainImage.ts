@@ -18,7 +18,8 @@ export const Container = styled.div`
 export const BlockedText = styled.div`
     width: 75vw;
     color: #bababa;
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
+    font-size: 4.5vw;
     font-weight: 500;
     display: flex;
     flex-direction: row;
