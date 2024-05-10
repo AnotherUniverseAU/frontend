@@ -71,7 +71,9 @@ export const Login = () => {
 
     const loginWithApple = async () => {
         localStorage.setItem('loginType', 'apple');
-        const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+        // const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+        const appleOauthUrl =
+            'https://appleid.apple.com/auth/authorize?response_type=code&client_id=net.azurestaticapps.kind-pebble-0020f5710.5&redirect_uri=https://kind-pebble-0020f5710.5.azurestaticapps.net/redirection';
         window.location.href = appleOauthUrl;
     };
 
