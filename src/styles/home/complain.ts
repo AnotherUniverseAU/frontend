@@ -33,9 +33,10 @@ export const ButtonsContainer = styled.div`
     margin: 1rem 0 1rem 8vw;
 `;
 
-export const Button = styled.button`
+export const Button = styled.div`
     background-color: white;
-    border: 0.1rem solid #737373;
+    border: 0.1rem solid #969696;
+    color: #969696;
     border-radius: 3rem;
     width: 5rem;
     height: 2.2rem;
@@ -45,7 +46,8 @@ export const Button = styled.button`
     transition: background-color 0.3s;
 
     &:hover {
-        color: #6d2fef;
+        background-color: #6d2fef;
+        color: white;
         border: 0.1rem solid #6d2fef;
     }
 `;
