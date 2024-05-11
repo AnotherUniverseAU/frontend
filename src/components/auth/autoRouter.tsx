@@ -47,27 +47,67 @@ const Authorization = ({ redirectTo, children }: AuthorizationProps) => {
     }
 };
 
+// const RouterInfo: RouterItem[] = [
+//     { path: '/landing', element: <Landing />, withAuthorization: true },
+//     { path: '/login', element: <Login />, withAuthorization: false },
+//     { path: '/redirection', element: <Redirection />, withAuthorization: false },
+//     // { path: "/permission", element: <Permission />, withAuthorization: true },
+//     { path: '/nickname', element: <Nickname />, withAuthorization: true },
+//     { path: '/createInfo', element: <CreateInfo />, withAuthorization: true },
+//     {
+//         path: '/contributeInfo',
+//         element: <ContributeInfo />,
+//         withAuthorization: true,
+//     },
+//     { path: '/create', element: <Create />, withAuthorization: true },
+//     { path: '/detail/:id', element: <Detail />, withAuthorization: true },
+//     { path: '/profile', element: <Profile />, withAuthorization: true },
+//     { path: '/nicknameEdit', element: <NicknameEdit />, withAuthorization: true },
+//     { path: '/notification', element: <Notification />, withAuthorization: true },
+//     { path: '/notice', element: <Notice />, withAuthorization: true },
+//     { path: '/withdraw', element: <Withdraw />, withAuthorization: true },
+//     { path: '/chatlist', element: <ChatList />, withAuthorization: true },
+//     { path: '/tokentest', element: <TokenTest />, withAuthorization: true },
+//     { path: '/loading', element: <Loading />, withAuthorization: false },
+//     {
+//         path: '/eachNicknameEdit',
+//         element: <EachNicknameEdit />,
+//         withAuthorization: true,
+//     },
+//     { path: '/au_admin_2023', element: <Admin />, withAuthorization: true },
+//     { path: '/au_admin_send', element: <SendMessage />, withAuthorization: true },
+//     { path: '/', element: <Main />, withAuthorization: true },
+//     {
+//         path: '/noticeDetail',
+//         element: <NoticeDetail />,
+//         withAuthorization: true,
+//     },
+//     { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: true },
+//     { path: '/complain/:id', element: <Complain />, withAuthorization: true },
+// ];
+
+////디버깅용
 const RouterInfo: RouterItem[] = [
-    { path: '/landing', element: <Landing />, withAuthorization: true },
+    { path: '/landing', element: <Landing />, withAuthorization: false },
     { path: '/login', element: <Login />, withAuthorization: false },
     { path: '/redirection', element: <Redirection />, withAuthorization: false },
     // { path: "/permission", element: <Permission />, withAuthorization: true },
-    { path: '/nickname', element: <Nickname />, withAuthorization: true },
+    { path: '/nickname', element: <Nickname />, withAuthorization: false },
     { path: '/createInfo', element: <CreateInfo />, withAuthorization: true },
     {
         path: '/contributeInfo',
         element: <ContributeInfo />,
         withAuthorization: true,
     },
-    { path: '/create', element: <Create />, withAuthorization: true },
-    { path: '/detail/:id', element: <Detail />, withAuthorization: true },
-    { path: '/profile', element: <Profile />, withAuthorization: true },
-    { path: '/nicknameEdit', element: <NicknameEdit />, withAuthorization: true },
-    { path: '/notification', element: <Notification />, withAuthorization: true },
-    { path: '/notice', element: <Notice />, withAuthorization: true },
-    { path: '/withdraw', element: <Withdraw />, withAuthorization: true },
-    { path: '/chatlist', element: <ChatList />, withAuthorization: true },
-    { path: '/tokentest', element: <TokenTest />, withAuthorization: true },
+    { path: '/create', element: <Create />, withAuthorization: false },
+    { path: '/detail/:id', element: <Detail />, withAuthorization: false },
+    { path: '/profile', element: <Profile />, withAuthorization: false },
+    { path: '/nicknameEdit', element: <NicknameEdit />, withAuthorization: false },
+    { path: '/notification', element: <Notification />, withAuthorization: false },
+    { path: '/notice', element: <Notice />, withAuthorization: false },
+    { path: '/withdraw', element: <Withdraw />, withAuthorization: false },
+    { path: '/chatlist', element: <ChatList />, withAuthorization: false },
+    { path: '/tokentest', element: <TokenTest />, withAuthorization: false },
     { path: '/loading', element: <Loading />, withAuthorization: false },
     {
         path: '/eachNicknameEdit',
@@ -76,14 +116,14 @@ const RouterInfo: RouterItem[] = [
     },
     { path: '/au_admin_2023', element: <Admin />, withAuthorization: true },
     { path: '/au_admin_send', element: <SendMessage />, withAuthorization: true },
-    { path: '/', element: <Main />, withAuthorization: true },
+    { path: '/', element: <Main />, withAuthorization: false },
     {
         path: '/noticeDetail',
         element: <NoticeDetail />,
         withAuthorization: true,
     },
-    { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: true },
-    { path: '/complain/:id', element: <Complain />, withAuthorization: true },
+    { path: '/chatroom/:id', element: <ChatRoom />, withAuthorization: false },
+    { path: '/complain/:id', element: <Complain />, withAuthorization: false },
 ];
 
 const AutoRouter = (refreshToken: any) => {
