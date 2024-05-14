@@ -86,7 +86,7 @@ const RouterInfo: RouterItem[] = [
   },
   { path: "/chatroom/:id", element: <ChatRoom />, withAuthorization: true },
   { path: "/complain/:id", element: <Complain />, withAuthorization: true },
-  { path: "/copyright.txt", element: <Copyright />, withAuthorization: false },
+  { path: "/copyright", element: <Copyright />, withAuthorization: false },
 ];
 
 // ////디버깅용
