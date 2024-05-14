@@ -17,7 +17,8 @@ export const Container = styled(Link)`
 
 export const BackgroundImage = styled.img`
     width: 28vw;
-    height: calc(8rem + 4vh);
+    height: 40vw;
+    /* height: calc(8rem + 4vh); */
     /* position: absolute; */
     top: 0;
     left: 0;
@@ -28,7 +29,7 @@ export const BackgroundImage = styled.img`
 
 export const ShadowImage = styled.div`
     width: 28vw;
-    height: 100%;
+    height: 40vw;
     position: absolute;
     top: 0;
     left: 0;
@@ -71,7 +72,8 @@ export const NameDiv = styled.div`
 
 export const Name = styled.p`
     color: white;
-    font-size: 0.8rem;
+    /* font-size: 0.8rem; */
+    font-size: 3vw;
     font-weight: 700;
     z-index: 2;
 `;
