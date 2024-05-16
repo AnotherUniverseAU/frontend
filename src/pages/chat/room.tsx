@@ -835,9 +835,6 @@ export const ChatRoom = (): JSX.Element => {
                         <S.ModalSubTextContainer>
                             <S.ModalSubText>비속어 등 부적절한 채팅이 감지되어</S.ModalSubText>
                             <S.ModalSubText> 전송이 불가합니다.</S.ModalSubText>
-                            {/* <S.ModalSubText>사용자의 부적절한 채팅은</S.ModalSubText>
-                            <S.ModalSubText>캐릭터에게 상처를 줄 수 있으므로</S.ModalSubText>
-                            <S.ModalSubText>해당 채팅은 전달되지 않았습니다</S.ModalSubText> */}
                         </S.ModalSubTextContainer>
                         <S.ModalButton onClick={() => setIsWarningModalOpen(false)}>확인</S.ModalButton>
                     </S.ModalContainer>
