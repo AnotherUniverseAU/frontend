@@ -16,6 +16,8 @@ import { Loading } from '../setting/loading';
 import { BackgroundFull } from 'src/components/background/background';
 import { CensorText } from 'src/components/censorText';
 
+import permissionCheck from 'src/assets/img/permissionCheck.png';
+
 interface CharacterChat {
     _id: string;
     characterId: string;
@@ -152,6 +154,9 @@ export const ChatRoom = (): JSX.Element => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [firstTime, setFirstTime] = useState(String);
     const [isLoading, setIsLoading] = useState(false);
+
+    const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+    const [warningMessage, setWarningMessage] = useState('');
 
     // 유저 맨 위 스크롤할 때 로딩창 생기게 하기
     //처음 마운팅될 때 chatTutorial이 보여진 적 없으면 보여줌
@@ -624,6 +629,52 @@ export const ChatRoom = (): JSX.Element => {
         setIsTuto(false);
     };
 
+    // const addChatMessage = (message: {
+    //     type: 'text' | 'image';
+    //     content: string;
+    //     imageUrl?: string;
+    //     isSent: boolean;
+    // }) => {
+    //     const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+9
+    //     const timeInKorea = new Date(new Date().getTime() + koreaTimeOffset)
+    //         .toISOString()
+    //         .replace('T', ' ')
+    //         .substring(0, 16);
+    //     const censoredContent = CensorText(message.content);
+    //     const newMessage: ChatMessage = {
+    //         time: timeInKorea,
+    //         content: censoredContent,
+    //         sentby: 'user',
+    //         type: message.type,
+    //         imageUrl: message.imageUrl,
+    //         isReply: false,
+    //     };
+    //     setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+
+    //     //새로운 채팅 입력시 제일 아래를 보여주는 로직
+    //     const current = subContainerRef.current;
+    //     if (current) {
+    //         setTimeout(() => {
+    //             current.scrollTop = current.scrollHeight;
+    //         }, 10);
+    //     }
+
+    //     // api로 새 메시지 전송
+    //     if (message.content !== '') {
+    //         const data = { characterId: id, userReply: escapeHtml(message.content) };
+    //         apiRequestPost(`chatroom/user-reply/${id}`, data);
+    //     }
+
+    //     //replyTutorial가 보여진 적 없으면 답장 튜토리얼 보여줌
+    //     if (isTuto) {
+    //         sizeRef.current?.focus();
+    //         const replyTutorialShown = localStorage.getItem(`replyTutorialShown`);
+    //         if (!replyTutorialShown) {
+    //             setShowReplyTutorial(true);
+    //         }
+    //     }
+    // };
+
     const addChatMessage = (message: {
         type: 'text' | 'image';
         content: string;
@@ -635,7 +686,16 @@ export const ChatRoom = (): JSX.Element => {
             .toISOString()
             .replace('T', ' ')
             .substring(0, 16);
+
         const censoredContent = CensorText(message.content);
+
+        if (censoredContent !== message.content) {
+            // 검열된 내용이 있는 경우 경고 모달을 띄움
+            setWarningMessage('부적절한 내용이 포함되어 있습니다.');
+            setIsWarningModalOpen(true);
+            return; // 메시지 추가 중단
+        }
+
         const newMessage: ChatMessage = {
             time: timeInKorea,
             content: censoredContent,
@@ -759,6 +819,30 @@ export const ChatRoom = (): JSX.Element => {
 
     return (
         <>
+            {isWarningModalOpen && (
+                // <S.StyledModal open={isWarningModalOpen}>
+                //     <S.ModalContainer>
+                //         <S.ModalText>{warningMessage}</S.ModalText>
+                //         <S.ModalButtonContainer>
+                //             <S.ModalRightButton onClick={() => setIsWarningModalOpen(false)}>닫기</S.ModalRightButton>
+                //         </S.ModalButtonContainer>
+                //     </S.ModalContainer>
+                // </S.StyledModal>
+
+                <S.StyledModal open={isWarningModalOpen}>
+                    <S.ModalContainer>
+                        <S.PermissionCheck src={permissionCheck} alt="permissionCheck" />
+                        <S.ModalSubTextContainer>
+                            <S.ModalSubText>비속어 등 부적절한 채팅이 감지되어</S.ModalSubText>
+                            <S.ModalSubText> 전송이 불가합니다.</S.ModalSubText>
+                            {/* <S.ModalSubText>사용자의 부적절한 채팅은</S.ModalSubText>
+                            <S.ModalSubText>캐릭터에게 상처를 줄 수 있으므로</S.ModalSubText>
+                            <S.ModalSubText>해당 채팅은 전달되지 않았습니다</S.ModalSubText> */}
+                        </S.ModalSubTextContainer>
+                        <S.ModalButton onClick={() => setIsWarningModalOpen(false)}>확인</S.ModalButton>
+                    </S.ModalContainer>
+                </S.StyledModal>
+            )}
             {isLoading === true ? (
                 <Loading></Loading>
             ) : (
