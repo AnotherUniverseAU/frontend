@@ -66,11 +66,11 @@ export const SubContainer = styled.div`
 
 export const InputTitle = styled.div`
     display: flex;
-    justifycontent: center;
+    justify-content: center;
     font-size: 0.9rem;
     font-weight: 700;
     color: black;
-    align-text: first;
+    text-align: first;
 `;
 export const InputWrapper = styled.div`
     width: 100%;
@@ -80,7 +80,7 @@ export const InputWrapper = styled.div`
     font-weight: 700;
     color: black;
     align-items: center;
-    align-text: first;
+    text-align: first;
     margin-top: 0.8rem;
 `;
 
