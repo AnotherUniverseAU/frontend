@@ -2,12 +2,6 @@ import { ReactEventHandler, useEffect, useRef, useState } from "react";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import styled from "styled-components";
 
-const ad1 = process.env.REACT_APP_ADMIN_ID1;
-const ad2 = process.env.REACT_APP_ADMIN_ID2;
-const ad3 = process.env.REACT_APP_ADMIN_ID3;
-const ad4 = process.env.REACT_APP_ADMIN_ID4;
-const adminList = [ad1, ad2, ad3, ad4];
-
 const Table = styled.table``;
 const Tr = styled.tr`
   border: 1px solid;
@@ -30,20 +24,19 @@ export const SendMessage = () => {
   const charIdRef = useRef<HTMLSelectElement>(null);
   const DateRef = useRef<HTMLInputElement>(null);
   const [characterChats, setCharacterChats] = useState<any>([]);
+  const [dateValue, setDateValue] = useState<any>();
   const [timeValue, setTimeValue] = useState<any>();
   // const timeRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const getCharInfo = async () => {
-      await apiRequestGet("user/info").then((res) => {
-        adminList.forEach((admin) => {
-          if (res.id === admin) {
-            setIsAdmin(true);
-          }
-        });
+      await apiRequestGet("user/check-admin").then((res) => {
+        if (res.isAdmin) {
+          setIsAdmin(true);
+        }
       });
     };
     getCharInfo();
-    setTimeValue(
+    setDateValue(
       new Date(new Date().getTime() + 9 * 60 * 60 * 1000)
         .toISOString()
         .slice(0, 10)
@@ -55,10 +48,13 @@ export const SendMessage = () => {
     }
   }, [isAdmin]);
 
-  const onChange = (e: any) => {
+  const onDateChange = (e: any) => {
+    setDateValue(e.target.value);
+  };
+  const onTimeChange = (e: any) => {
     setTimeValue(e.target.value);
   };
-  const onClick = (e: any) => {
+  const onSearchClick = (e: any) => {
     const charIdCurrent = charIdRef.current;
     const DateCurrent = DateRef.current;
     if (charIdCurrent && DateCurrent) {
@@ -67,76 +63,13 @@ export const SendMessage = () => {
       const time = "24:00";
 
       const timestamp = new Date(date + " " + time);
-      apiRequestGet(
-        `/chatroom/chat-history/${charId}/${timestamp}?offset=0`
-      ).then((res) => {
+
+      apiRequestGet(`user/get-users-by-query?quries=${""}`).then((res) => {
         console.log(res);
-        const getCharMessages = async () => {
-          const changedList = await changeDataForm(res);
-          console.log(changedList);
-          setCharacterChats(changedList);
-        };
+        const getCharMessages = async () => {};
         getCharMessages();
       });
     }
-  };
-
-  const changeDataForm = async (chatHistory: any) => {
-    const chatList = [];
-    const koreaTimeOffset = 9 * 60 * 60 * 1000; // Korea is UTC+
-
-    // 형식 변환해 chatList에 모두 넣기
-    // 각 캐릭터 메시지 뭉텅이 마다
-    for (let i of chatHistory.characterChats) {
-      // 각 내용마다
-      for (let j of i.content) {
-        if (j.startsWith("https:")) {
-          // 이미지일 때
-          const newMessage = {
-            time: new Date(Date.parse(i.timeToSend) + koreaTimeOffset)
-              .toISOString()
-              .replace("T", " ")
-              .substring(0, 16),
-            content: "",
-            sentby: "character",
-            type: "image",
-            imageUrl: j,
-          };
-          chatList.push(newMessage);
-        } else {
-          // text일 때
-          const newMessage = {
-            time: new Date(Date.parse(i.timeToSend) + koreaTimeOffset)
-              .toISOString()
-              .replace("T", " ")
-              .substring(0, 16),
-            content: j,
-            sentby: "character",
-            type: "text",
-          };
-          chatList.push(newMessage);
-        }
-      }
-      // 답장이 있다면 : 30분 추가해 다 넣어주자
-      if ("reply" in i && i.reply) {
-        i.reply.forEach((text: any) => {
-          const afterFiveM = new Date(
-            Date.parse(i.timeToSend) + 30 * 60 * 1000 + koreaTimeOffset
-          )
-            .toISOString()
-            .replace("T", " ")
-            .substring(0, 16);
-          const newMessage = {
-            time: afterFiveM,
-            content: text,
-            sentby: "character",
-            type: "text",
-          };
-          chatList.push(newMessage);
-        });
-      }
-    }
-    return chatList;
   };
 
   return (
@@ -146,13 +79,13 @@ export const SendMessage = () => {
           <div>
             <input
               ref={DateRef}
-              onChange={onChange}
+              onChange={onDateChange}
               type="date"
               id="date"
               min="2024-04-01"
-              max="2024-06-30"
-              value={timeValue}
+              value={dateValue}
             ></input>
+            <input type="time" onChange={onTimeChange}></input>
             <input type=""></input>
             {/* <input
             ref={timeRef}
@@ -162,7 +95,7 @@ export const SendMessage = () => {
               .toISOString()
               .slice(11, 16)}
           ></input> */}
-            <button onClick={onClick}>Search</button>
+            <button onClick={onSearchClick}>Search</button>
           </div>
           <Table>
             <Tr>
@@ -194,7 +127,7 @@ export const SendMessage = () => {
           </Table>
         </>
       ) : (
-        <>어드민 아님</>
+        <>not authorized</>
       )}
     </>
   );
