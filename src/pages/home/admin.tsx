@@ -2,12 +2,6 @@ import { ReactEventHandler, useEffect, useRef, useState } from "react";
 import { apiRequestGet } from "src/apis/apiRequestGet";
 import styled from "styled-components";
 
-const ad1 = process.env.REACT_APP_ADMIN_ID1;
-const ad2 = process.env.REACT_APP_ADMIN_ID2;
-const ad3 = process.env.REACT_APP_ADMIN_ID3;
-const ad4 = process.env.REACT_APP_ADMIN_ID4;
-const adminList = [ad1, ad2, ad3, ad4];
-
 const Table = styled.table``;
 const Tr = styled.tr`
   border: 1px solid;
@@ -34,12 +28,10 @@ export const Admin = () => {
   // const timeRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const getCharInfo = async () => {
-      await apiRequestGet("user/info").then((res) => {
-        adminList.forEach((admin) => {
-          if (res.id === admin) {
-            setIsAdmin(true);
-          }
-        });
+      await apiRequestGet("user/check-admin").then((res) => {
+        if (res.isAdmin) {
+          setIsAdmin(true);
+        }
       });
     };
     getCharInfo();
@@ -163,7 +155,6 @@ export const Admin = () => {
               type="date"
               id="date"
               min="2024-04-01"
-              max="2024-06-30"
               value={timeValue}
             ></input>
             {/* <input
@@ -206,7 +197,7 @@ export const Admin = () => {
           </Table>
         </>
       ) : (
-        <>어드민 아님</>
+        <>not authorized</>
       )}
     </>
   );
