@@ -3,7 +3,7 @@ import axios from "axios";
 export const getNewToken = async () => {
   const refreshToken = await localStorage.getItem("refreshToken");
 
-  const BASE_URL = process.env.REACT_APP_TEST_BASE_URL;
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   try {
     const response = await axios.get(`${BASE_URL}/auth/new-access-token`, {
       headers: {

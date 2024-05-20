@@ -4,7 +4,7 @@ import * as S from "./chatFooter.ts";
 import axios from "axios";
 import { apiRequestPostFormData } from "src/apis/apiRequestPost.ts";
 
-const BASE_URL = process.env.REACT_APP_TEST_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const ChatFooter: React.FC<{
   setChatMessage: (message: {

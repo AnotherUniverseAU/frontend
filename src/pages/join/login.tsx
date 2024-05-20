@@ -27,7 +27,7 @@ export const Login = () => {
     // }
     // await requestSafetyArea();
 
-    const kakaoOauthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_TEST_REDIRECT_URI}`;
+    const kakaoOauthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
     window.location.href = kakaoOauthUrl;
     localStorage.setItem("loginType", "kakao");
   };
@@ -35,7 +35,7 @@ export const Login = () => {
   const loginWithApple = async () => {
     localStorage.setItem("loginType", "apple");
     // const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
-    const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=net.azurestaticapps.kind-pebble-0020f5710.5&redirect_uri=${process.env.REACT_APP_TEST_REDIRECT_URI}`;
+    const appleOauthUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=net.azurestaticapps.kind-pebble-0020f5710.5&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
     window.location.href = appleOauthUrl;
   };
 

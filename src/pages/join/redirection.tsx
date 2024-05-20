@@ -16,7 +16,7 @@ export const Redirection = () => {
       if (type === "apple") {
         const code = params.get("code");
         const res = await axios.post(
-          `${process.env.REACT_APP_TEST_BASE_URL}/oauth/apple`,
+          `${process.env.REACT_APP_BASE_URL}/oauth/apple`,
           {
             code: code,
           }
@@ -28,7 +28,7 @@ export const Redirection = () => {
         const code = params.get("code");
 
         const res = await axios.post(
-          `${process.env.REACT_APP_TEST_BASE_URL}/oauth/kakao`,
+          `${process.env.REACT_APP_BASE_URL}/oauth/kakao`,
           {
             code: code,
           }

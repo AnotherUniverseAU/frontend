@@ -8,7 +8,7 @@ export const TokenTest = () => {
   const getNewAccessToken = async (refreshToken: string) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_TEST_BASE_URL}/auth/new-access-token`,
+        `${process.env.REACT_APP_BASE_URL}/auth/new-access-token`,
         {
           headers: {
             Authorization: `Bearer ${refreshToken}`,

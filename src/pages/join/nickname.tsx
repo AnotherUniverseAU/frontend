@@ -19,7 +19,7 @@ export const Nickname = () => {
   const [fcmToken, setFcmToken] = useState(String);
 
   const navigate = useNavigate();
-  const BASE_URL = process.env.REACT_APP_TEST_BASE_URL;
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const getAccessToken = async () => {
