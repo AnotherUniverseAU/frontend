@@ -4,7 +4,7 @@ import type { InternalAxiosRequestConfig } from "axios";
 import axios from "axios";
 import sendAccessTokenToApp from "./sendAccessTokenToApp";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_TEST_BASE_URL;
 // const refresh = localStorage.getItem("refreshToken");
 
 export const apiRequestGet = async (path: string) => {
