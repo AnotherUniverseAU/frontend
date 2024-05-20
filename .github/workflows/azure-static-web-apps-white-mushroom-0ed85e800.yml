@@ -34,8 +34,8 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env:
           REACT_APP_KAKAO_CLIENT_ID: ${{ secrets.REACT_APP_KAKAO_CLIENT_ID }}
-          REACT_APP_TEST_REDIRECT_URI: ${{ secrets.REACT_APP_TEST_REDIRECT_URI }}
-          REACT_APP_TEST_BASE_URL: ${{ secrets.REACT_APP_TEST_BASE_URL }}
+          REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_TEST_REDIRECT_URI }}
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_TEST_BASE_URL }}
           REACT_APP_GTM_ID: ${{ secrets.REACT_APP_GTM_ID }}
           ###### End of Repository/Build Configurations ######
 
