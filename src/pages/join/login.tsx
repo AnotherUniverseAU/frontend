@@ -30,44 +30,7 @@ export const Login = () => {
     const kakaoOauthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_TEST_REDIRECT_URI}`;
     window.location.href = kakaoOauthUrl;
     localStorage.setItem("loginType", "kakao");
-    // const getCode = async () => {
-    //   const res = axios.get(kakaoOauthUrl);
-    //   console.log(res);
-    // };
-    // getCode();
-
-    // setTimeout(() => {
-
-    //   console.log(urlParameter);
-    //   const a = async () => {
-    //     const res = await axios.post(`${process.env.REACT_APP_BASE_URL}`, data);
-    //     return res;
-    //   }
-
-    // }, 3000);
   };
-
-  // const loginWithApple = async (e: any) => {
-  //     e.preventDefault();
-  //     localStorage.setItem('loginType', 'apple');
-
-  //     console.log('sign in with apple');
-
-  //     (window as any).AppleID.auth.init({
-  //         responseType: 'code',
-  //         responseMode: 'query',
-  //         clientId: 'net.azurestaticapps.kind-pebble-0020f5710.5',
-  //         redirectURI: 'https://kind-pebble-0020f5710.5.azurestaticapps.net/redirection',
-  //         usePopup: false,
-  //     });
-
-  //     try {
-  //         const res = await (window as any).AppleID.auth.signIn();
-  //         console.log(res);
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // };
 
   const loginWithApple = async () => {
     localStorage.setItem("loginType", "apple");
