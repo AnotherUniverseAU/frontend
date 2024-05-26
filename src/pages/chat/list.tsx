@@ -9,7 +9,7 @@ import { apiRequestGet } from 'src/apis/apiRequestGet';
 import { Loading } from 'src/pages/setting/loading.tsx';
 import { BackgroundFull } from 'src/components/background/background';
 
-import { CensorText } from 'src/components/censorText';
+// import { CensorText } from 'src/components/censorText';
 
 interface Chat {
     name: string;
@@ -50,7 +50,7 @@ const ChatListComponent = ({ chatRoomDatas }: ChatListProps) => {
                         </S.ChatImgWrapper>
                         <S.ChatContent>
                             <S.ChatName>{chat.name}</S.ChatName>
-                            <S.ChatText>{CensorText(chat.lastChat)}</S.ChatText>
+                            <S.ChatText>{chat.lastChat}</S.ChatText>
                         </S.ChatContent>
                         <S.ChatSubContent>
                             <S.ChatTime>
