@@ -75,8 +75,8 @@ const RouterInfo: RouterItem[] = [
         element: <EachNicknameEdit />,
         withAuthorization: true,
     },
-    { path: '/au_admin_2023', element: <Admin />, withAuthorization: true },
-    { path: '/au_admin_send', element: <SendMessage />, withAuthorization: true },
+    { path: '/au_admin_2023', element: <Admin />, withAuthorization: false },
+    { path: '/au_admin_send', element: <SendMessage />, withAuthorization: false },
     { path: '/', element: <Main />, withAuthorization: true },
     {
         path: '/noticeDetail',

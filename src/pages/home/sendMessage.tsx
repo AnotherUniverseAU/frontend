@@ -1,134 +1,235 @@
-import { ReactEventHandler, useEffect, useRef, useState } from "react";
-import { apiRequestGet } from "src/apis/apiRequestGet";
-import styled from "styled-components";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const Table = styled.table``;
+const Table = styled.table`
+    width: 100%;
+    border-collapse: collapse;
+`;
+
 const Tr = styled.tr`
-  border: 1px solid;
+    border: 1px solid #ddd;
 `;
-const ContentTd = styled.td`
-  border: 1px solid;
+
+const Td = styled.td`
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
 `;
-const TimeTd = styled.td`
-  border: 1px solid;
-`;
-const StyledP = styled.p`
-  overflow-wrap: break-word;
-  max-width: 70vw;
-  padding: 0.5vw;
-`;
+
+interface User {
+    nickname: string;
+    lastAccess: string;
+}
 
 export const SendMessage = () => {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [userList, setUserList] = useState([]);
-  const charIdRef = useRef<HTMLSelectElement>(null);
-  const DateRef = useRef<HTMLInputElement>(null);
-  const [characterChats, setCharacterChats] = useState<any>([]);
-  const [dateValue, setDateValue] = useState<any>();
-  const [timeValue, setTimeValue] = useState<any>();
-  // const timeRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    const getCharInfo = async () => {
-      await apiRequestGet("user/check-admin").then((res) => {
-        if (res.isAdmin) {
-          setIsAdmin(true);
-        }
-      });
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const [userList, setUserList] = useState<User[]>([]);
+    const [daysAgo, setDaysAgo] = useState<number>(0);
+    const [hoursAgo, setHoursAgo] = useState<number>(0);
+    const [messageContent, setMessageContent] = useState<string>('');
+    const [dateToSend, setDateToSend] = useState<string>('');
+    const [queryToSend, setQueryToSend] = useState<any>(null);
+    const [nickname, setNickname] = useState<string>(''); // nickname 상태 추가
+
+    useEffect(() => {
+        const checkAdmin = async () => {
+            const token = localStorage.getItem('accessToken');
+            try {
+                const res = await axios.get(`${BASE_URL}/user/check-admin`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (res.data.isAdmin) {
+                    setIsAdmin(true);
+                }
+            } catch (error) {
+                console.error('Error checking admin status:', error);
+            }
+        };
+        checkAdmin();
+    }, []);
+
+    const handleDaysChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDaysAgo(Number(e.target.value));
     };
-    getCharInfo();
-    setDateValue(
-      new Date(new Date().getTime() + 9 * 60 * 60 * 1000)
-        .toISOString()
-        .slice(0, 10)
-    );
-  }, []);
-  useEffect(() => {
-    if (isAdmin) {
-      return;
-    }
-  }, [isAdmin]);
 
-  const onDateChange = (e: any) => {
-    setDateValue(e.target.value);
-  };
-  const onTimeChange = (e: any) => {
-    setTimeValue(e.target.value);
-  };
-  const onSearchClick = (e: any) => {
-    const charIdCurrent = charIdRef.current;
-    const DateCurrent = DateRef.current;
-    if (charIdCurrent && DateCurrent) {
-      const charId = charIdCurrent.value;
-      const date = DateCurrent.value;
-      const time = "24:00";
+    const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setHoursAgo(Number(e.target.value));
+    };
 
-      const timestamp = new Date(date + " " + time);
+    const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // nickname 입력 필드 핸들러 추가
+        setNickname(e.target.value);
+    };
 
-      apiRequestGet(`user/get-users-by-query?quries=${""}`).then((res) => {
-        console.log(res);
-        const getCharMessages = async () => {};
-        getCharMessages();
-      });
-    }
-  };
+    const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setMessageContent(e.target.value);
+    };
 
-  return (
-    <>
-      {isAdmin ? (
+    const handleDateToSendChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDateToSend(e.target.value);
+    };
+
+    const handleSearchClick = async () => {
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - daysAgo);
+        currentDate.setHours(currentDate.getHours() - hoursAgo);
+
+        const lastAccessValue = currentDate.toISOString();
+
+        const token = localStorage.getItem('accessToken');
+
+        let query: any = {
+            lastAccess: { $lt: lastAccessValue },
+        };
+
+        if (nickname) {
+            query.nickname = nickname; // nickname 조건 추가
+        }
+
+        const queries = JSON.stringify(query);
+        setQueryToSend(queries); // 상태 업데이트
+
+        try {
+            const response = await axios.post(
+                `${BASE_URL}/user/get-users-by-query`,
+                { queries: queries },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (response.data) {
+                setUserList(response.data);
+            } else {
+                setUserList([]);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            setUserList([]);
+        }
+    };
+
+    const handleSendMessageClick = async () => {
+        if (!dateToSend || !messageContent) {
+            alert('마케팅 메시지의 필요한 부분이 비어있습니다.');
+            return;
+        }
+        const token = localStorage.getItem('accessToken');
+        const body = {
+            dateToSend: new Date(dateToSend).toISOString(),
+            queries: queryToSend,
+            marketingMessageContent: messageContent,
+        };
+
+        try {
+            const response = await axios.post(`${BASE_URL}/user/set-send-marketing-message`, body, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.data) {
+                alert('마케팅 메시지가 정상적으로 전송되었습니다.');
+            } else {
+                alert('마케팅 메시지 전송에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error sending marketing message:', error);
+            alert('Failed to send marketing message.');
+        }
+    };
+
+    return (
         <>
-          <div>
-            <input
-              ref={DateRef}
-              onChange={onDateChange}
-              type="date"
-              id="date"
-              min="2024-04-01"
-              value={dateValue}
-            ></input>
-            <input type="time" onChange={onTimeChange}></input>
-            <input type=""></input>
-            {/* <input
-            ref={timeRef}
-            type="time"
-            onChange={onChange}
-            value={new Date(new Date().getTime() + 9 * 60 * 60 * 1000)
-              .toISOString()
-              .slice(11, 16)}
-          ></input> */}
-            <button onClick={onSearchClick}>Search</button>
-          </div>
-          <Table>
-            <Tr>
-              <th style={{ border: "1px solid" }}>content</th>
-              <th style={{ border: "1px solid" }}>time</th>
-            </Tr>
-            {characterChats.map((chat: any, idx: number) => {
-              return (
-                <Tr key={"d" + String(idx)}>
-                  {chat.imageUrl ? (
-                    <ContentTd key={"i" + String(idx)}>
-                      <img
-                        src={chat.imageUrl}
-                        alt="이미지"
-                        style={{ maxWidth: "50%" }}
-                      ></img>
-                    </ContentTd>
-                  ) : (
-                    <ContentTd key={"c" + String(idx)}>
-                      <StyledP>{chat.content}</StyledP>
-                    </ContentTd>
-                  )}
-                  <TimeTd key={"t" + String(idx)}>
-                    <StyledP>{chat.time.substring(5, 16)}</StyledP>
-                  </TimeTd>
-                </Tr>
-              );
-            })}
-          </Table>
+            {isAdmin ? (
+                <div style={{ margin: '5vw' }}>
+                    <br />
+                    <br />
+                    <h3>
+                        <strong>며칠, 몇시간 동안 안 들어왔는가?</strong>
+                    </h3>
+                    <br />
+                    <label>
+                        Nickname:
+                        <input type="text" value={nickname} onChange={handleNicknameChange} />{' '}
+                        {/* nickname 입력 필드 추가 */}
+                    </label>
+                    <br />
+                    <br />
+                    <label>
+                        Days ago:
+                        <input type="number" value={daysAgo} onChange={handleDaysChange} />
+                    </label>
+                    <br />
+                    <br />
+                    <label>
+                        Hours ago:
+                        <input type="number" value={hoursAgo} onChange={handleHoursChange} />
+                    </label>
+                    <br />
+                    <br />
+                    <button onClick={handleSearchClick}>Search</button>
+                    <br />
+                    <br />
+                    <br />
+
+                    {userList.length > 0 ? (
+                        <>
+                            <Table>
+                                <thead>
+                                    <Tr>
+                                        <th>Nickname</th>
+                                        <th>Last Access</th>
+                                    </Tr>
+                                </thead>
+                                <tbody>
+                                    {userList.map((user: User, idx: number) => (
+                                        <Tr key={idx}>
+                                            <Td>{user.nickname}</Td>
+                                            <Td>{new Date(user.lastAccess).toISOString()}</Td>
+                                        </Tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                            <br />
+                            <br />
+                            <br />
+                            <h3>
+                                <strong>마케팅 메시지 전송</strong>
+                            </h3>
+                            <br />
+                            <label>
+                                Date to Send:
+                                <input type="datetime-local" value={dateToSend} onChange={handleDateToSendChange} />
+                            </label>
+                            <br />
+                            <br />
+                            <label>
+                                Message Content
+                                <br />
+                                <br />
+                                <textarea value={messageContent} onChange={handleMessageChange}></textarea>
+                            </label>
+                            <br />
+                            <br />
+                            <br />
+                            <button onClick={handleSendMessageClick}>Send Message</button>
+                        </>
+                    ) : (
+                        <>검색 결과가 없습니다</>
+                    )}
+                </div>
+            ) : (
+                <div>Not authorized</div>
+            )}
         </>
-      ) : (
-        <>not authorized</>
-      )}
-    </>
-  );
+    );
 };
+
+export default SendMessage;
