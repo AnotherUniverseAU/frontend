@@ -26,8 +26,8 @@ interface User {
 export const SendMessage = () => {
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [userList, setUserList] = useState<User[]>([]);
-    const [daysAgo, setDaysAgo] = useState<number>(0);
-    const [hoursAgo, setHoursAgo] = useState<number>(0);
+    const [daysAgo, setDaysAgo] = useState<string>('');
+    const [hoursAgo, setHoursAgo] = useState<string>('');
     const [messageContent, setMessageContent] = useState<string>('');
     const [dateToSend, setDateToSend] = useState<string>('');
     const [queryToSend, setQueryToSend] = useState<any>(null);
@@ -53,15 +53,14 @@ export const SendMessage = () => {
     }, []);
 
     const handleDaysChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDaysAgo(Number(e.target.value));
+        setDaysAgo(e.target.value as any);
     };
 
     const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setHoursAgo(Number(e.target.value));
+        setHoursAgo(e.target.value as any);
     };
 
     const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // nickname 입력 필드 핸들러 추가
         setNickname(e.target.value);
     };
 
@@ -75,8 +74,8 @@ export const SendMessage = () => {
 
     const handleSearchClick = async () => {
         const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - daysAgo);
-        currentDate.setHours(currentDate.getHours() - hoursAgo);
+        currentDate.setDate(currentDate.getDate() - Number(daysAgo));
+        currentDate.setHours(currentDate.getHours() - Number(hoursAgo));
 
         const lastAccessValue = currentDate.toISOString();
 
@@ -106,6 +105,7 @@ export const SendMessage = () => {
 
             if (response.data) {
                 setUserList(response.data);
+                console.log('받아온 목록: ', response.data);
             } else {
                 setUserList([]);
             }
@@ -127,6 +127,8 @@ export const SendMessage = () => {
             marketingMessageContent: messageContent,
         };
 
+        console.log('보낼 데이터: ', body);
+
         try {
             const response = await axios.post(`${BASE_URL}/user/set-send-marketing-message`, body, {
                 headers: {
@@ -145,6 +147,38 @@ export const SendMessage = () => {
         }
     };
 
+    const handleSendIndividualMessageClick = async (nickname: string) => {
+        if (!dateToSend || !messageContent) {
+            alert('마케팅 메시지의 필요한 부분이 비어있습니다.');
+            return;
+        }
+        const token = localStorage.getItem('accessToken');
+        const body = {
+            dateToSend: new Date(dateToSend).toISOString(),
+            queries: JSON.stringify({ nickname }), // 특정 유저를 대상으로 하는 쿼리
+            marketingMessageContent: messageContent,
+        };
+
+        console.log('보낼 데이터: ', body);
+
+        try {
+            const response = await axios.post(`${BASE_URL}/user/set-send-marketing-message`, body, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.data) {
+                alert(`${nickname}에게 마케팅 메시지가 정상적으로 전송되었습니다.`);
+            } else {
+                alert(`${nickname}에게 마케팅 메시지 전송에 실패했습니다.`);
+            }
+        } catch (error) {
+            console.error(`Error sending marketing message to ${nickname}:`, error);
+            alert(`Failed to send marketing message to ${nickname}.`);
+        }
+    };
+
     return (
         <>
             {isAdmin ? (
@@ -152,14 +186,8 @@ export const SendMessage = () => {
                     <br />
                     <br />
                     <h3>
-                        <strong>며칠, 몇시간 동안 안 들어왔는가?</strong>
+                        <strong>며칠, 몇시간 동안 안 들어온 유저를 찾고 싶은가?</strong>
                     </h3>
-                    <br />
-                    <label>
-                        Nickname:
-                        <input type="text" value={nickname} onChange={handleNicknameChange} />{' '}
-                        {/* nickname 입력 필드 추가 */}
-                    </label>
                     <br />
                     <br />
                     <label>
@@ -174,32 +202,28 @@ export const SendMessage = () => {
                     </label>
                     <br />
                     <br />
+                    <br />
+                    <h3>
+                        <strong>찾고 싶은 특정 유저가 있는가?</strong>
+                    </h3>
+                    <br />
+                    <br />
+                    <label>
+                        Nickname:
+                        <input type="text" value={nickname} onChange={handleNicknameChange} />{' '}
+                        {/* nickname 입력 필드 추가 */}
+                    </label>
+                    <br />
+                    <br />
                     <button onClick={handleSearchClick}>Search</button>
+                    <br />
+
                     <br />
                     <br />
                     <br />
 
                     {userList.length > 0 ? (
                         <>
-                            <Table>
-                                <thead>
-                                    <Tr>
-                                        <th>Nickname</th>
-                                        <th>Last Access</th>
-                                    </Tr>
-                                </thead>
-                                <tbody>
-                                    {userList.map((user: User, idx: number) => (
-                                        <Tr key={idx}>
-                                            <Td>{user.nickname}</Td>
-                                            <Td>{new Date(user.lastAccess).toISOString()}</Td>
-                                        </Tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                            <br />
-                            <br />
-                            <br />
                             <h3>
                                 <strong>마케팅 메시지 전송</strong>
                             </h3>
@@ -219,7 +243,32 @@ export const SendMessage = () => {
                             <br />
                             <br />
                             <br />
-                            <button onClick={handleSendMessageClick}>Send Message</button>
+                            <Table>
+                                <thead>
+                                    <Tr>
+                                        <th>Nickname</th>
+                                        <th>Last Access</th>
+                                        <th>Send</th>
+                                    </Tr>
+                                </thead>
+                                <tbody>
+                                    {userList.map((user: User, idx: number) => (
+                                        <Tr key={idx}>
+                                            <Td>{user.nickname}</Td>
+                                            <Td>{new Date(user.lastAccess).toISOString()}</Td>
+                                            <Td>
+                                                <button onClick={() => handleSendIndividualMessageClick(user.nickname)}>
+                                                    Send
+                                                </button>{' '}
+                                                {/* 버튼 추가 */}
+                                            </Td>
+                                        </Tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                            <br />
+                            <br />
+                            <button onClick={handleSendMessageClick}>Send All</button>
                         </>
                     ) : (
                         <>검색 결과가 없습니다</>
