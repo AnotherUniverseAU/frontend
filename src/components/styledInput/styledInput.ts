@@ -34,6 +34,8 @@ export const CustomTextarea = styled.textarea<InputProps>`
     &::placeholder {
         color: ${(props) => (props.isEmpty ? '#FF0000' : props.isFocused ? '#6D2FEF' : '#a0a0a0')};
     }
+    -webkit-user-select: text;
+    user-select: text;
 `;
 
 export const CharacterCounter = styled.div<InputProps>`
