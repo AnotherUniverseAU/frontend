@@ -14,6 +14,8 @@ import { BackgroundLower, BackgroundUpper } from 'src/components/background/back
 import { BlockedMainImage } from 'src/components/mainImage/blockedMainImage.tsx';
 import { BlockedStyledImage } from 'src/components/styledImage/blockedStyledImage.tsx';
 
+import { Modal } from 'src/components/modal/modal.tsx';
+
 export const Main: React.FC = () => {
     const [isTutorial, setIsTutorial] = useState<boolean>(false);
 
@@ -25,6 +27,19 @@ export const Main: React.FC = () => {
     const [blockedCharacter, setBlockedCharacter] = useState<any[]>([]);
 
     const [loading, setLoading] = useState<boolean>(true);
+    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        const hasSeenModal = localStorage.getItem('hasSeenModal');
+        if (!hasSeenModal) {
+            setShowModal(true);
+            localStorage.setItem('hasSeenModal', 'true');
+        }
+    }, []);
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     useEffect(() => {
         // async function requestSafetyArea() {
@@ -83,6 +98,7 @@ export const Main: React.FC = () => {
         <>
             {!loading ? (
                 <S.Container style={{ overflow: isTutorial ? 'hidden' : 'scroll' }}>
+                    <Modal show={showModal} handleClose={handleCloseModal} />
                     {isTutorial && (
                         <S.TutorialContainer>
                             <S.VirtualHeader className="header">
